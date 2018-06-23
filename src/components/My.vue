@@ -1,7 +1,7 @@
 <template>
   <div class="My">
-    <div class="mytop">
-      <span class="pright"><router-link to="/login"><img src="../assets/icon-set.png" alt=""> </router-link></span>
+    <div class="mytop" >
+      <span class="pright" ><router-link to="/login" ><img src="../assets/icon-set.png" alt=""> </router-link></span>
       <div class="onepart">
         <div class="leftbox">
               <span>
@@ -26,7 +26,7 @@
         </div>
         <div class="right">
           <span class="withdraw">
-            <router-link to="/login">提  现</router-link>
+            <router-link to="/withdrawal">提  现</router-link>
           </span>
         </div>
       </div>
@@ -42,19 +42,81 @@
       </div>
       <div class="block">
         <router-link to="/login">
-          <p>待发订单</p>
+          <p>个人订货</p>
           <em>10</em>
-          <span>发货</span>
+          <span>订货</span>
         </router-link>
       </div>
       <div class="block">
         <router-link to="/login">
-          <p>待发订单</p>
+          <p>团队订单</p>
           <em>10</em>
-          <span>发货</span>
+          <span>查看</span>
         </router-link>
       </div>
     </div>
+
+    <div class="btnlistbox" >
+        <div class="linebtn">
+          <span class="btnblock">
+            <router-link to="/profit">
+              <i><img src="../assets/icon-01.png" alt=""/></i>
+              <b>查看利润</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-02.png" alt=""/></i>
+              <b>我的派单</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-03.png" alt=""/></i>
+              <b>我的订单</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-04.png" alt=""/></i>
+              <b>团队订单</b>
+            </router-link>
+          </span>
+        </div>
+        <div class="linebtn">
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-05.png" alt=""/></i>
+              <b>我的团队</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-06.png" alt=""/></i>
+              <b>我要推荐</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-07.png" alt=""/></i>
+              <b>我的消息</b>
+            </router-link>
+          </span>
+          <span class="btnblock">
+            <router-link to="/login">
+              <i><img src="../assets/icon-08.png" alt=""/></i>
+              <b>地址管理</b>
+            </router-link>
+          </span>
+        </div>
+    </div>
+
+    <div class="advbox">
+      <router-link to="/login">
+        <img src="../assets/go.gif" alt="" />
+      </router-link>
+    </div>
+
   </div>
 </template>
 
@@ -74,9 +136,8 @@
     position:relative;
     background:#f2f2f2;
     height:100vh;
-   /* background:url('../assets/my.jpg') no-repeat;*/
+    /*background:url('../assets/my.png') no-repeat;*/ /*测试用*/
     background-size:100%;
-   /* padding-top:60px;*/ /*测试用*/
   }
 
   .mytop{
@@ -210,21 +271,28 @@
     align-items: stretch;
     justify-content: space-around;
     box-sizing:border-box;
-    padding:20px;
+    padding:8px;
     .block{
       display:flex;
       flex-direction: column;
       align-items: stretch;
       justify-content: space-around;
       position:relative;
+      width:100%;
+      height:100%;
+      padding:10px;
 
+     a{
+       padding:10px;
+       font-size:12px;
+     }
      a:hover{
        background:#eee;
      }
 
       &:after{
           position:absolute;
-          right:-22px;
+          right:-2px;
           content:'';
           width:1px;
           height:100px;
@@ -243,7 +311,7 @@
         width:100%;
         display:block;
         color:d9160b;
-        font-size:20px;
+        font-size:14px;
         font-style:normal;
       }
       span{
@@ -251,8 +319,73 @@
         color:#d9160b;
         border-radius:50px;
         padding:1px 15px;
-        margin-top:20px;
+        margin-top:10px;
+        font-size:10px;
         display:inline-block;
+      }
+    }
+  }
+
+  .btnlistbox{
+    position:absolute;
+    top:270px;
+    width:96%;
+    margin-left:2%;
+    background:#fff;
+    border-radius:5px;
+    padding:10px;
+    box-sizing:border-box;
+    .linebtn{
+      width:100%;
+      margin-bottom:8px;
+      dispaly:flex;
+      flex-direction: column;
+      align-items: stretch;
+      justify-content: space-around;
+      float:left;
+      .btnblock{
+        width:25%;
+        float:left;
+        a{
+        display:block;
+          &:hover{
+            background:#eee;
+           }
+          i{
+            width:100%;
+            text-align:center;
+            display:inline-block;
+            img{
+              width:24px;
+              height:24px;
+              margin:12px auto;
+              display:inline-block;
+            }
+          }
+          b{
+            width:100%;
+            display:inline-block;
+            font-size:12px;
+            line-height:10px;
+            color:#666;
+          }
+        }
+      }
+    }
+  }
+
+
+  .advbox{
+    position:absolute;
+    top:436px;
+    width:96%;
+    margin-left:2%;
+    margin-top:20px;
+    background:#fff;
+    border-radius:5px;
+    a{
+      img{
+        width:100%;
       }
     }
   }

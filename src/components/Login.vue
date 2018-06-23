@@ -29,7 +29,7 @@
   </div>
 
   <div class="btnbox">
-   <span class="left"><router-link to="/register">账号密码登录</router-link></span>
+   <span class="left"><router-link to="/">账号密码登录</router-link></span>
   </div>
 
 
