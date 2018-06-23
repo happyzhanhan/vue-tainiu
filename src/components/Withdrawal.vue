@@ -70,7 +70,7 @@
 <style lang="scss" scoped>
 .withdrawal{
  background:#f2f2f2;
-
+ font-size:12px;
  height:94vh;
 }
 
@@ -88,7 +88,7 @@ padding-top:10px;
  padding:0 20px;
  background:#fff;
  border-bottom:1px solid #f2f2f2;
- line-height:34px;
+ line-height:40px;
 
  em{
   font-style:normal;
@@ -137,7 +137,7 @@ padding-top:10px;
     background:#f99c97;
     color:#fff;
     border:none;
-    font-size:16px;
+    font-size:14px;
     line-height:40px;
     outline:none;
    &.success{

@@ -21,7 +21,7 @@
       </div>
       <div class="twopart">
         <div class="left">
-          <b>待提现利润：</b>
+          <b>待提现利润：￥</b>
           <big>0.00</big>
         </div>
         <div class="right">
@@ -196,6 +196,7 @@
           text-align:left;
           font-size:18px;
           margin-top:6px;
+          font-weight:600;
         }
         p{
           float:left;
@@ -242,6 +243,7 @@
         b{font-size:12px;}
         big{
           font-size:20px;
+          font-weight:600;
         }
       }
       .right{
@@ -253,6 +255,7 @@
             font-size:12px;
             border-radius:50px;
             padding:3px 20px;
+            font-weight:600;
           }
         }
       }
@@ -313,6 +316,8 @@
         color:d9160b;
         font-size:14px;
         font-style:normal;
+        font-weight:600;
+        margin-top:3px;
       }
       span{
         border:1px solid #d9160b;
@@ -321,6 +326,7 @@
         padding:1px 15px;
         margin-top:10px;
         font-size:10px;
+        line-height:14px;
         display:inline-block;
       }
     }
