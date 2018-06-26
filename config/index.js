@@ -10,7 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/index': {
+        target: 'http://tainiu.yagou.com:8089/',
+        changeOrigin: true,
+        pathRewrite: {
+          // /v2将代表target/v2
+          '^/index': '/index'
+        }
+      }
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

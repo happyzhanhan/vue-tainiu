@@ -23,7 +23,7 @@ button,input[type="button"],input[type='submit']{cursor:pointer;}
 a{color:#222;text-decoration: none;cursor:pointer;}
 a:hover{color:#ec584e;}
 a:focus,button:focus,input:focus {outline: 0}
-b,em,strong{font-weight:normal;}
+b,em,strong{font-weight:normal;font-style:normal;}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -40,5 +40,99 @@ a{
 }
 button,input{
   outline:none;
+}
+
+.tips{
+  color:#cd2f23;
+  line-height:30px;
+  text-align:left;
+  width:100%;
+  margin:0 auto;
+  box-sizing:border-box;
+  padding:0 20px;
+}
+.btnbox{
+  box-sizing:border-box;
+  padding:0 20px;
+
+    button{
+      width:100%;
+      border-radius:50px;
+      background:#f99c97;
+      color:#fff;
+      border:none;
+      font-size:14px;
+      line-height:40px;
+      outline:none;
+    &.success{
+       background: -webkit-gradient(linear, left top, left bottom, from(#f82116), to(#c91002));
+       background: -moz-linear-gradient(top,  #f82116,  #c91002);
+       filter:  progid:DXImageTransform.Microsoft.gradient(startColorstr='#f82116', endColorstr='#c91002');
+       background:#ea1c10;
+
+     }
+    }
+}
+
+.lineboxtext{
+  background:#fff;
+  display:flex;
+  flex-direction: row ;
+  align-items: center;
+  justify-content: space-between;
+  line-height:40px;
+  padding:0 20px;
+  box-sizing:border-box;
+  border-bottom:2px solid #fafafa;
+}
+
+.location{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing:border-box;
+  padding:10px;
+  border-bottom:1px solid #f4f4f4;
+  color:#676767;
+
+span{
+  text-align:left;
+  font-size:14px;
+p{
+b{
+  text-align:left;
+}
+em{
+  float:right;
+  font-style:normal;
+}
+}
+
+&:nth-child(1){
+   width:15%;
+   text-align:center;
+i{
+  font-size:20px;
+  text-align:center;
+}
+}
+&:nth-child(2){
+   width:85%;
+   float:left;
+   text-align:left;
+ }
+}
+}
+
+  .mt-30{
+    margin-top:30px;
+  }
+
+
+.black{
+  width:200px!important;
+  min-width:200px!important;
+  top:500px!important;
 }
 </style>
