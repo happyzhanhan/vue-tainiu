@@ -21,7 +21,7 @@
   props: {
     headname: {
       type: String,
-      default: '名称'
+      default: '名称头部'
     },
     headstyle:{
       type: String,
@@ -33,7 +33,7 @@
 
 <style lang="scss" scoped>
  .headtop{
-     position:absolute;
+     position:fixed;
      top:0;
      left:0;
      z-index:99;
