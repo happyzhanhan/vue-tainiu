@@ -10,12 +10,11 @@
 
  <div class="paidian">
   <div class="fixed">
-   <p class="tips">*您有新的派单，请尽快发货哦！~</p>
    <div class="tabnav">
     <ul>
      <li class="hover">全部订单</li>
-     <li>待发货</li>
-     <li>已发货</li>
+     <li>待付款</li>
+     <li>待收货</li>
     </ul>
    </div>
   </div>
@@ -27,7 +26,7 @@
       <p>下单时间：2018-06-16 05:22:55</p>
      </span>
      <span>
-      <b>待发货</b>
+      <b>待付款</b>
      </span>
     </div>
    <div class="product">
@@ -39,19 +38,19 @@
    </div>
    <div class="location">
     <span>
-     <i class="el-icon-location-outline"></i>
+     <i class="el-icon-sold-out"></i>
     </span>
     <span>
-     <p><b>收货人：柯基</b><em>15088700456</em></p>
-     <p>收货地址：浙江省杭州市江干区下沙13号大街53号</p>
+     <p>发货快递：韵达</p>
+     <p>发货单号：YD123465465</p>
     </span>
    </div>
    <div class="moneyall">
     共50件商品，收货款金额￥ <big>450.0</big>
    </div>
    <div class="btnline">
-    <button class="red" @click="tosendproduct">立即发货</button>
-    <button @click="tosendnone">发不了货</button>
+    <button class="red" @click="tosendproduct">立即付款</button>
+    <button @click="tosendnone">取消订单</button>
    </div>
   </div>
  </div>
@@ -73,15 +72,6 @@
      <p><b>规格：250ml×24瓶</b><em>×50</em></p>
     </span>
   </div>
-  <div class="location">
-    <span>
-     <i class="el-icon-location-outline"></i>
-    </span>
-    <span>
-     <p><b>收货人：柯基</b><em>15088700456</em></p>
-     <p>收货地址：浙江省杭州市江干区下沙13号大街53号</p>
-    </span>
-  </div>
   <div class="moneyall">
    共50件商品，收货款金额￥ <big>450.0</big>
   </div>
@@ -100,11 +90,11 @@
 <script>
  import tnhead from '@/components/Head.vue';
 export default{
- name:'Send',
+  name:'Order',
  components:{tnhead},
  data(){
   return{
-   headname:'派单',
+   headname:'订单',
    headstyle:'whitetop',
   }
  },
@@ -135,6 +125,7 @@ export default{
 }*/
  .paidian{
  width:100%;
+ margin-top:3px;
   .tabnav{
   wiidth:100%;
    ul{

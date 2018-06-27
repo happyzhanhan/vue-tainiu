@@ -7,14 +7,15 @@
               <span>
                 <img src="../assets/tx.png" alt=""/>
               </span>
+
               <span class="roler">
-                区域代理
+                {{person['rolername']}}
               </span>
         </div>
         <div class="rightbox">
-          <h3>我的昵称</h3>
+          <h3>{{person['username']}} </h3>
           <p>
-            <b>推荐ID:925</b>
+            <b>推荐ID:{{uid}}</b>
             <button><i><img src="../assets/icon-link.png" alt=""></i> <b>复制推广链接</b></button>
           </p>
         </div>
@@ -41,7 +42,7 @@
         </router-link>
       </div>
       <div class="block">
-        <router-link to="/login">
+        <router-link to="/reserve">
           <p>个人订货</p>
           <em>10</em>
           <span>订货</span>
@@ -65,13 +66,13 @@
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/send">
               <i><img src="../assets/icon-02.png" alt=""/></i>
               <b>我的派单</b>
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/order">
               <i><img src="../assets/icon-03.png" alt=""/></i>
               <b>我的订单</b>
             </router-link>
@@ -85,7 +86,7 @@
         </div>
         <div class="linebtn">
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/myteam">
               <i><img src="../assets/icon-05.png" alt=""/></i>
               <b>我的团队</b>
             </router-link>
@@ -103,7 +104,7 @@
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/adresslist">
               <i><img src="../assets/icon-08.png" alt=""/></i>
               <b>地址管理</b>
             </router-link>
@@ -112,7 +113,7 @@
     </div>
 
     <div class="advbox">
-      <router-link to="/login">
+      <router-link to="/reserve">
         <img src="../assets/go.gif" alt="" />
       </router-link>
     </div>
@@ -124,10 +125,46 @@
   export default {
     name: 'My',
     data () {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    }
-  }
+      return {
+        uid: '0',
+        person:{
+          username:'木有用户名',
+          rolerid:1,
+          rolername:'区域代理'
+        }
+      }
+    },
+    methods:{
+       getuid(){
+        let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+        console.log(persondata);
+        if(persondata){
+          this.person.rolerid = persondata.rule_id;
+          this.person.username=persondata['username'];
+          switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+            case 1:this.person.rolername = '区域代理';
+              break;
+            case 2:this.person.rolername = '一级代理';
+              break;
+            case 3:this.person.rolername = '二级代理';
+              break;
+            case 4:this.person.rolername = '门    店';
+              break;
+            default:this.person.rolername = '新用户';
+              break;
+          }
+          this.uid=localStorage.getItem("TAINIUUID");
+        }else{
+          this.$router.push({path:'/login'})
+        }
+
+
+       }
+    },
+    created:function(){
+      this.getuid();
+    },
+
   }
 </script>
 
@@ -143,7 +180,7 @@
   .mytop{
     position:relative;
     width:100%;
-    background:url('../assets/mybg.jpg') no-repeat; /*测试用*/
+    background:url('../assets/mybg.jpg') #ff5134 no-repeat; /*测试用*/
     background-size:100%;
     display: flex;
     flex-direction: column;

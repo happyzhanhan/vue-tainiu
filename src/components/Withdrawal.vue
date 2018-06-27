@@ -54,7 +54,7 @@
 </template>
 
 <script>
- import tnhead from '@/components/head.vue';
+ import tnhead from '@/components/Head.vue';
  export default {
   name: 'Withdrawal',
   components: {tnhead},
@@ -88,13 +88,13 @@ padding-top:10px;
  padding:0 20px;
  background:#fff;
  border-bottom:1px solid #f2f2f2;
- line-height:40px;
+ line-height:50px;
 
  em{
   font-style:normal;
   color:#a4a4a4;
  }
- label{width:20%; text-align:left;}
+ label{width:20%; text-align:left; font-size:14px;}
  input{width:50%;}
  span{
    width:30%;
@@ -128,21 +128,4 @@ padding-top:10px;
  padding:0 20px;
 }
 
- .btnbox{
-   box-sizing:border-box;
-   padding:0 20px;
-   button{
-    width:100%;
-    border-radius:50px;
-    background:#f99c97;
-    color:#fff;
-    border:none;
-    font-size:14px;
-    line-height:40px;
-    outline:none;
-   &.success{
-     background:#ea1c10;
-    }
-   }
- }
 </style>

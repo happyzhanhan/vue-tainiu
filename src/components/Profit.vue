@@ -107,7 +107,7 @@
 </template>
 
 <script>
- import tnhead from '@/components/head.vue';
+ import tnhead from '@/components/Head.vue';
  export default {
   name: 'Profit',
   components:{tnhead},

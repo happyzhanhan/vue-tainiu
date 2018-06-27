@@ -17,128 +17,78 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入用户名" v-model="username" />
+    <input type="text"  autofocus placeholder="请输入手机号码"  @change="changeCss"/>
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
-    <input type="password" placeholder="请输入密码" v-model="password" />
+    <input type="text" placeholder="请输入验证码"   @change="changeCss2"/>
+    <button :class="{'success':isSuccess}">获取验证码</button>
    </div>
    <div class="linebox noborder">
     <p>您的订货推荐人ID已绑定：<b>925</b></p>
    </div>
   </div>
 
-  <!--<div class="btnbox">
+  <div class="btnbox">
    <span class="left"><router-link to="/">账号密码登录</router-link></span>
-  </div>-->
+  </div>
 
 
   <div class="bigbtn">
-   <button :class="{'success':isChecked}" @click="getAjax">登  录</button>
+   <button :class="{'success':isChecked}">登  录</button>
   </div>
 
  </div>
 </template>
 
 <script>
- const api = 'http://tainiu.yagou.com:8089';
  export default {
   name: 'Login',
   data () {
   return {
    isSuccess:false,
    isSuccess2:false,
+   isSuccess3:false,
+   isSuccess4:false,
    isChecked:false,
    show: true,
-   username:'',
-   password:'',
   }
  },
- watch:{
-  password:{
-   handler:function(val,oldval){
-      if(val){
-       this.isSuccess2=true
-        this.isChecked=true
-      }else{
-       this.isSuccess2=false
-       this.isChecked=false
-      }
-   },
-   deep:true
-  },
-  username:{
-   handler:function(val,oldval){
-    if(val){
-     this.isSuccess=true
-    }else{
-     this.isSuccess=false
-    }
-   },
-   deep:true
-  }
- },
-
  methods:{
-  getAjax:function () {
-   let data = {username:this.username,password:this.password}   //{username:'Who123',password:'3891265'}
-   this.$http.post(api+'/index/user/LoginService.html',data).then((res)=>{
+  changeCss(val) {
+   if (val.target.value == "") {
+    this.isSuccess = false;
+   } else {
+    this.isSuccess = true;
+   }
 
-        if(res.body.code=='SUCCESS'){
-        localStorage.setItem("TAINIUUID",res.body.data.id);
-        localStorage.setItem("TAINIUROLER",res.body.data.rule_id);
-        localStorage.setItem("TAINIUPERSON",JSON.stringify(res.body.data));
-        this.$message({
-           message: '恭喜你，登录成功！',
-           type: 'success',
-           customClass:'black'
-          });
-          this.$router.push({path:'/'})
-        }else if(res.body.code=='LOGIN_TAINIU_PASSWORD'){
-          this.$message({
-           message: '密码错误！',
-           type: 'error',
-           customClass:'black'
-          });
-        }else if(res.body.code=='PARAM_ERROR'){
-           this.$message({
-            message: '参数错误！',
-            type: 'error',
-            customClass:'black'
-           });
-        }else if(res.body.code=='USERNAME_NOT_EXIST'){
-           this.$message({
-            message: '用户名不存在！',
-            type: 'error',
-            customClass:'black'
-           });
-        }else{
-           this.$message({
-            message: '请求错误！',
-            type: 'error',
-            customClass:'black'
-           });
-        }
-   },(res)=>{
-      this.$message({
-       message: '系统错误！',
-       type: 'error',
-       customClass:'black'
-      });
-       console.log(res);
-    })
+  },
+  changeCss2(val) {
+   if (val.target.value == "") {
+    this.isSuccess2 = false;
+   } else {
+    this.isSuccess2 = true;
+   }
+  },
+  changeCss3(val) {
+   if (val.target.value == "") {
+    this.isSuccess3 = false;
+   } else {
+    this.isSuccess3 = true;
+   }
+  },
+  changeCss4(val) {
+   if (this.isChecked == false) {
+    this.isSuccess4 = false;
+   } else {
+    this.isSuccess4 = true;
+   }
+
   }
-
-
  }
  }
 </script>
 
 <style lang="scss" scoped>
- .black{
-  width:200px!important;
-  min-width:200px!important;
-  top:500px!important;
- }
  .headtop{
   width:100%;
   height:200px;
