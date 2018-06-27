@@ -13,6 +13,7 @@ import Reserve from '@/components/Reserve'
 import Pay from '@/components/Pay'
 import Adresslist from '@/components/Adresslist'
 import Addadress from '@/components/Addadress'
+import Myteam from '@/components/Myteam'
 
 Vue.use(Router)
 
@@ -78,6 +79,10 @@ export default new Router({
       path:'/addadress',
       name:'Addadress',
       component:Addadress
+    },{
+      path:'/myteam',
+      name:'Myteam',
+      component:Myteam
     }
   ],
   scrollBehavior (to, from, savedPosition) {
