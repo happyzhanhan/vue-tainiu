@@ -17,79 +17,217 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入手机号码"  @change="changeCss"/>
+    <input type="text"  autofocus placeholder="请输入手机号码" v-model="username" />
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
-    <input type="text" placeholder="请输入验证码"   @change="changeCss2"/>
-    <button :class="{'success':isSuccess}">获取验证码</button>
+    <input type="text" placeholder="请输入验证码" v-model="verification" />
+     <button v-show="show" :class="{'success':isSuccess1}" @click="getCode">获取验证码</button>
+     <button v-show="!show">{{count}}秒后重发</button>
    </div>
    <div class="linebox" :class="{'success':isSuccess3}">
-    <input type="text" placeholder="请输入订货推荐人ID，没有则默认为0" @change="changeCss3"/>
+    <input type="password" autocomplete="new-password" placeholder="请输入密码" v-model="password" />
+   </div>
+   <div class="linebox "  :class="{'success':isSuccess4}">
+    <input type="text" placeholder="请输入订货推荐人ID，没有则默认为0" v-model="commendid"/>
    </div>
   </div>
 
-  <div class="btnbox">
+  <!--<div class="btnbox">
    <span class="left"><router-link to="/register">账号密码注册</router-link></span>
-  </div>
+  </div>-->
 
 
   <div class="bigbtn">
    <p class="note">
     <label for="input">
-     <input id="input" type="checkbox" v-model="isChecked" @change="changeCss4"/>我已阅读《泰牛订货协议》
+     <el-checkbox v-model="Checked" >我已阅读《泰牛订货协议》</el-checkbox>
     </label>
    </p>
-   <button :class="{'success':isChecked}">注  册</button>
+   <button :class="{'success':isChecked}" @click="postregister">注  册</button>
   </div>
 
  </div>
 </template>
 
 <script>
+ const api = 'http://tainiu.yagou.com:8089';
+
  export default {
   name: 'Register',
   data () {
-  return {
-   isSuccess:false,
-   isSuccess2:false,
-   isSuccess3:false,
-   isSuccess4:false,
-   isChecked:false,
-   show: true,
-  }
+    return {
+     isSuccess:false,
+     isSuccess1:false,
+     isSuccess2:false,
+     isSuccess3:false,
+     isSuccess4:false,
+     isChecked:false,
+     username:'',
+     verification:'',
+     password:'',
+     commendid:0,
+     Checked:false,
+     timer:null,
+     count:0,
+     show:true,
+    }
+  },
+
+  watch:{
+   username:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess=true;
+      this.isSuccess1=true;
+     }else{
+      this.isSuccess=false;
+      this.isSuccess1=false;
+     }
+    },
+    deep:true
+   },
+   verification:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess2=true
+     }else{
+      this.isSuccess2=false
+     }
+    },
+    deep:true
+   },
+   password:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess3=true;
+     }else{
+      this.isSuccess3=false;
+     }
+    },
+    deep:true
+   },
+   commendid:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess4=true;
+     }else{
+      this.isSuccess4=false;
+     }
+    },
+    deep:true
+   },
+   Checked:{
+    handler:function(val,oldval){
+     if(val){
+      this.isChecked=true;
+     }else{
+      this.isChecked=false;
+     }
+    },
+    deep:true
+   },
+
+  },
+ computed:{
+
  },
- methods:{
-  changeCss(val) {
-   if (val.target.value == "") {
-    this.isSuccess = false;
-   } else {
-    this.isSuccess = true;
-   }
+ created:function(){
+    this.gettid();
+ },
+  methods:{
+   getCode:function(){
+       const TIME_COUNT = 60;
+       let _this = this;
+       if (!this.timer) {
+          this.count = TIME_COUNT;
+          this.show = false;
+          this.timer = setInterval(() => {
+               if (_this.count > 0 && _this.count <= TIME_COUNT) {
+                  _this.count--;
+                } else {
+                 _this.show = true;
+                 clearInterval(_this.timer);
+                 _this.timer = null;
+                }
+         }, 1000)
+      }
+      this.getverify();
+   },
+   gettid:function(){
+    if(this.$route.query.tid){
+     this.commendid = this.$route.query.tid;
+    }else{
+     this.commendid = '';
+    }
+   },
+   getverify:function(){
+      let data = {username:this.username};
+      let _this = this;
+      this.$http.post(api+'/index/User/RegisterPhoneService.html',data).then((res)=>{
+       console.log('请求了一次');
+        if(res.body.code=='SUCCESS'){
+          this.$message({
+           message: '请求成功！',
+           type: 'success',
+           customClass:'black'
+          });
+        }else{
+          this.$message({
+           message: '请求错误！',
+           type: 'error',
+           customClass:'black'
+          });
+        }
+      },(res)=>{
+        this.$message({
+         message: '系统错误！',
+         type: 'error',
+         customClass:'black'
+        });
+        console.log(res);
+      })
+     },
 
-  },
-  changeCss2(val) {
-   if (val.target.value == "") {
-    this.isSuccess2 = false;
-   } else {
-    this.isSuccess2 = true;
-   }
-  },
-  changeCss3(val) {
-   if (val.target.value == "") {
-    this.isSuccess3 = false;
-   } else {
-    this.isSuccess3 = true;
-   }
-  },
-  changeCss4(val) {
-   if (this.isChecked == false) {
-    this.isSuccess4 = false;
-   } else {
-    this.isSuccess4 = true;
-   }
+     postregister:function(){
+        let data = {username:this.username,password:this.password,verification:this.verification,commend_id:this.commendid}
+        this.$http.post(api+'/index/User/RegisterService.html',data).then((res)=>{
+         console.log('请求了2次');
 
+            if(res.body.code=='SUCCESS'){
+                 this.$message({
+                  message: '请求成功！',
+                  type: 'success',
+                  customClass:'black'
+                 });
+            }else if(res.body.code=='USERNAME_EXISTENCE'){
+                 this.$message({
+                  message: '号码已被注册！',
+                  type: 'error',
+                  customClass:'black'
+                 });
+            }else if(res.body.code=='VERIFICATION_CODE_OVERDUE'){
+                 this.$message({
+                  message: '验证码已过期！',
+                  type: 'error',
+                  customClass:'black'
+                 });
+            }else{
+                  this.$message({
+                   message: '请求错误！',
+                   type: 'error',
+                   customClass:'black'
+                  });
+            }
+         },(res)=>{
+           this.$message({
+            message: '系统错误！',
+            type: 'error',
+            customClass:'black'
+           });
+           console.log(res);
+       })
+     }
   }
- }
  }
 </script>
 
@@ -123,7 +261,7 @@
   height:100px;
  }
  h3{
-  margin-top:140px;
+  margin-top:160px;
   text-align:center;
   font-size:14px;
  }

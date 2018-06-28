@@ -17,19 +17,17 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入用户名" v-model="username" />
+    <input type="text"  autofocus placeholder="请输入用户名/手机号" v-model="username" />
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
     <input type="password" placeholder="请输入密码" v-model="password" />
    </div>
-   <div class="linebox noborder">
-    <p>您的订货推荐人ID已绑定：<b>925</b></p>
-   </div>
+
   </div>
 
-  <!--<div class="btnbox">
-   <span class="left"><router-link to="/">账号密码登录</router-link></span>
-  </div>-->
+  <div class="btnbox">
+   <span class="left"><router-link to="/forgetpassword">忘记密码？</router-link></span>
+  </div>
 
 
   <div class="bigbtn">
@@ -82,7 +80,6 @@
   getAjax:function () {
    let data = {username:this.username,password:this.password}   //{username:'Who123',password:'3891265'}
    this.$http.post(api+'/index/user/LoginService.html',data).then((res)=>{
-
         if(res.body.code=='SUCCESS'){
         localStorage.setItem("TAINIUUID",res.body.data.id);
         localStorage.setItem("TAINIUROLER",res.body.data.rule_id);
@@ -108,6 +105,12 @@
         }else if(res.body.code=='USERNAME_NOT_EXIST'){
            this.$message({
             message: '用户名不存在！',
+            type: 'error',
+            customClass:'black'
+           });
+        }else if('PHONE_CODE_INEXISTENCE'){
+           this.$message({
+            message: '该账号未注册！',
             type: 'error',
             customClass:'black'
            });
@@ -168,7 +171,7 @@
   height:100px;
  }
  h3{
-  margin-top:140px;
+  margin-top:160px;
   text-align:center;
   font-size:14px;
  }

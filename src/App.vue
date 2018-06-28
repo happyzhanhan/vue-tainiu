@@ -5,8 +5,10 @@
 </template>
 
 <script>
+
 export default {
   name: 'App',
+
 }
 </script>
 
@@ -127,6 +129,9 @@ i{
 
   .mt-30{
     margin-top:30px;
+  }
+  .mt-80{
+    margin-top:80px;
   }
 
 

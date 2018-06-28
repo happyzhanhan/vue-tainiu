@@ -252,7 +252,7 @@
 .profithead{
  position:relative;
  width:100%;
- background:url('../assets/profitbg.png') no-repeat;
+ background:url('../assets/profitbg.png') #ff5134 no-repeat;
  background-size:100%;
  color:#fff;
  padding-top:6vh;
@@ -274,7 +274,7 @@
  }
  h5{
   margin-top:20px;
-  padding-bottom:30px;
+  padding-bottom:26px;
  }
 }
 

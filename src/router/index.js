@@ -14,6 +14,11 @@ import Pay from '@/components/Pay'
 import Adresslist from '@/components/Adresslist'
 import Addadress from '@/components/Addadress'
 import Myteam from '@/components/Myteam'
+import Myteamorder from '@/components/Myteamorder'
+import Set from '@/components/Set'
+import Recommend from '@/components/Recommend'
+import Message from '@/components/Message'
+import Forgetpassword from '@/components/Forgetpassword'
 
 Vue.use(Router)
 
@@ -33,6 +38,11 @@ export default new Router({
       path: '/register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/forgetpassword',
+      name: 'Forgetpassword',
+      component: Forgetpassword
     },
     {
       path: '/profit',
@@ -83,6 +93,22 @@ export default new Router({
       path:'/myteam',
       name:'Myteam',
       component:Myteam
+    },{
+      path:'/myteamorder',
+      name:'Myteamorder',
+      component:Myteamorder
+    },{
+      path:'/set',
+      name:'Set',
+      component:Set
+    },{
+      path:'/recommend',
+      name:'Recommend',
+      component:Recommend,
+    },{
+      path:'/message',
+      name:'Message',
+      component:Message,
     }
   ],
   scrollBehavior (to, from, savedPosition) {

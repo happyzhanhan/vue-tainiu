@@ -3,14 +3,14 @@
  -->
 
 <template>
- <div class="tainiubox">
+ <div class="tainiubox" :class="showno ? 'whitebg':''">
     <tnhead :headname="headname"  :headstyle="headstyle"></tnhead>
     <div class="adresslistbox">
-        <!--<div class="shownone">
+        <div class="shownone" v-show="showno">
             <img src="../assets/noaddress.jpg" alt=""/>
             <p>您未添加地址！</p>
-        </div>-->
-        <div class="adresslist">
+        </div>
+        <div class="adresslist" v-show="!showno">
             <div class="fixed">
                 <div class="tabnav">
                     <ul>
@@ -71,21 +71,52 @@
 </template>
 
 <script>
- import tnhead from '@/components/Head.vue';
-
+import tnhead from '@/components/Head.vue';
+const api = 'http://tainiu.yagou.com:8089';
 export default{
  name:'Adresslist',
  components:{tnhead},
  data(){
   return{
     headname:'地址管理',
-    headstyle:'whitetop'
+    headstyle:'whitetop',
+    uid:0,
+    showno:true,
   }
+ },
+ created:function(){
+     this.getuid();
+     this.getAjax();
  },
  methods:{
      Toadd(){
          this.$router.push({path:'/addadress'})
-     }
+     },
+     getuid:function(){
+         if(localStorage.getItem("TAINIUUID")=='null'|| typeof localStorage.getItem("TAINIUUID") == "undefined" || localStorage.getItem("TAINIUUID") == null || localStorage.getItem("TAINIUROLER") == ""){
+             this.$router.push({path:'/login'})
+         }else{
+             this.uid = localStorage.getItem("TAINIUUID");
+         }
+     },
+     getAjax:function () {
+         let data = {uid:this.uid}
+         this.$http.post(api+'/index/Address/AddressSelectService.html',data).then((res)=>{
+
+             if(res.body.code=='SUCCESS'){
+                if(res.body.arr_length==0){
+                    this.showno=true;
+                }
+             }
+         },(res)=>{
+             this.$message({
+                 message: '系统错误！',
+                 type: 'error',
+                 customClass:'black'
+             });
+             console.log(res);
+         })
+    }
  }
 }
 </script>
@@ -95,6 +126,9 @@ export default{
   padding-top:6vh;
   height:94vh;
   background:#f5f5f5;
+  &.whitebg{
+     background:#fff;
+   }
  }
 
  .shownone{

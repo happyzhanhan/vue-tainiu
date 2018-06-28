@@ -226,6 +226,8 @@ background:#fff;
       height:40px;
      }
      p{
+     width:100%;
+     display:inline-block;
      &:nth-child(1){
       color:#000;
       font-weight:600;

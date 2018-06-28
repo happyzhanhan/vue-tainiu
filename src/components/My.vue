@@ -1,7 +1,7 @@
 <template>
   <div class="My">
     <div class="mytop" >
-      <span class="pright" ><router-link to="/login" ><img src="../assets/icon-set.png" alt=""> </router-link></span>
+      <span class="pright" ><router-link to="/set" ><img src="../assets/icon-set.png" alt=""> </router-link></span>
       <div class="onepart">
         <div class="leftbox">
               <span>
@@ -35,23 +35,23 @@
 
     <div class="listbox">
       <div class="block">
-        <router-link to="/login">
+        <router-link to="/send">
           <p>待发订单</p>
-          <em>10</em>
+          <em>0</em>
           <span>发货</span>
         </router-link>
       </div>
       <div class="block">
         <router-link to="/reserve">
           <p>个人订货</p>
-          <em>10</em>
+          <em>0</em>
           <span>订货</span>
         </router-link>
       </div>
       <div class="block">
-        <router-link to="/login">
+        <router-link to="/myteamorder">
           <p>团队订单</p>
-          <em>10</em>
+          <em>0</em>
           <span>查看</span>
         </router-link>
       </div>
@@ -78,7 +78,7 @@
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/myteamorder">
               <i><img src="../assets/icon-04.png" alt=""/></i>
               <b>团队订单</b>
             </router-link>
@@ -92,13 +92,13 @@
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/recommend">
               <i><img src="../assets/icon-06.png" alt=""/></i>
               <b>我要推荐</b>
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/login">
+            <router-link to="/message">
               <i><img src="../assets/icon-07.png" alt=""/></i>
               <b>我的消息</b>
             </router-link>

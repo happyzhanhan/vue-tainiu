@@ -6,7 +6,7 @@
  <div class="login">
   <div class="headtop">
    <div class="topbox">
-    <span class="left"><router-link to="/login">登录</router-link></span>
+    <span class="left"><router-link to="/login">忘记密码</router-link></span>
 
     <span class="right"><router-link to="/register">注册</router-link></span>
    </div>
@@ -17,14 +17,15 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入手机号码"  @change="changeCss"/>
+    <input type="text"  autofocus placeholder="请输入手机号码" v-model="username"/>
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
-    <input type="text" placeholder="请输入验证码"   @change="changeCss2"/>
-    <button :class="{'success':isSuccess}">获取验证码</button>
+    <input type="text" placeholder="请输入验证码" v-model="verification" />
+    <button v-show="show" :class="{'success':isSuccess1}" @click="getCode">获取验证码</button>
+    <button v-show="!show">{{count}}秒后重发</button>
    </div>
-   <div class="linebox noborder">
-    <p>您的订货推荐人ID已绑定：<b>925</b></p>
+   <div class="linebox" :class="{'success':isSuccess3}">
+    <input type="text" placeholder="请输入新密码"  v-model="password"/>
    </div>
   </div>
 
@@ -34,57 +35,112 @@
 
 
   <div class="bigbtn">
-   <button :class="{'success':isChecked}">登  录</button>
+   <button :class="{'success':isSuccess3}">修 改</button>
   </div>
 
  </div>
 </template>
 
 <script>
+ const api = 'http://tainiu.yagou.com:8089';
  export default {
-  name: 'Login',
+  name: 'Forgetpassword',
   data () {
   return {
    isSuccess:false,
+   isSuccess1:false,
    isSuccess2:false,
    isSuccess3:false,
-   isSuccess4:false,
-   isChecked:false,
-   show: true,
+   timer:null,
+   count:0,
+   show:true,
+   username:'',
+   password:'',
+   verification:'',
   }
  },
+ watch:{
+   username:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess=true;
+      this.isSuccess1=true;
+     }else{
+      this.isSuccess=false;
+      this.isSuccess1=false;
+     }
+    },
+    deep:true
+   },
+   verification:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess2=true
+     }else{
+      this.isSuccess2=false
+     }
+    },
+    deep:true
+   },
+   password:{
+    handler:function(val,oldval){
+     if(val){
+      this.isSuccess3=true;
+     }else{
+      this.isSuccess3=false;
+     }
+    },
+    deep:true
+   },
+ },
  methods:{
-  changeCss(val) {
-   if (val.target.value == "") {
-    this.isSuccess = false;
-   } else {
-    this.isSuccess = true;
-   }
+  getCode:function(){
+     const TIME_COUNT = 60;
+     let _this = this;
+     if (!this.timer) {
+      this.count = TIME_COUNT;
+      this.show = false;
+      this.timer = setInterval(() => {
+               if (_this.count > 0 && _this.count <= TIME_COUNT) {
+       _this.count--;
+      } else {
+       _this.show = true;
+       clearInterval(_this.timer);
+       _this.timer = null;
+      }
+     }, 1000)
+    }
+    this.getverify();
+   },
 
-  },
-  changeCss2(val) {
-   if (val.target.value == "") {
-    this.isSuccess2 = false;
-   } else {
-    this.isSuccess2 = true;
-   }
-  },
-  changeCss3(val) {
-   if (val.target.value == "") {
-    this.isSuccess3 = false;
-   } else {
-    this.isSuccess3 = true;
-   }
-  },
-  changeCss4(val) {
-   if (this.isChecked == false) {
-    this.isSuccess4 = false;
-   } else {
-    this.isSuccess4 = true;
-   }
+ getverify:function(){
+    let data = {username:this.username}
+    this.$http.post(api+'/index/User/RegisterPhoneService.html',data).then((res)=>{
+       if(res.body.code=='SUCCESS'){
+        this.$message({
+         message: '请求成功！',
+         type: 'success',
+         customClass:'black'
+        });
+       }else{
+        this.$message({
+         message: '请求错误！',
+         type: 'error',
+         customClass:'black'
+        });
+       }
+    },(res)=>{
+       this.$message({
+        message: '系统错误！',
+        type: 'error',
+        customClass:'black'
+       });
+       console.log(res);
+   })
+ },
 
-  }
- }
+ },
+
  }
 </script>
 
@@ -118,7 +174,7 @@
   height:100px;
  }
  h3{
-  margin-top:140px;
+  margin-top:160px;
   text-align:center;
   font-size:14px;
  }
