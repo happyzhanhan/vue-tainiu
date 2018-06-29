@@ -106,6 +106,8 @@ export default{
              if(res.body.code=='SUCCESS'){
                 if(res.body.arr_length==0){
                     this.showno=true;
+                }else{
+                    this.showno=false;
                 }
              }
          },(res)=>{

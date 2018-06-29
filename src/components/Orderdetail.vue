@@ -1,0 +1,401 @@
+<!--
+ * Created by happy<1659725767@qq.com> on 2018/6/29 9:51.
+ -->
+
+<template>
+    <div class="tainiubox">
+        <tnhead :headname="headname" :headstyle="headstyle"></tnhead>
+        <div class="adresslistbox">
+            <div class="detailbanner">
+                <img src="../assets/orderdetailbanner.jpg" alt=""/>
+            </div>
+            <div class="orderlogisticsdetail hiddenbox">
+                <div class="logisticsbox">
+                    <div class="lefticon">
+                        <img src="../assets/icon-15.png" alt=""/>
+                    </div>
+                    <div class="rightpart">
+                        <div class="onelogistics">
+                          <span>
+                               <i class="arrive"></i>
+                          </span>
+                        <span>
+                            <h5 class="arrive">订单已签收，提货地点【蜂巢快递柜】</h5>
+                            <p>2018-05-16 15:20:25</p>
+                        </span>
+                        </div>
+                        <div class="onelogistics">
+                           <span><i></i></span>
+                        <span>
+                            <h5>商品已到达杭州中转站</h5>
+                            <p>2018-05-16 15:20:25</p>
+                        </span>
+                        </div>
+                        <div class="onelogistics">
+                            <span><i></i></span>
+                        <span>
+                            <h5>商品已到达杭州中转站</h5>
+                            <p>2018-05-16 15:20:25</p>
+                        </span>
+                        </div>
+                        <div class="onelogistics">
+                            <span><i></i></span>
+                        <span>
+                            <h5>商品已到达杭州中转站</h5>
+                            <p>2018-05-16 15:20:25</p>
+                        </span>
+                        </div>
+                        <div class="onelogistics">
+                            <span><i></i></span>
+                        <span>
+                            <h5>商品已到达杭州中转站</h5>
+                            <p>2018-05-16 15:20:25</p>
+                        </span>
+                        </div>
+                    </div>
+                </div>
+               <div class="moredetail">
+                   <p><b>点击查看更多物流详情</b><i><img src="../assets/icon-17.png" alt=""/></i></p>
+               </div>
+            </div>
+
+            <div class="location">
+                <span>
+                 <i class="el-icon-location-outline"></i>
+                </span>
+                <span>
+                 <p><b>收货人：柯基</b><em>15088700456</em></p>
+                 <p>收货地址：浙江省杭州市江干区下沙13号大街53号</p>
+                </span>
+            </div>
+
+            <div class="orderproshow">
+                <p><b>订单编号：TN41346555</b> <button>复制</button></p>
+                <div class="product">
+                    <span><img src="../assets/product-01.jpg" alt=""></span>
+                    <span>
+                     <p><b>产品:泰国红牛（整箱）</b><em>￥90.0</em></p>
+                     <p><b>规格：250ml×24瓶</b><em>×50</em></p>
+                    </span>
+                </div>
+                <p><span><b>共50件商品，付款金额：</b><em>￥450.0</em></span></p>
+            </div>
+
+            <div class="ordernumber">
+                <p>付款编号： FK5646121545645312</p>
+                <p>下单时间： 2018-05-16 16:50:20</p>
+                <p>付款时间： 2018-05-16 16:50:20</p>
+                <p>发货时间： 2018-05-16 16:50:20</p>
+                <p>收货时间： 2018-05-16 16:50:20</p>
+            </div>
+
+            <div class="sendproduct">
+                <h3>发货信息</h3>
+                <div class="onelineaddress">
+                    <h4><b>柯基</b><em>123456789</em></h4>
+                    <p><b>浙江省 杭州市 江干区 白杨街道 13号路22号大街交叉口雅购大楼</b></p>
+                </div>
+                <p>韵达快递：1656323214</p>
+            </div>
+
+            <div class="kongbox"></div>
+
+            <div class="bottombtn">
+                <el-button size="mini" round>操作</el-button>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    import tnhead from '@/components/Head.vue';
+
+    export default{
+        name: 'Orderdetail',
+        components: {tnhead},
+        data()
+    {
+        return {
+            headname: '订单详情',
+            headstyle: 'whitetop'
+        }
+    }
+    }
+</script>
+
+<style lang="scss" scoped>
+    .tainiubox {
+        padding-top: 6vh;
+        height: 94vh;
+        background: #f5f5f5;
+    }
+
+    .orderlogisticsdetail{
+        background:#fff;
+        position:relative;
+        padding-bottom:30px;
+
+        &.hiddenbox{
+             height:90px;
+             overflow:hidden;
+         }
+
+        .moredetail{
+            width:100%;
+            height:30px;
+            display:block;
+            background:#fff;
+            line-height:30px;
+            font-size:8px;
+            color:#9b9b9b;
+            text-align:center;
+            position:absolute;
+            z-index:10;
+            bottom:0px;
+
+            img{
+                width:12px;
+                height:12px;
+                margin-left:3px;
+                display: inline-block;
+                vertical-align: middle;
+            }
+        }
+        .logisticsbox{
+            display:flex;
+            flex-direction:row;
+            .lefticon{
+                width:16%;
+                margin:40px 0;
+                text-align:right;
+                img{
+                    width:25px;
+                    height:20px;
+                }
+            }
+            .rightpart{
+                position:relative;
+                text-align:left;
+                &:before{
+                    content:"";
+                    position:absolute;
+                    top:15px;
+                    left:25px;
+                    width:1px;
+                    height:calc(100% - 30px);
+                    background:#9c9c9c;
+                    display:inline-block;
+                 }
+                .onelogistics{
+                    display:flex;
+                    flex-direction:row;
+                    align-items:center;
+                    margin-top:10px;
+                    span:nth-child(1){
+                        width:50px;
+                        text-align:center;
+                    }
+                    i{
+                        position:relative;
+                        z-index:9;
+                        width:8px;
+                        height:8px;
+                        border-radius:50%;
+                        display:inline-block;
+                        background:#9c9c9c;
+                        &.arrive{
+                            width:18px;
+                            height:18px;
+                            display:inline-block;
+                            background:url('../assets/icon-16.png') no-repeat;
+                            background-size:100%;
+                        }
+                    }
+
+                    h5{
+                        color:#676767;
+                        font-size:10px;
+                        &.arrive{
+                             color:#4c8e37;
+                         }
+                    }
+                    p{
+                        color:#999;
+                        font-size:8px;
+                    }
+                }
+            }
+        }
+    }
+
+    .location{
+        display:flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        box-sizing:border-box;
+        padding:10px;
+        border-bottom:1px solid #f4f4f4;
+        color:#676767;
+        background:#fff;
+        margin-top:6px;
+
+        span{
+            text-align:left;
+            font-size:14px;
+        p{
+        b{
+            text-align:left;
+        }
+        em{
+            float:right;
+            font-style:normal;
+        }
+        }
+
+        &:nth-child(1){
+             width:20%;
+             text-align:center;
+        i{
+            font-size:20px;
+            text-align:center;
+        }
+        }
+        &:nth-child(2){
+             width:80%;
+             float:left;
+             text-align:left;
+         }
+        }
+    }
+
+    .product{
+        margin-top:3px;
+        background:#fafafa;
+        display:flex;
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
+        padding:10px;
+        box-sizing:border-box;
+
+        span{
+            display:block;
+            &:nth-child(1){
+                 width:20%;
+                img{
+                    border:1px solid #e2e2e2;
+                }
+            }
+            &:nth-child(2){
+                 width:80%;
+             }
+            img{
+                width:40px;
+                height:40px;
+            }
+            p{
+                &:nth-child(1){
+                     color:#000;
+                     font-weight:600;
+                     font-size:14px;
+                 }
+                &:nth-child(2){
+                     color:#a1a1a1;
+                     font-size:10px;
+
+                 }
+                b{float:left;}
+                em{
+                    float:right;
+                    text-align:right;
+                    font-style:normal;
+                }
+            }
+        }
+    }
+
+.orderproshow{
+    background:#fff;
+    margin-top:6px;
+    >p{
+        font-size:10px;
+        line-height:30px;
+        display:flex;
+        flex-direction:row;
+        justify-content: space-between;
+        box-sizing:border-box;
+        padding:0 10px;
+        button{
+            border:none;
+            outline:none;
+            font-size:6px;
+            line-height:14px;
+            border:1px solid #ddd;
+            background:#fff;
+            border-radius:3px;
+            padding:0 10px;
+            margin-top:4px;
+        }
+        span{
+            em{
+                color:#f40000;
+            }
+        }
+    }
+}
+
+.ordernumber{
+    background:#fff;
+    margin-top:8px;
+    line-height:16px;
+    font-size:12px;
+    text-align:left;
+    box-sizing:border-box;
+    padding:12px 10px;
+    color:#676767;
+}
+
+.sendproduct{
+    background:#fff;
+    margin-top:8px;
+
+    >h3{text-align:left;font-size:14px;line-height:30px;text-indent:10px; color:#000;}
+     >p{line-height:30px;text-align:left;text-indent:10px; font-size:12px;}
+    .onelineaddress{
+        background:#fafafa;
+        margin:5px 0;
+        box-sizing:border-box;
+        padding:10px;
+        &:hover{
+             background:#eee;
+         }
+        h4{
+            display:flex;
+            flex-direction:row;
+            justify-content:space-between;
+            font-size:14px;
+            line-height:20px;
+            font-weight:700;
+            color:#5d5d5d;
+        }
+        p{  text-align:left;
+            color:#5d5d5d;
+            font-size:12px;
+        }
+    }
+}
+.kongbox{width:100%;height:60px; background:#f5f5f5;}
+.bottombtn{
+    position:fixed;
+    z-index:999;
+    bottom:0;
+    height:50px;
+    width:100%;
+    background:#fff;
+    box-sizing:border-box;
+    padding:0 10px;
+    button{float:right;margin-top:10px;}
+}
+
+</style>

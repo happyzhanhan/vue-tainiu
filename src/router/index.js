@@ -19,12 +19,18 @@ import Set from '@/components/Set'
 import Recommend from '@/components/Recommend'
 import Message from '@/components/Message'
 import Forgetpassword from '@/components/Forgetpassword'
+import Selectaddress from '@/components/Selectaddress'
+import Orderdetail from '@/components/Orderdetail'
 
 Vue.use(Router)
 
 export default new Router({
   mode:'history',
+  base: '/vueweb',
   routes: [
+    { path: '*',
+      component: Home
+    },
     {
       path: '/',
       component: Home
@@ -109,6 +115,14 @@ export default new Router({
       path:'/message',
       name:'Message',
       component:Message,
+    },{
+      path:'/selectaddress',
+      name:'Selectaddress',
+      component:Selectaddress,
+    },{
+      path:'/orderdetail',
+      name:'Orderdetail',
+      component:Orderdetail,
     }
   ],
   scrollBehavior (to, from, savedPosition) {

@@ -140,4 +140,8 @@ i{
   min-width:200px!important;
   top:500px!important;
 }
+
+
+.el-cascader{width:80%!important;border:none;}
+.el-cascader .el-input, .el-cascader .el-input__inner{border:none!important;}
 </style>
