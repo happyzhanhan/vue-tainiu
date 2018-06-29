@@ -118,19 +118,19 @@
        showselect:true,
 
        pickdata:{
-           level1:{
+           area1:{
                code:'0',
                name:'请选择省',
            },
-           level2:{
+           area2:{
                code:'',
                name:'',
            },
-           level3:{
+           area3:{
                code:'',
                name:'',
            },
-           level4:{
+           area4:{
                code:'',
                name:'',
            }
@@ -294,7 +294,19 @@
          console.log(val);
          console.log(e);
 
-
+        if(val.level==1){
+            this.pickdata.area1.name = val.name;
+            this.pickdata.area1.code = val.id;
+        }else if(val.level==2){
+            this.pickdata.area2.name = val.name;
+            this.pickdata.area2.code = val.id;
+        }else if(val.level==3){
+            this.pickdata.area3.name = val.name;
+            this.pickdata.area3.code = val.id;
+        }else if(val.level==4){
+            this.pickdata.area4.name = val.name;
+            this.pickdata.area4.code = val.id;
+        }
 
      },
      test1:function(){
