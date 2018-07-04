@@ -34,15 +34,15 @@
                 </router-link>
             </div>
             <div class="linebox">
-                <router-link to="/profit">
+                <a href="tel:057156581013">
                     <span>
                         <i><img src="../assets/kefu.png" alt=""/></i>
                         <b>联系客服</b>
                     </span>
                     <span>
-                        <i class="el-icon-arrow-right"></i>
+                        <i style="font-size:14px;">05715-6581013</i>
                     </span>
-                </router-link>
+                </a>
             </div>
             <div class="linebox">
                 <router-link to="/profit">

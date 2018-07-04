@@ -108,7 +108,7 @@ mounted:function(){
          }
      },
      getAjax:function () {
-         let data = {uid:this.uid}
+         let data = {}  //uid:this.uid
          this.axios.post('/api/index/Address/AddressSelectService.html',data).then((res)=>{
 
              if(res.data.code=='SUCCESS'){
@@ -129,7 +129,7 @@ mounted:function(){
          })
     },
     getAjaxdelete:function ($id) {
-        let data = {id:$id,uid:parseInt(this.uid)}
+        let data = {id:$id,} //uid:parseInt(this.uid)
         this.axios.post('/api/index/Address/AddressDeleteService.html',data).then((res)=>{
 
             if(res.data.code=='SUCCESS'){

@@ -114,7 +114,7 @@ export default{
   },
   getallorderlist:function(){
         let _this = this;
-        let data = {uid:this.uid,};
+        let data = {}; //uid:this.uid,
         this.axios.post('/api/index/oder/OderListService.html',data).then((res)=>{
          if(res.data.code=='SUCCESS'){
          console.log(res.data);

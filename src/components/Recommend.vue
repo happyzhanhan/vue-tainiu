@@ -7,15 +7,18 @@
         <tnhead :headname="headname" :headstyle="headstyle"></tnhead>
         <div class="adresslistbox">
             <h2>您的专属推荐ID</h2>
-            <h1>966</h1>
+            <h1>{{uid}}</h1>
             <p>推荐用户注册时填写您的专属推荐ID，即可加入您的团队，您将按照规定获得推荐利润。</p>
 
             <div class="moreblock">
                 <h4>复制链接发给好友，注册完成即可加入您的团队</h4>
-                <p><b>http://tainiu.com/register?tid=925</b><el-button size="mini" round>复制</el-button></p>
+                <p><b>{{turl}}</b><el-button type="button"
+                                                           v-clipboard:copy="turl"
+                                                           v-clipboard:success="onCopy"
+                                                           v-clipboard:error="onError" size="mini" round>复制</el-button></p>
                 <div class="line"></div>
                 <span>
-                    <img src="../assets/ewm.jpg" alt=""/>
+                    <img src="../assets/ewm.jpg" alt="" id="imgSrc"/>
                 </span>
                 <h4 class="tcenter">或直接扫一扫注册，加入您的团队▲</h4>
 
@@ -29,24 +32,88 @@
 
 <script>
     import tnhead from '@/components/Head.vue';
+    var QRCode = require('qrcode');
 
     export default{
         name: 'Recommonend',
         components: {tnhead},
         data()
-    {
-        return {
-            headname: '我要推荐',
-            headstyle: 'whitetop'
+        {
+            return {
+                headname: '我要推荐',
+                headstyle: 'whitetop',
+                uid: 0,
+                person:{
+                    username:'木有用户名',
+                    rolerid:1,
+                    rolername:'区域代理'
+                },
+            }
+        },
+        computed:{
+            turl:function(){
+                return 'http://localhost:8089/register?tid='+this.uid;
+            },
+        },
+        created:function(){
+            this.getuid();
+        },
+        mounted: function () {
+            QRCode.toDataURL(this.turl, {errorCorrectionLevel: "H"}, function (err, url) {
+                document.getElementById('imgSrc').src = url;
+            });
+        },
+        methods:{
+            getuid(){
+                let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+                console.log(persondata);
+                if(persondata){
+                    this.person.rolerid = persondata.rule_id;
+                    this.person.username=persondata['username'];
+
+                    switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+                        case 1:this.person.rolername = '区域代理';
+                            break;
+                        case 2:this.person.rolername = '一级代理';
+                            break;
+                        case 3:this.person.rolername = '二级代理';
+                            break;
+                        case 4:this.person.rolername = '门    店';
+                            break;
+                        default:this.person.rolername = '新用户';
+                            this.haspermissions = false;
+                            break;
+                    }
+                    this.uid=localStorage.getItem("TAINIUUID");
+                }else{
+                    this.$router.push({path:'/login'})
+                }
+            },
+            onCopy: function (e) {
+                this.$message({
+                    message: '复制成功！',
+                    type: 'success',
+                    customClass:'black'
+                });
+                console.log('你刚刚复制: ' + e.text)
+            },
+            onError: function (e) {
+                this.$message({
+                    message: '复制失败！',
+                    type: 'error',
+                    customClass:'black'
+                });
+                console.log('无法复制文本！')
+            }
+
         }
-    }
     }
 </script>
 
 <style lang="scss" scoped>
     .tainiubox {
         padding-top: 6vh;
-        height: 94vh;
+        min-height: 94vh;
         background: #f5f5f5;
     }
 
@@ -55,7 +122,7 @@
         background:url('../assets/tuijianbg.jpg') #ff5335 no-repeat;
         background-size:100% 100vh;
         color:#fff;
-    padding:30px 30px;
+    padding:30px 20px;
     box-sizing:border-box;
         h2{
             font-size:18px;
@@ -80,7 +147,7 @@
                 color:#5c1115;
                 line-height:30px;
                 text-align:left;
-                padding:0 30px;
+                padding:0 20px;
                 &.tcenter{
                     text-align:center;
                  }
@@ -93,7 +160,7 @@
                     padding:4px 16px;
                     border-color:#da180c;
                     color:#da180c;
-                    margin-left:30px;
+                    margin-left:10px;
                 }
             }
             .line{
