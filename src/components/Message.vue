@@ -201,4 +201,8 @@
           }
       }
   }
+
+    .tabcontent{
+        background:none;
+    }
 </style>

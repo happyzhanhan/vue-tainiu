@@ -1,63 +1,74 @@
 <template>
-  <div class="My">
-    <div class="mytop" >
-      <span class="pright" ><router-link to="/set" ><img src="../assets/icon-set.png" alt=""> </router-link></span>
-      <div class="onepart">
-        <div class="leftbox">
+  <div>
+    <div class="Myshownot animated fadeIn" v-show="!haspermissions">
+      <router-link to="/login" > <big class="animated wobble"><i class="el-icon-warning"></i></big></router-link>
+      <h2>您没有权限访问该系统</h2>
+      <h6>—— 请联系管理员开通权限 ——</h6>
+      <p>联系电话：<a href="tel:057156581013">0571-56581013</a>、<a href="tel:18757101741">18757101741</a></p>
+      <p>权限修改后需要重新登录，<router-link to="/login" ><el-button type="text">立即登录</el-button></router-link></p>
+    </div>
+    <div class="My">
+      <div class="mytop" >
+        <span class="pright" ><router-link to="/set" ><img src="../assets/icon-set.png" alt=""> </router-link></span>
+        <div class="onepart">
+          <div class="leftbox">
               <span>
-                <img src="../assets/tx.png" alt=""/>
+                <router-link to="/setpersonal" ><img src="../assets/tx.png" alt=""/></router-link>
               </span>
 
               <span class="roler">
                 {{person['rolername']}}
               </span>
+          </div>
+          <div class="rightbox">
+            <h3>{{person['username']}} </h3>
+            <p>
+              <b>我的ID:{{uid}}</b><input type="hidden" v-model="turl" />
+              <button type="button"
+                      v-clipboard:copy="turl"
+                      v-clipboard:success="onCopy"
+                      v-clipboard:error="onError"><i><img src="../assets/icon-link.png" alt=""></i> <b>复制推广链接</b></button>
+            </p>
+          </div>
         </div>
-        <div class="rightbox">
-          <h3>{{person['username']}} </h3>
-          <p>
-            <b>推荐ID:{{uid}}</b>
-            <button><i><img src="../assets/icon-link.png" alt=""></i> <b>复制推广链接</b></button>
-          </p>
-        </div>
-      </div>
-      <div class="twopart">
-        <div class="left">
-          <b>待提现利润：￥</b>
-          <big>0.00</big>
-        </div>
-        <div class="right">
+        <div class="twopart">
+          <div class="left">
+            <b>待提现利润：￥</b>
+            <big>0.00</big>
+          </div>
+          <div class="right">
           <span class="withdraw">
             <router-link to="/withdrawal">提  现</router-link>
           </span>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div class="listbox">
-      <div class="block">
-        <router-link to="/send">
-          <p>待发订单</p>
-          <em>0</em>
-          <span>发货</span>
-        </router-link>
+      <div class="listbox">
+        <div class="block">
+          <router-link to="/send">
+            <p>待发订单</p>
+            <em>0</em>
+            <span>发货</span>
+          </router-link>
+        </div>
+        <div class="block">
+          <router-link to="/reserve">
+            <p>个人订货</p>
+            <em>0</em>
+            <span>订货</span>
+          </router-link>
+        </div>
+        <div class="block">
+          <router-link to="/myteamorder">
+            <p>团队订单</p>
+            <em>0</em>
+            <span>查看</span>
+          </router-link>
+        </div>
       </div>
-      <div class="block">
-        <router-link to="/reserve">
-          <p>个人订货</p>
-          <em>0</em>
-          <span>订货</span>
-        </router-link>
-      </div>
-      <div class="block">
-        <router-link to="/myteamorder">
-          <p>团队订单</p>
-          <em>0</em>
-          <span>查看</span>
-        </router-link>
-      </div>
-    </div>
 
-    <div class="btnlistbox" >
+      <div class="btnlistbox" >
         <div class="linebtn">
           <span class="btnblock">
             <router-link to="/profit">
@@ -110,15 +121,17 @@
             </router-link>
           </span>
         </div>
-    </div>
+      </div>
 
-    <div class="advbox">
-      <router-link to="/reserve">
-        <img src="../assets/go.gif" alt="" />
-      </router-link>
-    </div>
+      <div class="advbox">
+        <router-link to="/reserve">
+          <img src="../assets/go.gif" alt="" />
+        </router-link>
+      </div>
 
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -131,35 +144,59 @@
           username:'木有用户名',
           rolerid:1,
           rolername:'区域代理'
-        }
+        },
+        haspermissions:true,
       }
     },
+  computed:{
+    turl:function(){
+      return 'http://localhost:8089/register?tid='+this.uid;
+    },
+  },
     methods:{
        getuid(){
-        let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
-        console.log(persondata);
-        if(persondata){
-          this.person.rolerid = persondata.rule_id;
-          this.person.username=persondata['username'];
-          switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
-            case 1:this.person.rolername = '区域代理';
-              break;
-            case 2:this.person.rolername = '一级代理';
-              break;
-            case 3:this.person.rolername = '二级代理';
-              break;
-            case 4:this.person.rolername = '门    店';
-              break;
-            default:this.person.rolername = '新用户';
-              break;
+          let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+          console.log(persondata);
+          if(persondata){
+            this.person.rolerid = persondata.rule_id;
+            this.person.username=persondata['username'];
+
+            switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+              case 1:this.person.rolername = '区域代理';
+                break;
+              case 2:this.person.rolername = '一级代理';
+                break;
+              case 3:this.person.rolername = '二级代理';
+                break;
+              case 4:this.person.rolername = '门    店';
+                break;
+              default:this.person.rolername = '新用户';
+                this.haspermissions = false;
+                break;
+            }
+            this.uid=localStorage.getItem("TAINIUUID");
+          }else{
+            this.$router.push({path:'/login'})
           }
-          this.uid=localStorage.getItem("TAINIUUID");
-        }else{
-          this.$router.push({path:'/login'})
+       },
+        onCopy: function (e) {
+          this.$message({
+            message: '复制成功！',
+            type: 'success',
+            customClass:'black'
+          });
+          console.log('你刚刚复制: ' + e.text)
+        },
+        onError: function (e) {
+          this.$message({
+            message: '复制失败！',
+            type: 'error',
+            customClass:'black'
+          });
+          console.log('无法复制文本！')
         }
 
 
-       }
     },
     created:function(){
       this.getuid();
@@ -169,6 +206,41 @@
 </script>
 
 <style lang="scss" scoped>
+  .wobble{
+    animation-iteration-count:infinite;
+  }
+  .Myshownot{
+    position:fixed;
+    top:0;
+    z-index:99999999999999999999;
+    width:100vw;
+    height:100vh;
+    display:block;
+    background:rgba(24,23,29,0.6);
+    color:#fff;
+  text-align:center;
+  a{dispaly:block;
+    big{
+      background:#fff;
+      width:98px;
+      height:99px;
+      border-radius:50%;
+      display:block;
+      margin:160px auto 60px;
+      i{font-size:100px; color:#ab1214;}
+    }
+  }
+    p{
+    }
+    h2{
+      font-size:25px;
+    }
+    h6{
+      font-size:16px;
+      line-height:24px;
+    }
+
+  }
   .My{
     position:relative;
     background:#f2f2f2;

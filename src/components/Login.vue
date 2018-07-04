@@ -31,7 +31,7 @@
 
 
   <div class="bigbtn">
-   <button :class="{'success':isChecked}" @click="getAjax">登  录</button>
+   <button :class="{'success':isChecked}" :disabled="!isChecked" @click="getAjax">登  录</button>
   </div>
 
  </div>
@@ -77,38 +77,40 @@
  },
 
  methods:{
+
   getAjax:function () {
    let data = {username:this.username,password:this.password}   //{username:'Who123',password:'3891265'}
-   this.$http.post(api+'/index/user/LoginService.html',data).then((res)=>{
-        if(res.body.code=='SUCCESS'){
-        localStorage.setItem("TAINIUUID",res.body.data.id);
-        localStorage.setItem("TAINIUROLER",res.body.data.rule_id);
-        localStorage.setItem("TAINIUPERSON",JSON.stringify(res.body.data));
+   this.axios.post('/api/index/user/LoginService.html',data).then((res)=>{
+       console.log(res);
+        if(res.data.code=='SUCCESS'){
+        localStorage.setItem("TAINIUUID",res.data.data.id);
+        localStorage.setItem("TAINIUROLER",res.data.data.rule_id);
+        localStorage.setItem("TAINIUPERSON",JSON.stringify(res.data.data));
         this.$message({
            message: '恭喜你，登录成功！',
            type: 'success',
            customClass:'black'
           });
           this.$router.push({path:'/'})
-        }else if(res.body.code=='LOGIN_TAINIU_PASSWORD'){
+        }else if(res.data.code=='LOGIN_TAINIU_PASSWORD'){
           this.$message({
            message: '密码错误！',
            type: 'error',
            customClass:'black'
           });
-        }else if(res.body.code=='PARAM_ERROR'){
+        }else if(res.data.code=='PARAM_ERROR'){
            this.$message({
             message: '参数错误！',
             type: 'error',
             customClass:'black'
            });
-        }else if(res.body.code=='USERNAME_NOT_EXIST'){
+        }else if(res.data.code=='USERNAME_NOT_EXIST'){
            this.$message({
             message: '用户名不存在！',
             type: 'error',
             customClass:'black'
            });
-        }else if('PHONE_CODE_INEXISTENCE'){
+        }else if(res.data.code=='PHONE_CODE_INEXISTENCE'){
            this.$message({
             message: '该账号未注册！',
             type: 'error',
@@ -116,7 +118,7 @@
            });
         }else{
            this.$message({
-            message: '请求错误！',
+            message: '请求错误:'+res.data.message,
             type: 'error',
             customClass:'black'
            });

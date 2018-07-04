@@ -21,7 +21,7 @@
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
     <input type="text" placeholder="请输入验证码" v-model="verification" />
-     <button v-show="show" :class="{'success':isSuccess1}" @click="getCode">获取验证码</button>
+     <button v-show="show" :class="{'success':isSuccess1}" :disabled="!isSuccess1" @click="getCode">获取验证码</button>
      <button v-show="!show">{{count}}秒后重发</button>
    </div>
    <div class="linebox" :class="{'success':isSuccess3}">
@@ -43,7 +43,7 @@
      <el-checkbox v-model="Checked" >我已阅读《泰牛订货协议》</el-checkbox>
     </label>
    </p>
-   <button :class="{'success':isChecked}" @click="postregister">注  册</button>
+   <button :class="{'success':isChecked}" :disabled="!isChecked" @click="postregister">注  册</button>
   </div>
 
  </div>
@@ -136,7 +136,19 @@
  },
   methods:{
    getCode:function(){
-       const TIME_COUNT = 60;
+
+    var reg=11 && /^1[3456789]\d{9}$/ ;
+    if(!reg.test(this.telephone)){
+     this.$message({
+      message: '手机格式不正确！',
+      type: 'warning',
+      customClass:'black'
+     });
+     return;
+    };
+
+
+    const TIME_COUNT = 60;
        let _this = this;
        if (!this.timer) {
           this.count = TIME_COUNT;
@@ -163,17 +175,16 @@
    getverify:function(){
       let data = {username:this.username};
       let _this = this;
-      this.$http.post(api+'/index/User/RegisterPhoneService.html',data).then((res)=>{
-       console.log('请求了一次');
-        if(res.body.code=='SUCCESS'){
+      this.axios.post('/api/index/User/RegisterPhoneService.html',data).then((res)=>{
+        if(res.data.code=='SUCCESS'){
           this.$message({
-           message: '请求成功！',
+           message: '发送成功！',
            type: 'success',
            customClass:'black'
           });
         }else{
           this.$message({
-           message: '请求错误！',
+           message: '发送失败：'+res.data.message,
            type: 'error',
            customClass:'black'
           });
@@ -190,22 +201,20 @@
 
      postregister:function(){
         let data = {username:this.username,password:this.password,verification:this.verification,commend_id:this.commendid}
-        this.$http.post(api+'/index/User/RegisterService.html',data).then((res)=>{
-         console.log('请求了2次');
-
-            if(res.body.code=='SUCCESS'){
+        this.axios.post('/api/index/User/RegisterService.html',data).then((res)=>{
+            if(res.data.code=='SUCCESS'){
                  this.$message({
-                  message: '请求成功！',
+                  message: '注册成功！',
                   type: 'success',
                   customClass:'black'
                  });
-            }else if(res.body.code=='USERNAME_EXISTENCE'){
+            }else if(res.data.code=='USERNAME_EXISTENCE'){
                  this.$message({
                   message: '号码已被注册！',
                   type: 'error',
                   customClass:'black'
                  });
-            }else if(res.body.code=='VERIFICATION_CODE_OVERDUE'){
+            }else if(res.data.code=='VERIFICATION_CODE_OVERDUE'){
                  this.$message({
                   message: '验证码已过期！',
                   type: 'error',
@@ -213,7 +222,7 @@
                  });
             }else{
                   this.$message({
-                   message: '请求错误！',
+                   message: '请求错误:'+res.data.message,
                    type: 'error',
                    customClass:'black'
                   });

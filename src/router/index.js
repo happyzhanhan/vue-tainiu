@@ -21,6 +21,8 @@ import Message from '@/components/Message'
 import Forgetpassword from '@/components/Forgetpassword'
 import Selectaddress from '@/components/Selectaddress'
 import Orderdetail from '@/components/Orderdetail'
+import Setpersonal from '@/components/Setpersonal'
+import Forgetpaypassword from '@/components/Forgetpaypassword'
 
 Vue.use(Router)
 
@@ -80,6 +82,10 @@ export default new Router({
       name: 'Order',
       component: Order
     },{
+      path: '/orderdetail',
+      name: 'Orderdetail',
+      component: Orderdetail
+    },{
       path:'/reserve',
       name:'Reserve',
       component:Reserve
@@ -120,9 +126,13 @@ export default new Router({
       name:'Selectaddress',
       component:Selectaddress,
     },{
-      path:'/orderdetail',
-      name:'Orderdetail',
-      component:Orderdetail,
+      path:'/setpersonal',
+      name:'Setpersonal',
+      component:Setpersonal,
+    },{
+      path:'/forgetpaypassword',
+      name:'Forgetpaypassword',
+      component:Forgetpaypassword,
     }
   ],
   scrollBehavior (to, from, savedPosition) {

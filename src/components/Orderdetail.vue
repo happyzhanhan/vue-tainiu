@@ -289,6 +289,7 @@
             }
             &:nth-child(2){
                  width:80%;
+
              }
             img{
                 width:40px;
@@ -303,6 +304,8 @@
                 &:nth-child(2){
                      color:#a1a1a1;
                      font-size:10px;
+                     width:100%;
+                     float:left;
 
                  }
                 b{float:left;}

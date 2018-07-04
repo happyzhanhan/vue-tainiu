@@ -97,6 +97,13 @@ button,input{
   padding:10px;
   border-bottom:1px solid #f4f4f4;
   color:#676767;
+  >p{
+     display:flex;
+     flex-direction: row;
+     align-items: center;
+     justify-content: space-between;
+     box-sizing:border-box;
+   }
 
 span{
   text-align:left;
@@ -144,4 +151,6 @@ i{
 
 .el-cascader{width:80%!important;border:none;}
 .el-cascader .el-input, .el-cascader .el-input__inner{border:none!important;}
+
+.el-message-box{width:220px!important;}
 </style>

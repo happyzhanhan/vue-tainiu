@@ -12,74 +12,52 @@
   <div class="fixed">
    <div class="tabnav">
     <ul>
-     <li class="hover">全部订单</li>
-     <li>待付款</li>
-     <li>待收货</li>
+     <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">全部订单</li>
+     <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">待收货</li>
+     <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">已完成</li>
     </ul>
    </div>
   </div>
 
-  <div class="tabcontent">
-    <div class="top">
-     <span>
-      <p>订单编号：46423123456</p>
-      <p>下单时间：2018-06-16 05:22:55</p>
-     </span>
-     <span>
-      <b>待付款</b>
-     </span>
-    </div>
-   <div class="product">
-    <span><img src="../assets/product-01.jpg" alt=""></span>
-    <span>
-     <p><b>产品:泰国红牛（整箱）</b><em>￥90.0</em></p>
-     <p><b>规格：250ml×24瓶</b><em>×50</em></p>
-    </span>
-   </div>
-   <div class="location">
-    <span>
-     <i class="el-icon-sold-out"></i>
-    </span>
-    <span>
-     <p>发货快递：韵达</p>
-     <p>发货单号：YD123465465</p>
-    </span>
-   </div>
-   <div class="moneyall">
-    共50件商品，收货款金额￥ <big>450.0</big>
-   </div>
-   <div class="btnline">
-    <button class="red" @click="tosendproduct">立即付款</button>
-    <button @click="tosendnone">取消订单</button>
-   </div>
-  </div>
+ <div class="tabcontent" v-for="order in orderlist" >
+     <div v-if="order.status==showstatus">
+         <div class="top">
+           <span>
+            <p>订单编号：{{order.trade_number}}</p>
+            <p>下单时间：{{order.add_time}}</p>
+           </span>
+           <span>
+            <b>待发货{{order.status}}</b>
+           </span>
+         </div>
+         <div class="product">
+          <span><img :src="order.product_pic_url" alt=""></span>
+          <span>
+           <p><b>{{order.trade_name}}</b><em></em></p>
+           <p><b>数量：{{order.product_amount}}</b></p>
+          </span>
+         </div>
+         <!--<div class="location">
+           <span>
+            <i class="el-icon-sold-out"></i>
+           </span>
+           <span>
+            <p>发货快递：韵达</p>
+            <p>发货单号：YD123465465</p>
+           </span>
+         </div>-->
+         <div class="moneyall">
+          共{{order.product_amount}}件商品，收货款金额￥ <big>{{order.amount_pay}}</big>
+         </div>
+         <div class="btnline">
+          <button class="red" @click="tosendproduct">确认收货</button>
+          <button @click="toshowdetail">查看详情</button>
+         </div>
+     </div>
+
  </div>
 
- <div class="tabcontent">
-  <div class="top">
-     <span>
-      <p>订单编号：46423123456</p>
-      <p>下单时间：2018-06-16 05:22:55</p>
-     </span>
-     <span>
-      <b>待发货</b>
-     </span>
-  </div>
-  <div class="product">
-   <span><img src="../assets/product-01.jpg" alt=""></span>
-    <span>
-     <p><b>产品:泰国红牛（整箱）</b><em>￥90.0</em></p>
-     <p><b>规格：250ml×24瓶</b><em>×50</em></p>
-    </span>
-  </div>
-  <div class="moneyall">
-   共50件商品，收货款金额￥ <big>450.0</big>
-  </div>
-  <div class="btnline">
-   <button class="red">立即发货</button>
-   <button>发不了货</button>
-  </div>
- </div>
+
 </div>
 
 
@@ -96,7 +74,18 @@ export default{
   return{
    headname:'订单',
    headstyle:'whitetop',
+   uid:1,
+   ordernumber:0,
+   orderlist:{
+
+   },
+   showstatus:'',
+
   }
+ },
+ created:function(){
+  this.getuid();
+  this.getallorderlist();
  },
  methods:{
   tosendnone:function(){
@@ -104,7 +93,42 @@ export default{
   },
   tosendproduct:function(){
    this.$router.push({path:'/sendproduct'})
-  }
+  },
+  toshowdetail:function(){
+   this.$router.push({path:'/orderdetail'})
+  },
+  getuid(){
+   let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+   console.log(persondata['id']);
+   if(persondata){
+    this.uid =  persondata['id'];
+   }else{
+    this.$router.push({path:'/login'})
+   }
+  },
+  getallorderlist:function(){
+        let _this = this;
+        let data = {uid:this.uid,};
+        this.axios.post('/api/index/oder/OderListService.html',data).then((res)=>{
+         if(res.data.code=='SUCCESS'){
+         console.log(res.data);
+         _this.orderlist = res.data.data;
+         _this.ordernumber = res.data.arr_length;
+        }else{
+         this.$message({
+          message: '错误：'+res.data.message,
+          type: 'error',
+          customClass:'black'
+         });
+        };
+       },(res)=>{
+        this.$message({
+         message: '系统错误！',
+         type: 'error',
+         customClass:'black'
+        });
+       })
+  },
  }
 
 }
@@ -113,7 +137,7 @@ export default{
 <style lang="scss" scodep>
 .send{
  position:relative;
- height:94vh;
+ min-height:94vh;
  padding-top:6vh;
  background:#f5f5f5;
 }
@@ -225,9 +249,11 @@ background:#fff;
       &:nth-child(2){
        color:#a1a1a1;
        font-size:10px;
+      width:100%;
+ float:left;
 
        }
-     b{float:left;}
+     b{float:left!important;}
      em{
        float:right;
        text-align:right;

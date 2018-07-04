@@ -7,38 +7,28 @@
     <tnhead :headname="headname" :headstyle ="headstyle"></tnhead>
    </div>
 
-  <div class="grybox"  v-show="showselect">
+  <div class="grybox animated fadeIn"  v-show="showselect">
       <div class="kongblock" @click="showselect = !showselect">
 
       </div>
-      <div class="adressselectbox">
+      <div class="adressselectbox animated fadeInUp">
           <h4 class="alerttitle"><b>选择收货地址</b><i class="el-icon-close" @click="showselect = !showselect"></i></h4>
           <div class="selectnamebox">
               <div class="topselectresult">
-                <span class="hover">
-                    <b>{{pickdata.area1.name}}</b>
-                    <input type="hidden" value="1" v-model="pickdata.area1.code"/>
-                </span>
-                <span>
-                    <b>{{pickdata.area2.name}}</b>
-                     <input type="hidden" value="1" v-model="pickdata.area2.code"/>
-                </span>
-                <span>
-                    <b>{{pickdata.area3.name}}</b>
-                    <input type="hidden" value="1" v-model="pickdata.area3.code"/>
-                </span>
-                <span>
-                    <b>{{pickdata.area4.name}}</b>
-                    <input type="hidden" value="1" v-model="pickdata.area4.code"/>
+                <span :class="currentChooseCityIndex==index?'hover':''" @click="switchChooseCity(index)"  v-for="(area,index) in chooseCity" >
+                    <b>{{area.name}}</b>
                 </span>
               </div>
+
           </div>
 
-          <div class="adresslistbox">
-              <div class="onedata" v-for="(items,index) in arealist" @click="changearea(index,items,$event)" >
 
-                  <p>{{items.name}} <i class="el-icon-check"></i></p>
-                  <input type="hidden" value="1" v-model="items.id"/>
+          <div class="adresslistbox">
+              <div class="onedata" v-for="(area,index) in arealist"  >
+                <div :class=" chooseCity[currentChooseCityIndex] != undefined && area.id == chooseCity[currentChooseCityIndex].id ?'hover':''" v-show="true" @click="chooseArea(index,area,$event)">
+                    <p>{{area.name}} <i class="el-icon-check"></i></p>
+                </div>
+
               </div>
           </div>
 
@@ -60,7 +50,7 @@
             </div>
             <div class="linebox" @click="showselect = !showselect">
                 <label for="name">所在地区</label>
-                <input type="text" placeholder="选择省市区县" v-model="address_system"/>
+                <h6>{{address_system}}</h6>
                 <span><i class="el-icon-arrow-right"></i></span>
 
             </div>
@@ -69,9 +59,9 @@
                 <input type="text" placeholder="街道、小区、门牌号等" v-model="address_detail"/>
                 <span><i class="el-icon-success" :class="{'success':isSuccess3}"></i></span>
             </div>
-            <div class="lineboxtwo">
-                <el-radio v-model="addr_type" value="1" label="1">收货地址</el-radio>
-                <el-radio v-model="addr_type" value="2" label="2">发货地址</el-radio>
+            <div class="lineboxtwo" v-if="this.$route.query.type == 'add'">
+                <el-radio v-model="addr_type" label="0">收货地址</el-radio>
+                <el-radio v-model="addr_type" label="1">发货地址</el-radio>
             </div>
             <div class="linebox">
                 <label class="w100" for="name">设为默认地址</label>
@@ -84,7 +74,7 @@
 
         </div>
         <div class="btnbox">
-            <button :class="{'success':isSuccess4}">保   存</button>
+            <button :class="{'success':isSuccess4}" @click="postad">保   存</button>
         </div>
 
     </div>
@@ -101,6 +91,7 @@
   components: {tnhead},
    data (){
    return {
+       uid:1,
         headname:'新增地址',
         headstyle:'whitetop',
        isSuccess1:false,
@@ -108,140 +99,48 @@
        isSuccess3:false,
        isSuccess4:false,
 
+       id:0,
        fullname:'',
        phone:'',
-       address_system:'',
+       //address_system:'',
        address_detail:'',
-       addr_type:'1',
+       addr_type:'0',
        default_addr:true,
+       showselect:false,
 
-       showselect:true,
-
-       pickdata:{
-           area1:{
-               code:'0',
-               name:'请选择省',
+       showarea :1,
+       currentChooseCityIndex:0,
+       chooseCity:[
+           /*{
+               id:15,
+               name:"内蒙古自治区",
            },
-           area2:{
-               code:'',
-               name:'',
+          {
+               id:1505,
+               name:"通辽市",
            },
-           area3:{
-               code:'',
-               name:'',
-           },
-           area4:{
-               code:'',
-               name:'',
-           }
-       },
+           {
+               id:150523,
+               name:"开鲁县",
+           }*/
+       ],
 
-       arealist:[{
-            fullName:'1234',
-            id:1,
-            level:1,
-            name:'A省',
-            pid:0,
-            pinyin:'eqew',
-            type:'1',
-            children:[{
-                fullName:'1234',
-                id:1,
-                level:2,
-                name:'市',
-                pid:0,
-                pinyin:'eqew',
-                type:'1',
-                children:[{
-                    fullName:'1234',
-                    id:1,
-                    level:3,
-                    name:'区县',
-                    pid:0,
-                    pinyin:'eqew',
-                    type:'1',
-                    children:[{
-                        fullName:'1234',
-                        id:1,
-                        level:4,
-                        name:'区县1',
-                        pid:0,
-                        pinyin:'eqew',
-                        type:'1',
-                    },{
-                        fullName:'1234',
-                        id:1,
-                        level:4,
-                        name:'区县2',
-                        pid:0,
-                        pinyin:'eqew',
-                        type:'1',
-                    },{
-                        fullName:'1234',
-                        id:1,
-                        level:4,
-                        name:'区县3',
-                        pid:0,
-                        pinyin:'eqew',
-                        type:'1',
-                    }],
-                }]
-            }]
-       },{
-           fullName:'1234',
-           id:1,
-           level:1,
-           name:'B省',
-           pid:0,
-           pinyin:'eqew',
-           type:'1',
-           children:[{
-               fullName:'1234',
-               id:1,
-               level:2,
-               name:'市',
-               pid:0,
-               pinyin:'eqew',
-               type:'1',
-               children:[{
-                   fullName:'1234',
-                   id:1,
-                   level:3,
-                   name:'区县',
-                   pid:0,
-                   pinyin:'eqew',
-                   type:'1',
-                   children:[{
-                       fullName:'1234',
-                       id:1,
-                       level:4,
-                       name:'区县1',
-                       pid:0,
-                       pinyin:'eqew',
-                       type:'1',
-                   },{
-                       fullName:'1234',
-                       id:1,
-                       level:4,
-                       name:'区县2',
-                       pid:0,
-                       pinyin:'eqew',
-                       type:'1',
-                   },{
-                       fullName:'1234',
-                       id:1,
-                       level:4,
-                       name:'区县3',
-                       pid:0,
-                       pinyin:'eqew',
-                       type:'1',
-                   }],
-               }]
-           }]
-       }]
+       arealist:[
 
+       ],
+       areaCache:{},
    }
   },
+ computed:{
+     address_system:function(){
+
+         let fulladdress='';
+         for(var i in this.chooseCity){
+             fulladdress += this.chooseCity[i].name;
+         }
+         return fulladdress;
+     }
+ },
  watch:{
      address_detail:function(val,oldval){
          if(val){
@@ -266,16 +165,119 @@
      }
  },
  created:function(){
-     this.getad();
+     this.init();
  },
  methods:{
+     init:function(){
+         let data = {level:1};
+         this.getuid();  //获取用户名
+         this.getupdatedata();
+         this.getad(data); //获取省份
 
-      getad:function(){
-          let data = {level:1}
-          this.$http.post(api+'/index/Address/AddressService.html',data).then((res)=>{
+
+     },
+     getuid(){
+         let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+         console.log(persondata['id']);
+         if(persondata){
+            this.uid =  persondata['id'];
+         }else{
+             this.$router.push({path:'/login'})
+         }
+     },
+     getupdatedata(){
+         if(this.$route.query.type == 'update'){
+             let typename = '';
+             if(this.$route.query.addr_type == 0){
+                 typename = '收货';
+             }else{
+                 typename = '发货';
+             }
+             this.headname = '修改'+typename+'地址';
+
+             this.axios.post('/api/index/Address/AddressSelectService.html',{id:this.$route.query.id,uid:this.uid}).then((res)=>{
+                 if(res.data.code=='SUCCESS'){
+                    console.info('获取单条数据:');
+                    console.log(res.data.data);
+                         this.id = res.data.data[0].id;
+                         this.fullname = res.data.data[0].fullname;
+                         this.phone = res.data.data[0].phone;
+                         this.chooseCity = [
+                            {
+                                id:res.data.data[0].area1_code,
+                                name:res.data.data[0].area1_name,
+                            },
+                             {
+                                 id:res.data.data[0].area2_code,
+                                 name:res.data.data[0].area2_name,
+                             },
+                             {
+                                 id:res.data.data[0].area3_code,
+                                 name:res.data.data[0].area3_name,
+                             },
+                             {
+                                 id:res.data.data[0].area4_code,
+                                 name:res.data.data[0].area4_name,
+                             },
+                             {
+                                 id:res.data.data[0].area5_code,
+                                 name:res.data.data[0].area5_name,
+                             }
+                         ];
+
+                         this.address_detail = res.data.data[0].address_detail;
+                         this.addr_type = res.data.data[0].addr_type;
+
+                         if( res.data.data[0].default_addr == 1){
+                             this.default_addr = true;
+                         }else{
+                             this.default_addr = false;
+                         }
+
+                }else{
+                     this.$message({
+                         message: '请求失败：'+res.data.message,
+                         type: 'error',
+                         customClass:'black'
+                     });
+                }
+             },(res)=>{
+                 this.$message({
+                     message: '系统错误！',
+                     type: 'error',
+                     customClass:'black'
+                 });
+             })
+         }else{
+             return;
+         }
+     },
+      getad:function(data){
+          var cacheKey = JSON.stringify(data);
+          var cacheData = this.areaCache[cacheKey]
+          if(cacheData != undefined && cacheData.length >0){
+              this.setAreaList(cacheData);
+              return ;
+          }
+          console.info(data);
+          let _this = this;
+          let a, b, c;
+          this.axios.post('/api/index/Address/AddressService.html',data).then((res)=>{
                     console.log(res);
-                  if(res.body.code=='SUCCESS'){
+                  if(res.data.code=='SUCCESS'){
 
+
+                      if(res.data.data.length == 0){
+                          _this.showselect=false;
+                          return;
+                      }
+                      this.areaCache[cacheKey] = res.data.data;
+                            if(_this.chooseCity[_this.currentChooseCityIndex] == undefined){
+                                _this.$set(_this.chooseCity,_this.currentChooseCityIndex,{
+                                    name:"请选择",
+                                });
+                            }
+                      _this.setAreaList(res.data.data);
                   }
               },(res)=>{
                  this.$message({
@@ -289,29 +291,143 @@
      close:function(){
          this.showselect=false;
      },
-     changearea:function(i,val,e){
-         console.log(i);
-         console.log(val);
-         console.log(e);
+     setAreaList:function(areaList){
 
-        if(val.level==1){
-            this.pickdata.area1.name = val.name;
-            this.pickdata.area1.code = val.id;
-        }else if(val.level==2){
-            this.pickdata.area2.name = val.name;
-            this.pickdata.area2.code = val.id;
-        }else if(val.level==3){
-            this.pickdata.area3.name = val.name;
-            this.pickdata.area3.code = val.id;
-        }else if(val.level==4){
-            this.pickdata.area4.name = val.name;
-            this.pickdata.area4.code = val.id;
+         this.arealist = areaList;
+     },
+    switchChooseCity:function(index){
+        console.info('switchChooseCity index',index);
+        this.currentChooseCityIndex = index;
+
+        if(index == 0){
+            this.getad( {level:1});
+        }else{
+
+            var param = {};
+
+            if(this.chooseCity[index].pid > 0){
+                param = {pid:this.chooseCity[index].pid};
+            }else{
+                param = {pid:this.chooseCity[index-1].id};
+            }
+            this.getad(param);
         }
 
+    },
+    chooseArea:function(i,area,e){
+        console.log('this.chooseCity 0',this.chooseCity);
+        if(area.id == this.chooseCity[this.currentChooseCityIndex].id){
+            return;
+        }
+        this.$set(this.chooseCity,this.currentChooseCityIndex,area);
+        console.log('this.chooseCity 1',this.chooseCity);
+
+        var chooseCity = [];
+        for(var i in this.chooseCity){
+            if (i <= this.currentChooseCityIndex){
+                chooseCity.push( JSON.parse(JSON.stringify(this.chooseCity[i])));
+            }
+        }
+
+        this.chooseCity = chooseCity;
+        this.currentChooseCityIndex ++;
+
+        this.getad({pid:area.id});
      },
-     test1:function(){
-         console.log(2);
-     }
+    postad:function(){
+        var reg=11 && /^1[3456789]\d{9}$/ ;
+        if(!reg.test(this.phone)){
+            this.$message({
+                message: '手机格式不正确！',
+                type: 'warning',
+                customClass:'black'
+            });
+            return;
+        };
+
+        let data = {
+            uid:this.uid,
+            fullname:this.fullname,
+            phone:this.phone,
+            address_detail:this.address_detail,
+            addr_type:this.addr_type,
+            address_system:this.address_system,
+
+        };
+        if(this.default_addr){
+            data['default_addr'] = 1;
+        }else{
+            data['default_addr'] = 0;
+        }
+        for(var i in this.chooseCity){
+            let j = parseInt(i)+1;
+            data['area'+j+'_code'] = this.chooseCity[i].id;
+            data['area'+j+'_name'] = this.chooseCity[i].name;
+        }
+
+        console.log(data);
+
+        let _this = this;
+
+        if(_this.$route.query.type == 'update'){
+            //更新
+            data['id'] = _this.id;
+            this.axios.post('/api/index/Address/AddressUpDataService.html',data).then((res)=>{
+                    console.log(res);
+                if(res.data.code=='SUCCESS'){
+                    this.$message({
+                        message: '请求成功！',
+                        type: 'success',
+                        customClass:'black'
+                    });
+                    this.$router.back(-1);
+                }else{
+                    this.$message({
+                        message: '请求错误：'+res.data.messaga,
+                        type: 'error',
+                        customClass:'black'
+                    });
+                }
+            },(res)=>{
+                this.$message({
+                    message: '系统错误！',
+                    type: 'error',
+                    customClass:'black'
+                });
+                console.log(res);
+            })
+        }else if(_this.$route.query.type == 'add'){
+                //新增
+                 this.axios.post('/api/index/Address/AddressAddService.html',data).then((res)=>{
+                     console.log(res);
+                 if(res.data.code=='SUCCESS'){
+                     this.$message({
+                         message: '请求成功！',
+                         type: 'success',
+                         customClass:'black'
+                     });
+                     this.$router.back(-1);
+                 }else{
+                     this.$message({
+                         message: '请求错误：'+res.data.messaga,
+                         type: 'error',
+                         customClass:'black'
+                     });
+                 }
+             },(res)=>{
+                 this.$message({
+                     message: '系统错误！',
+                     type: 'error',
+                     customClass:'black'
+                 });
+                 console.log(res);
+             })
+        }
+
+
+
+   },
+
 },
 
 
@@ -364,16 +480,20 @@
         padding:0 10px;
         i{line-height:6vh; margin-top:0;  width:10%;display:inline-block; float:left;}
         .topselectresult{
-            width:88%;
-            overflow-x:scroll;
+            width:100%;
             display:flex;
             flex-direction:row;
             align-items:stretch;
+            align-content: flex-start;
             flex-wrap: nowrap;
             line-height:6vh;
-            justify-content:space-between;
+            justify-content: flex-start;
             span{
-                margin-right:2px;
+                width:20%;
+                overflow: hidden;
+                text-overflow:ellipsis;
+                white-space: nowrap;
+
                 b{
                     padding:10px 10px;
                     color:#999;
@@ -393,20 +513,24 @@
     }
 
     .adresslistbox{
+        /*height:calc(44vh-30px)!important;*/
+        height:39vh!important;
+        overflow-y:scroll;
         .onedata{
             width:100%;
             line-height:30px;
             text-align:left;
-            box-sizing:border-box;
-            padding:0 10px;
+            text-indent:20px;
             i{display:none;}
-
-            &:hover{background:#eee;
-                i{
-                    display:inline-block;
-                    color:#f40000;
+            >div{
+                &.hover{background:#eee;
+                    i{
+                        display:inline-block;
+                        color:#f40000;
+                    }
                 }
-            }
+             }
+
         }
     }
 }
@@ -428,7 +552,7 @@
 
         .el-icon-success{
             &.success{
-                 color:#4c8e37;
+                 color:rgb(19, 206, 102);
              }
         }
 
@@ -436,12 +560,21 @@
           font-style:normal;
           color:#a4a4a4;
          }
-         label{width:20%; text-align:left; font-size:14px;
-            &.w100{width:40%;}
+         label{width:65px; text-align:left; font-size:14px;
+            &.w100{width:100px;}
          }
-         input{width:50%; text-indent:14px;}
+         input{width:80%; text-indent:14px;}
+         h6{
+             width:80%;
+             text-align:left;
+             line-height:20px;
+             color:#666;
+             box-sizing:border-box;
+             padding-left:20px;
+             font-size:14px;
+         }
          span{
-           width:30%;
+
            i{
             float:right;
             color:#f4f4f4;

@@ -7,26 +7,15 @@
         <tnhead :headname="headname" :headstyle="headstyle"></tnhead>
         <div class="adresslistbox">
             <div class="copyright">
-                <p><img src="../assets/logotx.png" alt=""/></p>
-                <h3>泰牛订货系统</h3>
-                <p>当前版本V1.0.1</p>
+                <p><img src="../assets/tx.png" alt=""/></p>
+                <h3>{{person.username}}</h3>
+                <p>我的推荐ID:{{uid}}</p>
             </div>
             <div class="linebox">
-                <router-link to="/setpersonal">
-                    <span>
-                        <i><img src="../assets/kefu.png" alt=""/></i>
-                        <b>用户设置</b>
-                    </span>
-                    <span>
-                        <i class="el-icon-arrow-right"></i>
-                    </span>
-                </router-link>
-            </div>
-            <div class="linebox">
-                <router-link to="/profit">
+                <router-link to="/forgetpaypassword">
                     <span>
                         <i><img src="../assets/question.png" alt=""/></i>
-                        <b>常见问题</b>
+                        <b>修改支付密码</b>
                     </span>
                     <span>
                         <i class="el-icon-arrow-right"></i>
@@ -34,31 +23,17 @@
                 </router-link>
             </div>
             <div class="linebox">
-                <router-link to="/profit">
+                <router-link to="/forgetpassword">
                     <span>
                         <i><img src="../assets/kefu.png" alt=""/></i>
-                        <b>联系客服</b>
+                        <b>修改登录密码</b>
                     </span>
                     <span>
                         <i class="el-icon-arrow-right"></i>
                     </span>
                 </router-link>
             </div>
-            <div class="linebox">
-                <router-link to="/profit">
-                    <span>
-                        <i><img src="../assets/fankui.png" alt=""/></i>
-                        <b>意见反馈</b>
-                    </span>
-                    <span>
-                        <i class="el-icon-arrow-right"></i>
-                    </span>
-               </router-link>
-            </div>
 
-            <div class="btnbox mt-80">
-                <button class="success" @click="layout">退出登录</button>
-            </div>
         </div>
     </div>
 </template>
@@ -72,17 +47,46 @@
         data()
         {
             return {
-                headname: '设置',
-                headstyle: 'whitetop'
+                headname: '用户设置',
+                headstyle: 'whitetop',
+                uid: 0,
+                person:{
+                    username:'木有用户名',
+                    rolerid:1,
+                    rolername:'区域代理'
+                },
             }
         },
+        created:function(){
+            this.getuid();
+        },
         methods:{
-            layout(){
-                localStorage.removeItem("TAINIUUID");
-                localStorage.removeItem("TAINIUROLER");
-                localStorage.removeItem("TAINIUPERSON");
-                this.$router.push({path:'/login'});
+            getuid(){
+                let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+                console.log(persondata);
+                if(persondata){
+                    this.person.rolerid = persondata.rule_id;
+                    this.person.username=persondata['username'];
+
+                    switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+                        case 1:this.person.rolername = '区域代理';
+                            break;
+                        case 2:this.person.rolername = '一级代理';
+                            break;
+                        case 3:this.person.rolername = '二级代理';
+                            break;
+                        case 4:this.person.rolername = '门    店';
+                            break;
+                        default:this.person.rolername = '新用户';
+                            this.haspermissions = false;
+                            break;
+                    }
+                    this.uid=localStorage.getItem("TAINIUUID");
+                }else{
+                    this.$router.push({path:'/login'})
+                }
             },
+
         }
     }
 </script>

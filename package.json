@@ -11,8 +11,11 @@
   },
   "dependencies": {
     "ajv": "^6.5.1",
+    "animate.css": "^3.6.1",
+    "axios": "^0.18.0",
     "element-ui": "^2.4.1",
     "vue": "^2.5.2",
+    "vue-clipboard2": "^0.2.0",
     "vue-resource": "^1.5.1",
     "vue-router": "^3.0.1"
   },

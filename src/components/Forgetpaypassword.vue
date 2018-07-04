@@ -4,7 +4,8 @@
 
 <template>
  <div class="login">
-  <div class="headtop">
+  <tnhead :headname="headname" :headstyle="headstyle"></tnhead>
+  <div class="headtopthis">
    <div class="topbox">
     <span class="left"><router-link to="/login">忘记密码</router-link></span>
 
@@ -17,25 +18,24 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入手机号码" v-model="telephone"/>
+    <b>{{person.telephone}}</b>
+    <span>
+     手机号码注册后暂不可更改
+    </span>
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
-    <input type="text" placeholder="请输入验证码" v-model="verification" />
+    <input type="text" placeholder="请输入验证码"  v-model="verification" />
     <button v-show="show" :class="{'success':isSuccess1}" :disabled="!isSuccess1" @click="getCode">获取验证码</button>
     <button v-show="!show">{{count}}秒后重发</button>
    </div>
    <div class="linebox" :class="{'success':isSuccess3}">
-    <input type="password" placeholder="请输入新密码"  v-model="password"/>
+    <input type="password" placeholder="请输入支付密码"  v-model="password"/>
    </div>
-  </div>
-
-  <div class="btnbox">
-   <span class="left"><router-link to="/login">账号密码登录</router-link></span>
   </div>
 
 
   <div class="bigbtn">
-   <button :class="{'success':isSuccess3}" :disabled="!isSuccess3" @click="postdata">修 改</button>
+   <button :class="{'success':isSuccess3}" :disabled="!isSuccess3" @click="postdata">设  置</button>
   </div>
 
  </div>
@@ -43,12 +43,18 @@
 
 <script>
  const api = 'http://tainiu.yagou.com:8089';
+ import tnhead from '@/components/Head.vue';
+
  export default {
   name: 'Forgetpassword',
+  components: {tnhead},
   data () {
   return {
-   isSuccess:false,
-   isSuccess1:false,
+   headname: '设置支付密码',
+   headstyle: 'whitetop',
+
+   isSuccess:true,
+   isSuccess1:true,
    isSuccess2:false,
    isSuccess3:false,
    timer:null,
@@ -58,21 +64,18 @@
    telephone:'',
    password:'',
    verification:'',
+   uid: 0,
+   person:{
+    username:'木有用户名',
+    rolerid:1,
+    rolername:'区域代理',
+    telephone:15088700456,
+   },
+
   }
  },
  watch:{
-  telephone:{
-    handler:function(val,oldval){
-     if(val){
-      this.isSuccess=true;
-      this.isSuccess1=true;
-     }else{
-      this.isSuccess=false;
-      this.isSuccess1=false;
-     }
-    },
-    deep:true
-   },
+
    verification:{
     handler:function(val,oldval){
      if(val){
@@ -94,11 +97,40 @@
     deep:true
    },
  },
+ created:function(){
+  this.getuid();
+ },
  methods:{
+  getuid(){
+   let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+   console.log(persondata);
+   if(persondata){
+    this.person.rolerid = persondata.rule_id;
+    this.person.username = persondata['username'];
+    this.person.telephone = persondata['telephone'];
+
+    switch(this.person.rolerid){    //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+     case 1:this.person.rolername = '区域代理';
+      break;
+     case 2:this.person.rolername = '一级代理';
+      break;
+     case 3:this.person.rolername = '二级代理';
+      break;
+     case 4:this.person.rolername = '门    店';
+      break;
+     default:this.person.rolername = '新用户';
+      this.haspermissions = false;
+      break;
+    }
+    this.uid=localStorage.getItem("TAINIUUID");
+   }else{
+    this.$router.push({path:'/login'})
+   }
+  },
   getCode:function(){
 
    var reg=11 && /^1[3456789]\d{9}$/ ;
-   if(!reg.test(this.telephone)){
+   if(!reg.test(parseInt(this.person.telephone))){
     this.$message({
      message: '手机格式不正确！',
      type: 'warning',
@@ -106,8 +138,6 @@
     });
     return;
    };
-
-
 
    const TIME_COUNT = 60;
      let _this = this;
@@ -128,7 +158,7 @@
    },
 
   getverify:function(){
-     let data = {username:this.telephone}
+     let data = {username:this.person.telephone}
      this.axios.post('/api//index/User/RegisterPhoneService.html',data).then((res)=>{
         if(res.data.code=='SUCCESS'){
          this.$message({
@@ -153,14 +183,14 @@
     })
   },
    postdata:function(){
-       let data = {telephone:this.telephone,password:this.password,verification:this.verification,}
-       this.axios.post('/api/index/User/NoLoggedPasswordService.html',data).then((res)=>{
+       let data = {telephone:this.person.telephone,paypassword:this.password,verification:this.verification,}
+       this.axios.post('/api/index/user/PaymentPasswordService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
             localStorage.setItem("TAINIUUID",res.data.data.id);
             localStorage.setItem("TAINIUROLER",res.data.data.rule_id);
             localStorage.setItem("TAINIUPERSON",JSON.stringify(res.data.data));
             this.$message({
-             message: '修改成功！',
+             message: '设置成功！',
              type: 'success',
              customClass:'black'
             });
@@ -206,7 +236,7 @@
 </script>
 
 <style lang="scss" scoped>
- .headtop{
+ .headtopthis{
   width:100%;
   height:200px;
   background:url('../assets/logobg.jpg') no-repeat;
@@ -253,6 +283,10 @@
   align-items: center;
   justify-content: space-between;
   border-bottom:1px solid #f79c97;
+ b{ font-size:16px; color:#000; width:30%; text-align:left;}
+ span{color:#999; font-size:14px;}
+
+
  &.success{
    border-bottom-color:#ea1c10;
   }
