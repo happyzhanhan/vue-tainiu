@@ -9,63 +9,38 @@
             <div class="fixed">
                 <div class="tabnav">
                     <ul>
-                        <li class="hover">系统消息</li>
-                        <li>订单消息</li>
-                        <li>平台消息</li>
+                        <li :class="{'hover':msgtype==''}" @click="msgtype=''">系统消息</li>
+                        <li :class="{'hover':msgtype==3}" @click="msgtype=3">订单消息</li>
+                        <li :class="{'hover':msgtype==1}" @click="msgtype=1">平台消息</li>
                     </ul>
                 </div>
             </div>
-            <div class="tabcontent">
-                <div class="messageone">
-                    <div class="leftmsgbox">
-                       <img src="../assets/icon-10.png" alt=""/>
-                    </div>
-                    <div class="rightbox">
-                        <div class="colbox">
-                            <div class="rowbox">
-                                <span><h4>系统消息</h4><p>06月10日 16:50</p></span>
-                                <span><el-button type="text">详情▶</el-button></span>
-                            </div>
-                            <div class="grybox">
-                                <h3>平台通知</h3>
-                                <p>恭喜您成为我平台代理，享受推荐用户人的利润30%，采购价格9折优惠，快来订购吧！</p>
+
+            <div class="showno  animated fadeIn" v-if="msgnum==0 || msgnum==null">
+                <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+                <p>没有数据哦！~</p>
+            </div>
+            <div class="tabcontent" >
+                <div  v-for="msg in msglist">
+                    <div class="messageone" v-if="msg.type==msgtype || msgtype==''">
+                        <div class="leftmsgbox">
+                            <img :src="msg.tx_pic_url" alt=""/>
+                        </div>
+                        <div class="rightbox">
+                            <div class="colbox">
+                                <div class="rowbox">
+                                    <span><h4>{{msgtypyname(msg.type)}}</h4><p>{{msg.add_time}}</p></span>
+                                    <span v-if="msg.link!=''&& msg.link != null && msg.link !='null' "><a :href="msg.link">详情{{msg.link}}▶</a></span>
+                                </div>
+                                <div class="grybox">
+                                    <h3>{{msg.title}}</h3>
+                                    <p>{{msg.content}}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="messageone">
-                    <div class="leftmsgbox">
-                        <img src="../assets/icon-11.png" alt=""/>
-                    </div>
-                    <div class="rightbox">
-                        <div class="colbox">
-                            <div class="rowbox">
-                                <span><h4>系统消息</h4><p>06月10日 16:50</p></span>
-                                <span><el-button type="text">详情▶</el-button></span>
-                            </div>
-                            <div class="grybox">
-                                <h3>平台通知</h3>
-                                <p>恭喜您成为我平台代理，享受推荐用户人的利润30%，采购价格9折优惠，快来订购吧！</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="messageone">
-                    <div class="leftmsgbox">
-                        <img src="../assets/icon-12.png" alt=""/>
-                    </div>
-                    <div class="rightbox">
-                        <div class="colbox">
-                            <div class="rowbox">
-                                <span><h4>系统消息</h4><p>06月10日 16:50</p></span>
-                                <span><el-button type="text">详情▶</el-button></span>
-                            </div>
-                            <div class="grybox">
-                                <h3>平台通知</h3>
-                                <p>恭喜您成为我平台代理，享受推荐用户人的利润30%，采购价格9折优惠，快来订购吧！</p>
-                            </div>
-                        </div>
-                    </div>
+
+
                 </div>
             </div>
         </div>
@@ -79,12 +54,73 @@
         name: 'Message',
         components: {tnhead},
         data()
-    {
-        return {
-            headname: '消息管理',
-            headstyle: 'whitetop'
+        {
+            return {
+                headname: '消息管理',
+                headstyle: 'whitetop',
+                uid:1,
+                msgnum:0,
+                msgtype:0,
+                msglist:{
+
+                },
+            }
+        },
+        created:function(){
+            this.getuid();
+            this.getmessage();
+        },
+        computed:function(){
+
+        },
+        methods:{
+            getuid(){
+                let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+                if(persondata){
+                    this.uid =  persondata['id'];
+                }else{
+                    this.$router.push({path:'/login'})
+                }
+            },
+            getmessage:function(){
+                    let _this = this;
+                    let data = {receiver_uid:this.uid,};
+                    this.axios.post('/api/index/Message/MessageSelectService.html',data).then((res)=>{
+                        if(res.data.code=='SUCCESS'){
+                        _this.msglist = res.data.data;
+                        _this.msgnum = res.data.num;
+                    }else{
+                        this.$message({
+                            message: '错误：'+res.data.message,
+                            type: 'error',
+                            customClass:'black'
+                        });
+                    };
+                },(res)=>{
+                    this.$message({
+                        message: '系统错误！',
+                        type: 'error',
+                        customClass:'black'
+                    });
+                })
+            },
+            msgtypyname:function(msg){
+
+                switch(msg){
+                    case '0': return '平台消息';
+                        break;
+                    case '1': return '系统消息';
+                        break;
+                    case '2': return '发货消息';
+                        break;
+                    case '3': return '买家消息';
+                        break;
+                    default:return '其他消息';
+                }
+            },
+
         }
-    }
+
     }
 </script>
 
@@ -192,6 +228,7 @@
           }
       }
       .rightbox{
+        width:90%;
           h4{
               font-size:14px;
           }

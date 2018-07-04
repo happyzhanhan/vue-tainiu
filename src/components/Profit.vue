@@ -6,98 +6,56 @@
  <div class="profit">
    <div class="profithead">
       <tnhead :headname="headname"></tnhead>
-      <h2>￥16588.00</h2>
+      <h2>0.00</h2>
       <p>账户余额</p>
       <router-link to="/withdrawal"><span>我要提现</span></router-link>
-      <h5>累计结算利润：￥<b>1654655.0</b></h5>
+      <h5>累计结算利润：￥<b>0.0</b></h5>
    </div>
    <div class="tablehead">
-     <el-tabs v-model="activeName" @tab-click="handleClick">
-      <el-tab-pane name="first"> <span slot="label" style="margin:0 11px;">结算利润明细</span>
-       <div class="detailtable">
-        <el-table
-                :data="tableData"
-                style="width: 100%"
-                height="350">
-         <el-table-column
-                 prop="date"
-                 label="时间">
-         </el-table-column>
-         <el-table-column
-                 prop="name"
-                 label="名称">
-         </el-table-column>
-         <el-table-column
-                 prop="money"
-                 label="金额">
-         </el-table-column>
-         <el-table-column
-                 prop="opration"
-                 label="操作">
-              <template slot-scope="scope">
-               <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
-              </template>
-         </el-table-column>
-        </el-table>
-       </div>
-      </el-tab-pane>
-      <el-tab-pane name="second"> <span slot="label" style="margin:0 11px;">提现明细</span>
-       <div class="detailtable">
-        <el-table
-                :data="tableData2"
-                style="width: 100%"
-                height="350">
-         <el-table-column
-                 prop="date"
-                 label="时间">
-         </el-table-column>
-         <el-table-column
-                 prop="name"
-                 label="名称">
-         </el-table-column>
-         <el-table-column
-                 prop="money"
-                 label="金额">
-         </el-table-column>
-         <el-table-column
-                 prop="opration"
-                 label="操作">
-          <template slot-scope="scope">
-           <el-button type="text" size="small">查看</el-button>
-          </template>
-         </el-table-column>
-        </el-table>
-       </div>
-      </el-tab-pane>
-      <el-tab-pane name="third"><span slot="label" style="margin:0 12px;">订购付款明细</span>
-       <div class="detailtable">
-        <el-table
-                :data="tableData2"
-                style="width: 100%"
-                height="350">
-         <el-table-column
-                 prop="date"
-                 label="时间">
-         </el-table-column>
-         <el-table-column
-                 prop="name"
-                 label="名称">
-         </el-table-column>
-         <el-table-column
-                 prop="money"
-                 label="金额">
-         </el-table-column>
-         <el-table-column
-                 prop="opration"
-                 label="操作">
-          <template slot-scope="scope">
-           <el-button type="text" size="small">查看</el-button>
-          </template>
-         </el-table-column>
-        </el-table>
-       </div>
-      </el-tab-pane>
-     </el-tabs>
+
+    <div class="fixed">
+     <div class="tabnav">
+      <ul>
+       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">结算利润明细</li>
+       <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">订单付款明细</li>
+       <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">提现明细</li>
+      </ul>
+     </div>
+    </div>
+
+    <div class="tabcontent">
+     <div class="showno  animated fadeIn" v-if="datanumber==0 || datanumber==null">
+      <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+      <p>没有数据哦！~</p>
+     </div>
+     <table  v-if="datanumber!=0">
+      <tr>
+       <th width="40%">时间</th>
+       <th>名称</th>
+       <th>金额</th>
+       <th>操作</th>
+      </tr>
+      <tr>
+       <td>2018-10-05 15:60:50</td>
+       <td>订单支付</td>
+       <td>40.5</td>
+       <td><a href="#">详情</a></td>
+      </tr>
+      <tr>
+       <td>2018-10-05 15:60:50</td>
+       <td>订单支付</td>
+       <td>40.5</td>
+       <td><a href="#">详情</a></td>
+      </tr>
+      <tr>
+       <td>2018-10-05 15:60:50</td>
+       <td>订单支付</td>
+       <td>40.5</td>
+       <td><a href="#">详情</a></td>
+      </tr>
+     </table>
+    </div>
+
    </div>
 
   <div>
@@ -115,125 +73,17 @@
    return {
     headname:'利润',
     activeName: 'first',
+    datanumber:0,
+    showstatus:'',
     tableData: [{
-     date: '2016-05-02 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-01 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-03 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }],
-    tableData2: [{
-     date: '2016-05-02 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }],
-    tableData3: [{
-     date: '2016-05-02 14:50:30',
-     name: '订单结算',
-     money: '453.0'
-    }, {
-     date: '2016-05-04 14:50:30',
-     name: '订单结算',
-     money: '453.0',
-    }],
+       date: '2016-05-02 14:50:30',
+       name: '订单结算',
+       money: '453.0'
+      }, {
+       date: '2016-05-04 14:50:30',
+       name: '订单结算',
+       money: '453.0'
+      }],
    }
   },
   methods: {
@@ -281,24 +131,71 @@
  .tablehead{
  /* background:#fff;*/
   margin-top:5px;
-  background:url('../assets/wbg.png') no-repeat;
   background-size:100%;
  }
-
- #tab-first{
-  margin-left:30px!important;
- }
-
- .el-tabs__header{
-  margin-bottom:0!important;
+ .tabnav{
+  wiidth:100%;
   background:#fff;
+ ul{
+  width:100%;
+  display:flex;
+  flex-direction: row ;
+  align-items: stretch;
+  justify-content: space-around;
+ li{
+  width:50%;
+  line-height:40px;
+  background:#fff;
+  font-weight:600;
+  position:relative;
+
+ &:before{
+   content:"";
+   position:absolute;
+   width:1px;
+   height:30px;
+   display:block;
+   background:#f5f5f5;
+   right:0;
+   top:5px;
+  }
+ &:after{
+   content:'';
+   position:absolute;
+   bottom:0;
+   left:50%;
+   margin-left:-50px;
+   width:100px;
+   height:2px;
+   background:#f0160d;
+   display:none;
+  }
+ &:last-child{
+ &:before{
+   display:none;
+  }
+ }
+ &:hover,&.hover{
+           color:#f0160d;
+ &:after{display:block;}
+ }
+ }
+ }
  }
 
- .el-tabs__item{
-  padding:0 35px!important;
+ .tabcontent{
+  margin-top:5px;
+  background:#f5f5f5;
  }
 
- .detailtable{
-  text-align:left;
+ .tabcontent{
+  table{
+   width:100%;
+   line-height:30px;
+   background:#fff;
+   tr>td{
+    border-top:1px solid #f5f5f5;
+   }
+  }
  }
 </style>

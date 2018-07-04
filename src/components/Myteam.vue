@@ -8,7 +8,7 @@
         <div class="teambox">
             <div class="teamnumber">
                 <p>团队人数</p>
-                <h2>115</h2>
+                <h2>0</h2>
             </div>
             <div class="searchbox">
                 <div class="searchbar">
@@ -26,7 +26,11 @@
                 </div>
             </div>
             <div class="content">
-                <table>
+                <div class="showno  animated fadeIn" v-if="datanumber==0 || datanumber==null">
+                    <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+                    <p>没有数据哦！~</p>
+                </div>
+                <table v-if="datanumber!=0">
                     <thead>
                         <tr>
                             <th width="40%">日期</th>
@@ -112,7 +116,8 @@
     {
         return {
             headname: '我的团队',
-            headstyle: 'whitetop'
+            headstyle: 'whitetop',
+            datanumber:0,
         }
     }
     }

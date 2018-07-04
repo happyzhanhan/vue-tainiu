@@ -19,7 +19,13 @@
    </div>
   </div>
 
+     <div class="showno  animated fadeIn" v-if="ordernumber==0 || ordernumber==null">
+         <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+         <p>没有数据哦！~</p>
+     </div>
+
  <div class="tabcontent" v-for="order in orderlist" >
+
      <div v-if="order.status==showstatus">
          <div class="top">
            <span>
@@ -99,7 +105,7 @@ export default{
   },
   getuid(){
    let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
-   console.log(persondata['id']);
+  // console.log(persondata['id']);
    if(persondata){
     this.uid =  persondata['id'];
    }else{

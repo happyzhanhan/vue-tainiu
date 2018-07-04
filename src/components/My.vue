@@ -4,7 +4,7 @@
       <router-link to="/login" > <big class="animated wobble"><i class="el-icon-warning"></i></big></router-link>
       <h2>您没有权限访问该系统</h2>
       <h6>—— 请联系管理员开通权限 ——</h6>
-      <p>联系电话：<a href="tel:057156581013">0571-56581013</a>、<a href="tel:18757101741">18757101741</a></p>
+      <p style="margin-top:50px;">联系电话：<a href="tel:057156581013">0571-56581013</a>、<a href="tel:18757101741">18757101741</a></p>
       <p>权限修改后需要重新登录，<router-link to="/login" ><el-button type="text">立即登录</el-button></router-link></p>
     </div>
     <div class="My">

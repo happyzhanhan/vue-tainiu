@@ -129,7 +129,7 @@
 
   getverify:function(){
      let data = {username:this.telephone}
-     this.axios.post('/api//index/User/RegisterPhoneService.html',data).then((res)=>{
+     this.axios.post('/api//index/login/RegisterPhoneService.html',data).then((res)=>{
         if(res.data.code=='SUCCESS'){
          this.$message({
           message: '发送成功！',
@@ -154,7 +154,7 @@
   },
    postdata:function(){
        let data = {telephone:this.telephone,password:this.password,verification:this.verification,}
-       this.axios.post('/api/index/User/NoLoggedPasswordService.html',data).then((res)=>{
+       this.axios.post('/api/index/login/NoLoggedPasswordService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
             localStorage.setItem("TAINIUUID",res.data.data.id);
             localStorage.setItem("TAINIUROLER",res.data.data.rule_id);

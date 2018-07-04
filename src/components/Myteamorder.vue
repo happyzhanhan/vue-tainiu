@@ -9,21 +9,21 @@
                 <tnhead :headname="headname" ></tnhead>
 
                 <div class="ordernumber">
-                    订单量累计：94
+                    订单量累计：0
                 </div>
                 <div class="listall">
                     <div class="part">
                         <span><img src="../assets/icon-money.png" alt=""></span>
                         <span>
                             <p>金额累计</p>
-                            <p><b>￥</b><em>568685.00</em></p>
+                            <p><b>￥</b><em>0.00</em></p>
                         </span>
                     </div>
                     <div class="part">
                         <span><img src="../assets/icon-moneymore.png" alt=""></span>
                         <span>
                             <p>利润累计</p>
-                            <p><b>￥</b><em>568685.00</em></p>
+                            <p><b>￥</b><em>0.00</em></p>
                         </span>
                     </div>
                 </div>
@@ -46,7 +46,11 @@
                 </div>
             </div>
             <div class="content">
-                <table>
+                <div class="showno  animated fadeIn" v-if="datanumber==0 || datanumber==null">
+                    <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+                    <p>没有数据哦！~</p>
+                </div>
+                <table  v-if="datanumber!=0 ">
                     <thead>
                     <tr>
                         <th width="40%">日期</th>
@@ -99,6 +103,7 @@
     {
         return {
             headname: '团队订单',
+            datanumber:0,
         }
     }
     }
@@ -106,7 +111,7 @@
 
 <style lang="scss" scoped>
     .tainiubox {
-        height: 94vh;
+        min-height: 100vh;
         background: #f5f5f5;
     }
 

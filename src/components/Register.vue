@@ -137,8 +137,8 @@
   methods:{
    getCode:function(){
 
-    var reg=11 && /^1[3456789]\d{9}$/ ;
-    if(!reg.test(this.telephone)){
+    var reg=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    if(reg.test(this.telephone)){
      this.$message({
       message: '手机格式不正确！',
       type: 'warning',
@@ -175,7 +175,7 @@
    getverify:function(){
       let data = {username:this.username};
       let _this = this;
-      this.axios.post('/api/index/User/RegisterPhoneService.html',data).then((res)=>{
+      this.axios.post('/api/index/login/RegisterPhoneService.html',data).then((res)=>{
         if(res.data.code=='SUCCESS'){
           this.$message({
            message: '发送成功！',
@@ -201,13 +201,14 @@
 
      postregister:function(){
         let data = {username:this.username,password:this.password,verification:this.verification,commend_id:this.commendid}
-        this.axios.post('/api/index/User/RegisterService.html',data).then((res)=>{
+        this.axios.post('/api/index/login/RegisterService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
                  this.$message({
                   message: '注册成功！',
                   type: 'success',
                   customClass:'black'
                  });
+                 this.$router.push({path:'/login'})
             }else if(res.data.code=='USERNAME_EXISTENCE'){
                  this.$message({
                   message: '号码已被注册！',
