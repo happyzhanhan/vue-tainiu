@@ -24,7 +24,7 @@
          <p>没有数据哦！~</p>
      </div>
 
- <div class="tabcontent" v-for="order in orderlist" >
+ <div class="tabcontent" v-for="(order,index) in orderlist" >
 
      <div v-if="order.status==showstatus">
          <div class="top">
@@ -57,7 +57,7 @@
          </div>
          <div class="btnline">
           <button class="red" @click="tosendproduct">确认收货</button>
-          <button @click="toshowdetail">查看详情</button>
+          <button @click="toshowdetail(index)">查看详情</button>
          </div>
      </div>
 
@@ -100,12 +100,13 @@ export default{
   tosendproduct:function(){
    this.$router.push({path:'/sendproduct'})
   },
-  toshowdetail:function(){
-   this.$router.push({path:'/orderdetail'})
+  toshowdetail:function(index){
+
+      console.log('trade_number:'+this.orderlist[index].trade_number);
+      this.$router.push({path:'/orderdetail',query:{trade_number:this.orderlist[index].trade_number} });
   },
   getuid(){
    let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
-  // console.log(persondata['id']);
    if(persondata){
     this.uid =  persondata['id'];
    }else{
@@ -114,10 +115,9 @@ export default{
   },
   getallorderlist:function(){
         let _this = this;
-        let data = {}; //uid:this.uid,
+        let data = {};
         this.axios.post('/api/index/oder/OderListService.html',data).then((res)=>{
          if(res.data.code=='SUCCESS'){
-         console.log(res.data);
          _this.orderlist = res.data.data;
          _this.ordernumber = res.data.arr_length;
         }else{

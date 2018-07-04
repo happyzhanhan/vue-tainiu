@@ -7,10 +7,11 @@
         <tnhead :headname="headname" :headstyle="headstyle"></tnhead>
         <div class="adresslistbox">
             <div class="detailbanner">
-                <img src="../assets/orderdetailbanner.jpg" alt=""/>
+                <span>{{statusname(trad.status)}}</span>
+                <img src="../assets/detailpost.jpg" alt=""/>
             </div>
-            <div class="orderlogisticsdetail hiddenbox">
-                <div class="logisticsbox">
+            <div class="orderlogisticsdetail hiddenbox" style="display:none;">
+                <div class="logisticsbox" >
                     <div class="lefticon">
                         <img src="../assets/icon-15.png" alt=""/>
                     </div>
@@ -59,37 +60,40 @@
                </div>
             </div>
 
-            <div class="location">
+            <div class="location" v-if="trad.consignee != null && trad.consignee !=''">
                 <span>
                  <i class="el-icon-location-outline"></i>
                 </span>
                 <span>
-                 <p><b>收货人：柯基</b><em>15088700456</em></p>
-                 <p>收货地址：浙江省杭州市江干区下沙13号大街53号</p>
+                 <p><b>收货人：{{trad.consignee}}</b><em>{{trad.consignee_phone}}</em></p>
+                 <p>收货地址：{{trad.consignee_system_address}} {{trad.consignee_detail_address}}</p>
                 </span>
             </div>
 
             <div class="orderproshow">
-                <p><b>订单编号：TN41346555</b> <button>复制</button></p>
+                <p><b>订单编号：{{trad.trade_number}}</b> <button
+                        v-clipboard:copy="trad.trade_number"
+                        v-clipboard:success="onCopy"
+                        v-clipboard:error="onError">复制</button></p>
                 <div class="product">
-                    <span><img src="../assets/product-01.jpg" alt=""></span>
+                    <span><img :src="trad.product_pic_url" alt=""></span>
                     <span>
-                     <p><b>产品:泰国红牛（整箱）</b><em>￥90.0</em></p>
-                     <p><b>规格：250ml×24瓶</b><em>×50</em></p>
+                     <p><b>产品:{{trad.trade_name}}</b><em></em></p>
+                     <p><b>数量：{{trad.product_amount}}</b><em></em></p>
                     </span>
                 </div>
-                <p><span><b>共50件商品，付款金额：</b><em>￥450.0</em></span></p>
+                <p><span><b>共{{trad.product_amount}}件商品，付款金额：</b><em>￥{{trad.amount_pay}}</em></span></p>
             </div>
 
             <div class="ordernumber">
-                <p>付款编号： FK5646121545645312</p>
-                <p>下单时间： 2018-05-16 16:50:20</p>
-                <p>付款时间： 2018-05-16 16:50:20</p>
-                <p>发货时间： 2018-05-16 16:50:20</p>
-                <p>收货时间： 2018-05-16 16:50:20</p>
+                <p>付款编号： {{wallet_serial.serial_number}}</p>
+                <p>下单时间： {{trad.add_time}}</p>
+                <p>付款时间： {{trad.add_time}}</p>
+                <!--<p>发货时间： 2018-05-16 16:50:20</p>
+                <p>收货时间： 2018-05-16 16:50:20</p>-->
             </div>
 
-            <div class="sendproduct">
+            <div class="sendproduct" style="display: none;">
                 <h3>发货信息</h3>
                 <div class="onelineaddress">
                     <h4><b>柯基</b><em>123456789</em></h4>
@@ -114,13 +118,86 @@
         name: 'Orderdetail',
         components: {tnhead},
         data()
-    {
-        return {
-            headname: '订单详情',
-            headstyle: 'whitetop'
-        }
-    }
-    }
+        {
+            return {
+                headname: '订单详情',
+                headstyle: 'whitetop',
+                uid:1,
+                trad:{},
+                wallet_serial:{},
+            }
+        },
+        created:function(){
+            this.getuid();
+            this.getallorderdetail();
+        },
+        methods:{
+            getuid(){
+                let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
+                if(persondata){
+                    this.uid =  persondata['id'];
+                }else{
+                    this.$router.push({path:'/login'})
+                }
+            },
+            getallorderdetail:function(){
+                let _this = this;
+                let data = {trade_number:this.$route.query.trade_number};
+                this.axios.post('/api/index/oder/OderDetailedService.html',data).then((res)=>{
+                    if(res.data.code=='SUCCESS'){
+                        console.log(res.data);
+                        _this.trad = res.data.data.trad;
+                        _this.wallet_serial = res.data.data.wallet_serial;
+                    }else{
+                        this.$message({
+                            message: '错误：'+res.data.message,
+                            type: 'error',
+                            customClass:'black'
+                        });
+                    };
+                },(res)=>{
+                    this.$message({
+                        message: '系统错误！',
+                        type: 'error',
+                        customClass:'black'
+                    });
+                })
+            },
+            statusname:function(status){
+                switch(parseInt(status)){
+                    case 0: return '订单未支付';
+                        break;
+                    case 1: return '订单支付,待发货';
+                        break;
+                    case 2: return '订单已发货';
+                        break;
+                    case 3: return '订单已收货';
+                        break;
+                    case 4: return '订单已完成';
+                        break;
+                   default: return '订单状态';
+                        break;
+                }
+            },
+            onCopy: function (e) {
+                this.$message({
+                    message: '复制成功！',
+                    type: 'success',
+                    customClass:'black'
+                });
+                console.log('你刚刚复制: ' + e.text)
+            },
+            onError: function (e) {
+                this.$message({
+                    message: '复制失败！',
+                    type: 'error',
+                    customClass:'black'
+                });
+                console.log('无法复制文本！')
+            }
+
+        },
+}
 </script>
 
 <style lang="scss" scoped>
@@ -128,6 +205,18 @@
         padding-top: 6vh;
         height: 94vh;
         background: #f5f5f5;
+    }
+
+    .detailbanner{
+        position:relative;
+        span{
+            position: absolute;
+            top:29px;
+            left:30px;
+            z-index:9;
+            color:#fff;
+            font-size:16px;
+        }
     }
 
     .orderlogisticsdetail{

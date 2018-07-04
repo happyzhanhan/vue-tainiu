@@ -6,10 +6,7 @@
  <div class="tainiubox" :class="showno ? 'whitebg':''">
     <tnhead :headname="headname"  :headstyle="headstyle"></tnhead>
     <div class="adresslistbox">
-        <div class="shownone animated fadeIn" v-if="showno">
-            <img src="../assets/noaddress.jpg" alt=""/>
-            <p>您未添加地址！</p>
-        </div>
+
         <div class="adresslist" v-show="!showno">
             <div class="fixed">
                 <div class="tabnav">
@@ -57,6 +54,12 @@
                 </div>
             </div>
         </div>
+
+        <div class="shownone animated fadeIn" v-if="showno">
+            <img src="../assets/noaddress.jpg" alt=""/>
+            <p>您未添加地址！</p>
+        </div>
+
         <div class="btnbox">
             <button class="success" @click="Toadd">新增地址</button>
         </div>
