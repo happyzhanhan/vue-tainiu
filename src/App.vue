@@ -153,4 +153,9 @@ i{
 .el-cascader .el-input, .el-cascader .el-input__inner{border:none!important;}
 
 .el-message-box{width:220px!important;}
+
+ .fadeIn{
+     animation-delay:2s;
+     -webkit-animation-delay:2s;
+ }
 </style>
