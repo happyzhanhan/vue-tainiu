@@ -52,7 +52,7 @@
         },
         computed:{
             turl:function(){
-                return 'http://localhost:8089/register?tid='+this.uid;
+                return 'http://tainiu.yggx.com/index.php/index/index/index#/register?tid='+this.uid;
             },
         },
         created:function(){

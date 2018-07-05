@@ -1,4 +1,5 @@
 <template>
+
   <div id="app">
       <router-view/>
   </div>
@@ -145,7 +146,7 @@ i{
 .black{
   width:200px!important;
   min-width:200px!important;
-  top:500px!important;
+  top:200px!important;
 }
 
 

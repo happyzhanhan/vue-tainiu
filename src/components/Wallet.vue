@@ -6,19 +6,41 @@
  <div class="profit">
    <div class="profithead">
       <tnhead :headname="headname"></tnhead>
-      <h2>0.00</h2>
-      <p>账户余额</p>
-      <router-link to="/withdrawal"><span>我要提现</span></router-link>
-      <h5>累计结算利润：￥<b>0.0</b></h5>
+    <router-link to="/balance">
+     <h2>0.00</h2>
+      <p>账户余额(元)</p>
+    </router-link>
+      <!--<router-link to="/withdrawal"><span class="btnyellow">我要提现</span></router-link>-->
+      <p class="bzjshow"><img src="../assets/bzj.png" alt="" width="14px" style="margin-right: 5px;"/>已缴纳保证金：10000.0</p>
+       <div class="listall">
+           <div class="part">
+            <router-link to="/earnings">
+            <span><img src="../assets/wallet.png" alt=""></span>
+            <span>
+                <p>货款余额</p>
+                <p><b>￥</b><em>0.00</em></p>
+            </span>
+             </router-link>
+           </div>
+           <div class="part">
+            <router-link to="/profit">
+             <span><img src="../assets/icon-moneymore.png" alt=""></span>
+             <span>
+                 <p>利润余额</p>
+                 <p><b>￥</b><em>0.00</em></p>
+             </span>
+             </router-link>
+          </div>
+     </div>
    </div>
    <div class="tablehead">
 
     <div class="fixed">
      <div class="tabnav">
       <ul>
-       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">结算利润明细</li>
-       <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">订单付款明细</li>
-       <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">提现明细</li>
+       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">余额明细</li>
+       <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">货款明细</li>
+       <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">利润明细</li>
       </ul>
      </div>
     </div>
@@ -71,7 +93,7 @@
   components:{tnhead},
   data ()  {
    return {
-    headname:'利润',
+    headname:'我的钱包',
     activeName: 'first',
     datanumber:0,
     showstatus:'',
@@ -99,7 +121,57 @@
   background:#f2f2f2;
   height:100vh;
  }
-.profithead{
+a{
+ color:#fff;
+}
+ .listall{
+  width:100%;
+  display:flex;
+  flex-direction: row  ;
+  align-items: flex-start;
+  justify-content:  flex-start;
+  padding-bottom:26px;
+  box-sizing:border-box;
+ padding:10px 20px;
+
+ .part{
+  display:flex;
+  flex-direction: row  ;
+  align-items:center;
+  justify-content:  flex-start;
+  width:100%;
+
+ span{
+  display:inline-block;
+ img{
+  width:26px;
+  height:26px;
+  margin-right:10px;
+  float: left;
+ }
+ p{text-align:left;}
+ }
+ &:nth-child(1){
+   position:relative;
+ &:after{
+   content:"";
+   position:absolute;
+   right:0;
+   top:0;
+   z-index:0;
+   width:1px;
+   height:40px;
+   background:#f89e81;
+   display:block;
+  }
+ }
+ &:nth-child(2){
+   padding-left:20px;
+  }
+ }
+ }
+
+ .profithead{
  position:relative;
  width:100%;
  background:url('../assets/profitbg.png') #ff5134 no-repeat;
@@ -114,9 +186,10 @@
  p{
   font-size:12px;
   line-height:16px;
-  margin-bottom:10px;
+  margin-bottom:3px;
+
  }
- span{
+ span.btnyellow{
   background:#fcebbd;
   border-radius:50px;
   padding:5px 30px;
@@ -127,6 +200,11 @@
   padding-bottom:26px;
  }
 }
+
+
+ p.bzjshow{
+  color:#ffdf8a;
+ }
 
  .tablehead{
  /* background:#fff;*/

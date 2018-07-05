@@ -7,17 +7,16 @@
    <div class="profithead">
       <tnhead :headname="headname"></tnhead>
       <h2>0.00</h2>
-      <p>账户余额</p>
+      <p>我的货款</p>
       <router-link to="/withdrawal"><span>我要提现</span></router-link>
-      <h5>累计结算利润：￥<b>0.0</b></h5>
+      <h5>累计已提现货款：￥<b>0.0</b></h5>
    </div>
    <div class="tablehead">
 
     <div class="fixed">
      <div class="tabnav">
       <ul>
-       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">结算利润明细</li>
-       <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">订单付款明细</li>
+       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">货款明细</li>
        <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">提现明细</li>
       </ul>
      </div>
@@ -71,7 +70,7 @@
   components:{tnhead},
   data ()  {
    return {
-    headname:'利润',
+    headname:'我的货款',
     activeName: 'first',
     datanumber:0,
     showstatus:'',

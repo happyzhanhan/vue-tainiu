@@ -71,9 +71,9 @@
       <div class="btnlistbox" >
         <div class="linebtn">
           <span class="btnblock">
-            <router-link to="/profit">
+            <router-link to="/wallet">
               <i><img src="../assets/icon-01.png" alt=""/></i>
-              <b>查看利润</b>
+              <b>我的钱包</b>
             </router-link>
           </span>
           <span class="btnblock">
@@ -150,7 +150,7 @@
     },
   computed:{
     turl:function(){
-      return 'http://localhost:8089/register?tid='+this.uid;
+      return 'http://tainiu.yggx.com/index.php/index/index/index#/register?tid='+this.uid;
     },
   },
     methods:{

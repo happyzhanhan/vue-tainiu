@@ -17,7 +17,7 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入用户名/手机号" v-model="username" />
+    <input type="number"  autofocus placeholder="请输入用户名/手机号" v-model="username" />
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
     <input type="password" placeholder="请输入密码" v-model="password" />

@@ -17,7 +17,7 @@
 
   <div class="form">
    <div class="linebox" :class="{'success':isSuccess}">
-    <input type="text"  autofocus placeholder="请输入手机号码" v-model="username" />
+    <input type="number"  autofocus placeholder="请输入手机号码" v-model="username" />
    </div>
    <div class="linebox" :class="{'success':isSuccess2}">
     <input type="text" placeholder="请输入验证码" v-model="verification" />
@@ -137,7 +137,7 @@
   methods:{
    getCode:function(){
 
-    var reg=/^(((13[0-9]{1})|(15[0-9]{1})|(18[0-9]{1}))+\d{8})$/;
+    var reg=/^1\d{10}$/;
     if(reg.test(this.telephone)){
      this.$message({
       message: '手机格式不正确！',

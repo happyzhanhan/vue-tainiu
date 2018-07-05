@@ -24,15 +24,18 @@ import Orderdetail from '@/components/Orderdetail'
 import Setpersonal from '@/components/Setpersonal'
 import Forgetpaypassword from '@/components/Forgetpaypassword'
 import Sendopinion from '@/components/Sendopinion'
+import Wallet from '@/components/Wallet'
+import Balance from '@/components/Balance'
+import Earnings from '@/components/Earnings'
 
 Vue.use(Router)
 
 export default new Router({
-  mode:'history',
-  base: '/vueweb',
+  //mode:'history',
+  //base: '/vueweb',
   routes: [
     { path: '*',
-      component: Home
+      component: Register
     },
     {
       path: '/',
@@ -138,6 +141,18 @@ export default new Router({
       path:'/sendopinion',
       name:'Sendopinion',
       component:Sendopinion,
+    },{
+      path:'/wallet',
+      name:'Wallet',
+      component:Wallet,
+    },{
+      path:'/balance',
+      name:'Balance',
+      component:Balance,
+    },{
+      path:'/earnings',
+      name:'Earnings',
+      component:Earnings,
     }
   ],
   scrollBehavior (to, from, savedPosition) {
