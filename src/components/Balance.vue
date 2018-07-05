@@ -24,7 +24,7 @@
 
     <div class="tabcontent">
      <div class="showno  animated fadeIn" v-if="datanumber==0 || datanumber==null">
-      <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:100px;"/>
+      <img src="../assets/noimg.jpg" alt="空数据" width="50%" style="margin-top:50px;"/>
       <p>没有数据哦！~</p>
      </div>
      <table  v-if="datanumber!=0">

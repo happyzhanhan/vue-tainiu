@@ -298,6 +298,7 @@
                  type: 'success',
                  customClass:'black'
              });
+             this.$router.push({path:'/order'});
              }else{
                  this.$message({
                      message: '错误：'+res.data.message,
