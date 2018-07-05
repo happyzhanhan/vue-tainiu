@@ -110,7 +110,7 @@
           </span>
           <span class="btnblock">
             <router-link to="/message">
-              <i><img src="../assets/icon-07.png" alt=""/></i>
+              <i><el-badge :value="12" class="item"><img src="../assets/icon-07.png" alt=""/></el-badge></i>
               <b>我的消息</b>
             </router-link>
           </span>
@@ -422,7 +422,7 @@
       em{
         width:100%;
         display:block;
-        color:d9160b;
+        color:#d9160b;
         font-size:14px;
         font-style:normal;
         font-weight:600;
@@ -452,8 +452,8 @@
     box-sizing:border-box;
     .linebtn{
       width:100%;
-      margin-bottom:8px;
-      dispaly:flex;
+      margin-bottom:8px;/*
+      dispaly:flex;*/
       flex-direction: column;
       align-items: stretch;
       justify-content: space-around;
@@ -470,10 +470,10 @@
             width:100%;
             text-align:center;
             display:inline-block;
+            padding:12px 0;
             img{
               width:24px;
               height:24px;
-              margin:12px auto;
               display:inline-block;
             }
           }

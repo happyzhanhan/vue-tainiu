@@ -22,7 +22,7 @@
                     </span>
                 </router-link>
             </div>
-            <div class="linebox">
+            <!--<div class="linebox">
                 <router-link to="/profit">
                     <span>
                         <i><img src="../assets/question.png" alt=""/></i>
@@ -32,7 +32,7 @@
                         <i class="el-icon-arrow-right"></i>
                     </span>
                 </router-link>
-            </div>
+            </div>-->
             <div class="linebox">
                 <a href="tel:057156581013">
                     <span>
@@ -45,7 +45,7 @@
                 </a>
             </div>
             <div class="linebox">
-                <router-link to="/profit">
+                <router-link to="/sendopinion">
                     <span>
                         <i><img src="../assets/fankui.png" alt=""/></i>
                         <b>意见反馈</b>

@@ -23,6 +23,7 @@ import Selectaddress from '@/components/Selectaddress'
 import Orderdetail from '@/components/Orderdetail'
 import Setpersonal from '@/components/Setpersonal'
 import Forgetpaypassword from '@/components/Forgetpaypassword'
+import Sendopinion from '@/components/Sendopinion'
 
 Vue.use(Router)
 
@@ -133,6 +134,10 @@ export default new Router({
       path:'/forgetpaypassword',
       name:'Forgetpaypassword',
       component:Forgetpaypassword,
+    },{
+      path:'/sendopinion',
+      name:'Sendopinion',
+      component:Sendopinion,
     }
   ],
   scrollBehavior (to, from, savedPosition) {

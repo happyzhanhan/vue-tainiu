@@ -70,9 +70,6 @@
             this.getuid();
             this.getmessage();
         },
-        computed:function(){
-
-        },
         methods:{
             getuid(){
                 let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
