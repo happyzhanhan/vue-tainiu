@@ -143,7 +143,7 @@
             getallorderdetail:function(){
                 let _this = this;
                 let data = {trade_number:this.$route.query.trade_number};
-                this.axios.post('/api/index/oder/OderDetailedService.html',data).then((res)=>{
+                this.axios.post('/index.php/index/oder/OderDetailedService.html',data).then((res)=>{
                     if(res.data.code=='SUCCESS'){
                         console.log(res.data);
                         _this.trad = res.data.data.trad;

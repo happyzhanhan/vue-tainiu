@@ -56,7 +56,7 @@
                link:'aaaaaaaaaa'
               }
              console.log(data);
-              this.axios.post('/api/index/Message/MessageSendService.html',data).then((res)=>{
+              this.axios.post('/index.php/index/Message/MessageSendService.html',data).then((res)=>{
 
                  if(res.data.code=='SUCCESS'){
                     this.$message({

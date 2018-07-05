@@ -195,7 +195,7 @@
              }
              this.headname = '修改'+typename+'地址';
 
-             this.axios.post('/api/index/Address/AddressSelectService.html',{id:this.$route.query.id,uid:this.uid}).then((res)=>{
+             this.axios.post('/index.php/index/Address/AddressSelectService.html',{id:this.$route.query.id,uid:this.uid}).then((res)=>{
                  if(res.data.code=='SUCCESS'){
                     console.info('获取单条数据:');
                     console.log(res.data.data);
@@ -262,7 +262,7 @@
           console.info(data);
           let _this = this;
           let a, b, c;
-          this.axios.post('/api/index/Address/AddressService.html',data).then((res)=>{
+          this.axios.post('/index.php/index/Address/AddressService.html',data).then((res)=>{
                     console.log(res);
                   if(res.data.code=='SUCCESS'){
 
@@ -372,7 +372,7 @@
         if(_this.$route.query.type == 'update'){
             //更新
             data['id'] = _this.id;
-            this.axios.post('/api/index/Address/AddressUpDataService.html',data).then((res)=>{
+            this.axios.post('/index.php/index/Address/AddressUpDataService.html',data).then((res)=>{
                     console.log(res);
                 if(res.data.code=='SUCCESS'){
                     this.$message({
@@ -398,7 +398,7 @@
             })
         }else if(_this.$route.query.type == 'add'){
                 //新增
-                 this.axios.post('/api/index/Address/AddressAddService.html',data).then((res)=>{
+                 this.axios.post('/index.php/index/Address/AddressAddService.html',data).then((res)=>{
                      console.log(res);
                  if(res.data.code=='SUCCESS'){
                      this.$message({

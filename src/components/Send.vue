@@ -13,9 +13,9 @@
      <p class="tips">*您有新的派单，请尽快发货哦！~</p>
      <div class="tabnav">
       <ul>
-       <li class="hover">全部订单</li>
-       <li>待发货</li>
-       <li>已发货</li>
+       <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">全部订单</li>
+       <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">待发货</li>
+       <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">已完成</li>
       </ul>
      </div>
     </div>
@@ -79,6 +79,7 @@ export default{
    headstyle:'whitetop',
    uid:1,
    ordernumber:0,
+   showstatus:'',
    orderlist:{
 
    },
@@ -109,7 +110,7 @@ export default{
   getallorderlist:function(){
      let _this = this;
      let data = {uid:this.uid,};
-     this.axios.post('/api/index/oder/OderListService.html',data).then((res)=>{
+     this.axios.post('/index.php/index/oder/OderSellerListService.html',data).then((res)=>{
       if(res.data.code=='SUCCESS'){
       console.log(res.data);
       _this.orderlist = res.data.data;

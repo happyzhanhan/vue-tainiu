@@ -112,7 +112,7 @@ mounted:function(){
      },
      getAjax:function () {
          let data = {}  //uid:this.uid
-         this.axios.post('/api/index/Address/AddressSelectService.html',data).then((res)=>{
+         this.axios.post('/index.php/index/Address/AddressSelectService.html',data).then((res)=>{
 
              if(res.data.code=='SUCCESS'){
                 if(res.data.num==0){
@@ -133,7 +133,7 @@ mounted:function(){
     },
     getAjaxdelete:function ($id) {
         let data = {id:$id,} //uid:parseInt(this.uid)
-        this.axios.post('/api/index/Address/AddressDeleteService.html',data).then((res)=>{
+        this.axios.post('/index.php/index/Address/AddressDeleteService.html',data).then((res)=>{
 
             if(res.data.code=='SUCCESS'){
 

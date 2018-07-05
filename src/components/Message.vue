@@ -82,7 +82,7 @@
             getmessage:function(){
                     let _this = this;
                     let data = {receiver_uid:this.uid,};
-                    this.axios.post('/api/index/Message/MessageSelectService.html',data).then((res)=>{
+                    this.axios.post('/index.php/index/Message/MessageSelectService.html',data).then((res)=>{
                         if(res.data.code=='SUCCESS'){
                         _this.msglist = res.data.data;
                         _this.msgnum = res.data.num;

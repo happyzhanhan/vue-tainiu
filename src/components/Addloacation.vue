@@ -321,7 +321,7 @@
           console.info(data);
           let _this = this;
           let a, b, c;
-          this.axios.post('/api//index/Address/AddressService.html',data).then((res)=>{
+          this.axios.post('/index.php//index/Address/AddressService.html',data).then((res)=>{
                     console.log(res);
                   if(res.data.code=='SUCCESS'){
 

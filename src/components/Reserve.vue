@@ -223,7 +223,7 @@
      getproduct:function(){
              let _this = this;
              let data = {rule_id:this.rule_id};
-             this.axios.post('/api/index/Product/ProductSelectService.html',data).then((res)=>{
+             this.axios.post('/index.php/index/Product/ProductSelectService.html',data).then((res)=>{
                  if(res.data.code=='SUCCESS'){
                  _this.product = res.data.data.product;
                  _this.product_rule = res.data.data.product_rule;
@@ -245,7 +245,7 @@
     getaddress:function(){
         let _this = this;
         let data = {uid:this.uid,default_addr:'1',addr_type:'0'};
-        this.axios.post('/api/index/Address/AddressSelectService.html',data).then((res)=>{
+        this.axios.post('/index.php/index/Address/AddressSelectService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
                 if(res.data.num>0){
                     _this.addressshow = true;
@@ -291,7 +291,7 @@
 
         /* console.log(data);
          return;*/
-         this.axios.post('/api/index/Oder/OderGenerateService.html',data).then((res)=>{
+         this.axios.post('/index.php/index/Oder/OderGenerateService.html',data).then((res)=>{
              if(res.data.code=='SUCCESS'){
              this.$message({
                  message: '订单提交成功！',

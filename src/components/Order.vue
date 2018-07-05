@@ -116,7 +116,7 @@ export default{
   getallorderlist:function(){
         let _this = this;
         let data = {};
-        this.axios.post('/api/index/oder/OderListService.html',data).then((res)=>{
+        this.axios.post('/index.php/index/oder/OderBuyerListService.html',data).then((res)=>{
          if(res.data.code=='SUCCESS'){
          _this.orderlist = res.data.data;
          _this.ordernumber = res.data.arr_length;

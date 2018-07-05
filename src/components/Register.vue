@@ -175,7 +175,7 @@
    getverify:function(){
       let data = {username:this.username};
       let _this = this;
-      this.axios.post('/api/index/login/RegisterPhoneService.html',data).then((res)=>{
+      this.axios.post('/index.php/index/login/RegisterPhoneService.html',data).then((res)=>{
         if(res.data.code=='SUCCESS'){
           this.$message({
            message: '发送成功！',
@@ -201,7 +201,7 @@
 
      postregister:function(){
         let data = {username:this.username,password:this.password,verification:this.verification,commend_id:this.commendid}
-        this.axios.post('/api/index/login/RegisterService.html',data).then((res)=>{
+        this.axios.post('/index.php/index/login/RegisterService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
                  this.$message({
                   message: '注册成功！',
