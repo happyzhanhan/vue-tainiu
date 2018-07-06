@@ -53,36 +53,18 @@
                 <table  v-if="datanumber!=0 ">
                     <thead>
                     <tr>
+                        <th>序号</th>
                         <th width="40%">日期</th>
                         <th>用户</th>
-                        <th>订单金额</th>
+                        <th>订单利润</th>
                     </tr>
                     </thead>
                     <tbody>
-                    <tr>
-                        <td>2018-06-12 16:00:22</td>
-                        <td>150***1541</td>
-                        <td>1065.0</td>
-                    </tr>
-                    <tr>
-                        <td>2018-06-12 16:00:22</td>
-                        <td>150***1541</td>
-                        <td>15.0</td>
-                    </tr>
-                    <tr>
-                        <td>2018-06-12 16:00:22</td>
-                        <td>150***1541</td>
-                        <td>60.0</td>
-                    </tr>
-                    <tr>
-                        <td>2018-06-12 16:00:22</td>
-                        <td>150***1541</td>
-                        <td>8520.0</td>
-                    </tr>
-                    <tr>
-                        <td>2018-06-12 16:00:22</td>
-                        <td>150***1541</td>
-                        <td>4645.5</td>
+                    <tr v-for="(order,index) in teamorderlist">
+                        <td>{{index+1}}</td>
+                        <td>{{order.add_time}}</td>
+                        <td>{{order.buyerid}}</td>
+                        <td>{{order.profit}}</td>
                     </tr>
 
                     </tbody>
@@ -100,12 +82,45 @@
         name: 'Adresslist',
         components: {tnhead},
         data()
-    {
-        return {
-            headname: '团队订单',
-            datanumber:0,
-        }
-    }
+        {
+            return {
+                headname: '团队订单',
+                datanumber:0,
+                teamorderlist:{},
+            }
+        },
+        created:function(){
+            this.getAjaxteamorder();
+        },
+        methods: {
+            getAjaxteamorder:function () {
+                let data = {};
+                let _this = this;
+                this.axios.post('/index.php/index/My_manage/MyOderTeamListService.html',data).then((res)=>{
+
+                    if(res.data.code=='SUCCESS'){
+                        _this.datanumber = res.data.data.total;
+                        _this.teamorderlist = res.data.data.rows;
+
+                    }else{
+                        this.$message({
+                            message: '获取失败：'+res.data.message,
+                            type: 'error',
+                            customClass:'black'
+                        });
+                    }
+                },(res)=>{
+                    this.$message({
+                            message: '系统错误！',
+                            type: 'error',
+                            customClass:'black'
+                        });
+                        console.log(res);
+                 })
+            },
+
+
+        },
     }
 </script>
 

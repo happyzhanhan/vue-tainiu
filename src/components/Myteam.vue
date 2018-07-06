@@ -8,13 +8,13 @@
         <div class="teambox">
             <div class="teamnumber">
                 <p>团队人数</p>
-                <h2>0</h2>
+                <h2>{{datanumber}}</h2>
             </div>
             <div class="searchbox">
                 <div class="searchbar">
                     <div class="el-icon-search"></div>
                     <div class="input">
-                        <input type="text" placeholder="搜索用户名" />
+                        <input type="text" placeholder="搜索用户名" v-model="searchname"/>
                     </div>
                 </div>
                 <div class="timebar">
@@ -33,71 +33,18 @@
                 <table v-if="datanumber!=0">
                     <thead>
                         <tr>
+                            <th>序号</th>
                             <th width="40%">日期</th>
                             <th>用户</th>
                             <th>角色</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
-                        </tr>
-                        <tr>
-                            <td>2018-06-12 16:00:22</td>
-                            <td>150***1541</td>
-                            <td>区代</td>
+                        <tr v-for="(person,index) in myteam"  v-if="person.username==searchname || searchname=='' ">
+                            <td>{{index+1}}</td>
+                            <td>{{person.reg_time}}</td>
+                            <td>{{getphonenumber(person.username)}}</td>
+                            <td>{{getrulename(person.rule_id)}}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -113,13 +60,61 @@
         name: 'Adresslist',
         components: {tnhead},
         data()
-    {
-        return {
-            headname: '我的团队',
-            headstyle: 'whitetop',
-            datanumber:0,
-        }
-    }
+        {
+            return {
+                headname: '我的团队',
+                headstyle: 'whitetop',
+                datanumber:0,
+                searchname:'',
+            }
+        },
+        created:function(){
+            this.getAjaxmyteam();
+        },
+        methods: {
+            getAjaxmyteam:function () {
+                let data = {};
+                let _this = this;
+                    this.axios.post('/index.php/index/My_manage/MyTeamService.html',data).then((res)=>{
+
+                        if(res.data.code=='SUCCESS'){
+                            _this.datanumber = res.data.data.total;
+                            _this.myteam = res.data.data.rows;
+                        }else{
+                            this.$message({
+                                message: '获取失败：'+res.data.message,
+                                type: 'error',
+                                customClass:'black'
+                            });
+                        }
+                    },(res)=>{
+                        this.$message({
+                            message: '系统错误！',
+                            type: 'error',
+                            customClass:'black'
+                        });
+                        console.log(res);
+                    })
+            },
+            getphonenumber:function(phone){
+                return phone.substr(0, 3) + '****' + phone.substr(7);
+            },
+            getrulename:function(id){
+                switch(parseFloat(id)){                                            //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
+                    case 1:return '区域代理';
+                        break;
+                    case 2:return '一级代理';
+                        break;
+                    case 3:return '二级代理';
+                        break;
+                    case 4:return '门    店';
+                        break;
+                    default:return '新用户';
+                        break;
+                }
+            },
+
+        },
     }
 </script>
 

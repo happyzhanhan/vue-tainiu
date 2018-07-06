@@ -12,7 +12,7 @@
 
             <div class="moreblock">
                 <h4>复制链接发给好友，注册完成即可加入您的团队</h4>
-                <p><b>{{turl}}</b><el-button type="button"
+                <p><b class="link">{{turl}}</b><el-button type="button"
                                                            v-clipboard:copy="turl"
                                                            v-clipboard:success="onCopy"
                                                            v-clipboard:error="onError" size="mini" round>复制</el-button></p>
@@ -117,6 +117,17 @@
         background: #f5f5f5;
     }
 
+    b.link{
+        width: 200px;
+        overflow: hidden;
+        overflow: hidden;
+        text-overflow:ellipsis;
+        white-space: nowrap;
+        display: inline-block;
+        float: left;
+        line-height: 30px;
+
+    }
     .adresslistbox{
         height:94vh;
         background:url('../assets/tuijianbg.jpg') #ff5335 no-repeat;
@@ -146,8 +157,9 @@
             h4{
                 color:#5c1115;
                 line-height:30px;
-                text-align:left;
-                padding:0 20px;
+                text-align:center;
+                padding:0 10px;
+                font-size:10px;
                 &.tcenter{
                     text-align:center;
                  }

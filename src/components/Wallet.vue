@@ -7,18 +7,18 @@
         <div class="profithead">
             <tnhead :headname="headname"></tnhead>
             <router-link to="/balance">
-                <h2>0.00</h2>
+                <h2>{{balance.money}}</h2>
                 <p>账户余额(元)</p>
             </router-link>
             <!--<router-link to="/withdrawal"><span class="btnyellow">我要提现</span></router-link>-->
-            <p class="bzjshow"><img src="../assets/bzj.png" alt="" width="14px" style="margin-right: 5px;"/>已缴纳保证金：10000.0</p>
+            <p class="bzjshow" v-if="bzj.money>0"><img src="../assets/bzj.png" alt="" width="14px" style="margin-right: 5px;"/>已缴纳保证金：{{bzj.money}}</p>
             <div class="listall">
                 <div class="part">
                     <router-link to="/earnings">
                         <span><img src="../assets/wallet.png" alt=""></span>
             <span>
                 <p>货款余额</p>
-                <p><b>￥</b><em>0.00</em></p>
+                <p><b>￥</b><em>{{goodspayment.money}}</em></p>
             </span>
                     </router-link>
                 </div>
@@ -27,7 +27,7 @@
                         <span><img src="../assets/icon-moneymore.png" alt=""></span>
              <span>
                  <p>利润余额</p>
-                 <p><b>￥</b><em>0.00</em></p>
+                 <p><b>￥</b><em>{{profit.money}}</em></p>
              </span>
                     </router-link>
                 </div>
@@ -97,6 +97,7 @@
             activeName: 'first',
             datanumber:0,
             showstatus:'',
+
             tableData: [{
                 date: '2016-05-02 14:50:30',
                 name: '订单结算',
@@ -106,12 +107,61 @@
                 name: '订单结算',
                 money: '453.0'
             }],
+
+            goodspayment:{
+                money:0.0,
+            },
+            balance:{
+                money:0.0,
+            },
+            profit:{
+                money:0.0,
+            },
+            bzj:{
+                money:0.0,
+            }
+
+
         }
     },
+    created:function(){
+        this.getAjaxwallet();
+    },
     methods: {
-        handleClick(tab, event) {
-            console.log(tab, event);
-        }
+        getAjaxwallet:function () {
+                let data = {};
+                let _this = this;
+                this.axios.post('/index.php/index/My_manage/WalletSelectService.html',data).then((res)=>{
+
+                    if(res.data.code=='SUCCESS'){
+                        let databaserows = res.data.data.wallet.rows;
+                        for(var i in databaserows){
+                            if(databaserows[i].type=='PAYMENT_FOR_GOODS'){
+                                _this.goodspayment.money = databaserows[i].total_money;
+                            }else if(databaserows[i].type=='BALANCE'){
+                                _this.balance.money = databaserows[i].total_money;
+                            }else if(databaserows[i].type=='PROFIT'){
+                                _this.profit.money = databaserows[i].total_money;
+                            }
+                        }
+
+
+                    }else{
+                        this.$message({
+                            message: '获取失败：'+res.data.message,
+                            type: 'error',
+                            customClass:'black'
+                        });
+                    }
+            },(res)=>{
+                this.$message({
+                    message: '系统错误！',
+                    type: 'error',
+                    customClass:'black'
+                });
+                console.log(res);
+            })
+        },
     }
     }
 </script>

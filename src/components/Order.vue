@@ -13,8 +13,8 @@
    <div class="tabnav">
     <ul>
      <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">全部订单</li>
-     <li :class="{'hover':showstatus ==1}" @click="showstatus=1 ">待收货</li>
-     <li :class="{'hover':showstatus ==4}" @click="showstatus=4 ">已完成</li>
+     <li :class="{'hover':showstatus =='PAY_WAIT_TAKE'}" @click="showstatus='PAY_WAIT_TAKE' ">待接单</li>
+     <li :class="{'hover':showstatus =='SEND_WAIT_RECEIVE'}" @click="showstatus='SEND_WAIT_RECEIVE' ">待收货</li>
     </ul>
    </div>
   </div>
@@ -26,14 +26,14 @@
 
  <div class="tabcontent" v-for="(order,index) in orderlist" >
 
-     <div v-if="order.status==showstatus">
+     <div v-if="order.status==showstatus || showstatus==''">
          <div class="top">
            <span>
             <p>订单编号：{{order.trade_number}}</p>
             <p>下单时间：{{order.add_time}}</p>
            </span>
            <span>
-            <b>待发货{{order.status}}</b>
+            <b class="colorgreen">{{switchstatus(order.status)}}</b>
            </span>
          </div>
          <div class="product">
@@ -56,7 +56,7 @@
           共{{order.product_amount}}件商品，收货款金额￥ <big>{{order.amount_pay}}</big>
          </div>
          <div class="btnline">
-          <button class="red" @click="tosendproduct">确认收货</button>
+          <button class="red" v-if="order.status=='SEND_WAIT_RECEIVE' " @click="receivegoods(order.trade_name)">确认收货</button>
           <button @click="toshowdetail(index)">查看详情</button>
          </div>
      </div>
@@ -78,7 +78,7 @@ export default{
  components:{tnhead},
  data(){
   return{
-   headname:'订单',
+   headname:'我的订单',
    headstyle:'whitetop',
    uid:1,
    ordernumber:0,
@@ -104,6 +104,37 @@ export default{
 
       console.log('trade_number:'+this.orderlist[index].trade_number);
       this.$router.push({path:'/orderdetail',query:{trade_number:this.orderlist[index].trade_number} });
+  },
+     /*
+     * 状态:
+      WAIT_PAY 待付款,
+      PAY_WAIT_TAKE 已付款待接单,
+      TAKE_WAIT_SEND已接单待发货,
+      SEND_WAIT_RECEIVE 已发货待收货,
+      RECEIVE_PAYFOR_SELLER 已收货待结算货款, 给卖家结算货款，给推荐人结算利润，
+      FINISH 订单完成，
+      CANCEL 订单被取消
+     *
+     * */
+  switchstatus:function(status){
+      switch(status){
+          case 'WAIT_PAY':return '未付款';
+            break;
+          case 'PAY_WAIT_TAKE':return '待接单';
+              break;
+          case 'TAKE_WAIT_SEND':return '待发货';
+              break;
+          case 'SEND_WAIT_RECEIVE':return '待收货';
+              break;
+          case 'RECEIVE_PAYFOR_SELLER':return '已完成';
+              break;
+          case 'FINISH':return '已关闭';
+            break;
+          case 'CANCEL':return '订单被取消';
+            break;
+          default: return '未知';
+            break;
+      }
   },
   getuid(){
    let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
@@ -135,6 +166,51 @@ export default{
         });
        })
   },
+     receivegoods:function(number){
+         let _this = this;
+         let data = {trade_name:number};
+
+             this.$confirm('请收到货后再确认收货！点击后将不可更改！', '提示', {
+                 confirmButtonText: '确定',
+                 cancelButtonText: '取消',
+                 type: 'warning'
+             }).then(() => {
+
+                 this.axios.post('/index.php/index/Oder/OderCollectService.html',data).then((res)=>{
+                        if(res.data.code=='SUCCESS'){
+                             this.$message({
+                                 type: 'success',
+                                 message: '确认收货成功!',
+                                 customClass:'black'
+                             });
+                             _this.getallorderlist(); //刷新数据
+                         }else{
+                             this.$message({
+                                 message: '错误：'+res.data.message,
+                                 type: 'error',
+                                 customClass:'black'
+                             });
+                         };
+                 },(res)=>{
+                     this.$message({
+                         message: '系统错误！',
+                         type: 'error',
+                         customClass:'black'
+                     });
+                 })
+
+            }).catch(() => {
+                 this.$message({
+                         type: 'info',
+                         message: '已取消',
+                         customClass:'black'
+                 });
+             });
+
+
+
+     },
+
  }
 
 }
@@ -153,6 +229,9 @@ export default{
  top:0;
  z-index:2;
 }*/
+.colorgreen{
+    color:green;
+}
  .paidian{
  width:100%;
  margin-top:3px;

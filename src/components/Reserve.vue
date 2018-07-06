@@ -4,6 +4,45 @@
 
 <template>
  <div class="send">
+     <div class="passwordbox animated fadeIn" v-if="showgrybox==true" >
+         <div class="kongblock " @click="showgrybox = false,showpay=true">
+
+         </div>
+         <div class="passwordselectbox animated fadeInUp">
+             <div class="partone" v-show="showpay==true">
+                 <h4 class="alerttitle"><b>确认支付</b><i class="el-icon-close" @click="showgrybox = false"></i></h4>
+                 <div class="postpasswordbox">
+                    <h2>￥{{needpay}}</h2>
+                    <p><b>订单名称</b><em>{{this.product[this.productId].name}}…</em></p>
+                    <p @click="showpay=false"><b>付款方式</b><em>{{switchwallettype(type)}} <i class="el-icon-arrow-right"></i></em></p>
+
+                     <div class="linebox">
+                         <label for="name">支付密码：</label>
+                         <input type="password" placeholder="请填写支付密码" v-model="paypassword"/>
+                         <span><i class="el-icon-question" @click="Toforgetpassword"></i></span>
+                     </div>
+
+                     <div class="btnbox mt-30 bottom20">
+                         <button :class="{'success':issuccess}" @click="postorder" :disabled="!issuccess">立即付款</button>
+                     </div>
+                 </div>
+             </div>
+             <div class="parttwo "  v-if="showpay==false">
+                 <h4 class="alerttitle" @click="showpay=true" ><i class="el-icon-arrow-left"></i><b>选择支付钱包</b></h4>
+                 <div class="postpasswordbox">
+
+                     <p @click="type='BALANCE',showpay= true"><b><img src="../assets/money.png" alt="" width="20px"> 账户余额</b><em><i v-if="type=='BALANCE'" class="el-icon-check"></i></em></p>
+
+                     <p @click="type='PAYMENT_FOR_GOODS',showpay= true"><b><img src="../assets/money.png" alt="" width="20px"> 货款余额</b><em><i v-if="type=='PAYMENT_FOR_GOODS'" class="el-icon-check"></i></em></p>
+
+                     <p @click="type='PROFIT',showpay= true"><b><img src="../assets/money.png" alt="" width="20px"> 利润余额</b><em><i v-if="type=='PROFIT'" class="el-icon-check"></i></em></p>
+
+                 </div>
+             </div>
+         </div>
+     </div>
+
+
   <div class="sendhead">
    <tnhead :headname="headname" :headstyle ="headstyle"></tnhead>
 
@@ -51,17 +90,18 @@
             </span>
           </div>
 
-         <span class="price" v-for="price in product_rule" v-if="price.product_id==pro.id">
-              <s>￥{{pro.product_price}}</s><em >￥{{price.product_price}}</em>
-         </span>
+             <span class="price">
+                  <s>￥{{pro.product_price}}</s>
+                 <em >￥{{pro.rule_price}}</em>
+             </span>
        </label>
       </div>
 
    </div>
 
    <div class="numberline">
-    <b>选择订货数量：(整10倍订购)</b>
-    <el-input-number v-model="buynumber" size="mini" :min="50" :step='10' label="描述文字" ></el-input-number>
+    <b>选择订货数量：</b>
+    <el-input-number v-model="buynumber" size="mini" :min="50" :step='1' label="描述文字" ></el-input-number>
    </div>
 
   <!-- <div class="tabblock" v-show="rule_id>4">
@@ -79,17 +119,14 @@
     <p>应付金额：<span class="pricebox"><b>￥</b><big>{{needpay}}</big></span></p>
    </div>
 
-  <div class="linebox">
-      <label for="name">支付密码：</label>
-      <input type="password" placeholder="请填写支付密码" v-model="paypassword"/>
-      <span><i class="el-icon-success" :class="{'success':isSuccess2}"></i></span>
-  </div>
 
    <div class="btnbox mt-30">
-    <button :class="{'success':issuccess}" @click="postorder" :disabled="!issuccess">下 单</button>
+    <button :class="{'success':true}" @click="showgrybox = true">下 单</button>
    </div>
   </div>
  </div>
+
+
 </template>
 
 <script>
@@ -102,6 +139,9 @@
   return{
    headname:'泰牛订货系统',
    headstyle:'whitetop',
+   showgrybox:false,
+      showpay:true,
+      type:'BALANCE',
 
    num1: 1,
    uid:0,
@@ -169,25 +209,18 @@
  },
  computed:{
      text:function(){
-         return "您已开通【"+this.getrulename(this.rule_id)+"】权限，赶紧来下单吧！~"
+         return "您已开通【"+this.getrulename(this.rule_id)+"】权限，赶紧来下单吧！"
      },
      needpay:function(){
-         let sum;
-         if(this.product_rule.length>0){
-             for(var i in this.product_rule){
-                 if(this.product[this.productId].id == this.product_rule[i].product_id){
-                     sum = parseFloat(this.product_rule[i].product_price)*this.buynumber;
-                 }
-             }
-             return sum;
-         }else{
-             return parseFloat(this.product[this.productId].product_price)*this.buynumber;
-         }
+         return parseFloat(this.product[this.productId].rule_price)*this.buynumber;
      },
  },
  methods:{
      Toadresslist(){
          this.$router.push({path:'/adresslist'})
+     },
+     Toforgetpassword(){
+         this.$router.push({path:'/forgetpaypassword'})
      },
      getrulename:function(id){
          switch(parseFloat(id)){                                            //角色： 0 新用户，1 区域代理，2 一级代理，3 二级代理，4 门店
@@ -200,6 +233,18 @@
              case 4:return '门    店';
                  break;
              default:return '新用户';
+                 break;
+         }
+     },
+     switchwallettype:function(type){
+         switch(type){
+             case 'BALANCE':return '账户余额';
+                break;
+             case 'PAYMENT_FOR_GOODS':return '货款余额';
+                 break;
+             case 'PROFIT':return '利润余额';
+                 break;
+             dafult :return '未知';
                  break;
          }
      },
@@ -226,7 +271,6 @@
              this.axios.post('/index.php/index/Product/ProductSelectService.html',data).then((res)=>{
                  if(res.data.code=='SUCCESS'){
                  _this.product = res.data.data.product;
-                 _this.product_rule = res.data.data.product_rule;
              }else{
                  this.$message({
                      message: '错误：'+res.data.message,
@@ -322,6 +366,107 @@
 </script>
 
 <style lang="scss" scoped>
+
+    @-moz-keyframes zuo /* Firefox */
+    {
+        from {transform: translate(100vw,0);}
+        to {transform: translate(0,0);}
+    }
+
+    @-moz-keyframes you /* Firefox */
+    {
+        from {transform: translate(0,0);}
+        to {transform: translate(100vw,0);}
+    }
+
+    .passwordbox{
+        width:100%;
+        height:100vh;
+        background:rgba(0,0,0,.6);
+        position:fixed;
+        top:0;
+        z-index:999;
+
+        .partoneani{
+            animation:zuo 1s infinite;
+        }
+        .parttwoani{
+            animation:you 1s infinite;
+        }
+
+        .kongblock{
+            position:fixed;
+            top:0;
+            z-index:9999;
+            width:100%;
+            height:50vh;
+        }
+
+        .passwordselectbox{
+            position:fixed;
+            bottom:0;
+            z-index:9999;
+            width:100%;
+            height:50vh;
+            overflow-y:hidden;
+            background:#fff;
+
+            .alerttitle{
+                position:relative;
+                line-height:30px;
+                font-size:12px;
+                color:#666;
+                border-bottom:1px solid #eee;
+                i.el-icon-close{position:absolute;top:5px;right:10px;;z-index:9; font-size:18px;}
+                i.el-icon-arrow-left{position:absolute;top:5px;left:10px;;z-index:9; font-size:18px;}
+            }
+            .postpasswordbox{
+                box-sizing: border-box;
+                padding:35px 12px;
+                display:block;
+                height:50vh;
+                margin-top:-30px;
+                 h2{font-size: 24px;}
+                p{
+                    display: flex;
+                    flex-direction: row;
+                    justify-items: space-between;
+                    align-items:center;
+                    width: 100%;
+                    box-sizing: border-box;
+                    padding:0 20px;
+                    line-height:40px;
+                    border-bottom:1px solid #eee;
+                    b,em{display: inline-block; width: 50%;}
+                    b{
+                        float: left;
+                        text-align: left;
+                        img{
+                            line-height: 40px;
+                            margin-top:10px;
+                            margin-right:10px;
+                        }
+                    }
+                    em{
+                        float: right;
+                        text-align: right;
+                    }
+                    i.el-icon-check{
+                        color:green;
+                    }
+
+                }
+                .bottom20{
+                    position:absolute;
+                    bottom:20px;
+                    width: 100%;
+                    left:0;
+                    z-index: 999;
+                }
+            }
+        }
+    }
+
     .linebox{
         display:flex;
         flex-direction: row ;
@@ -333,7 +478,7 @@
         background:#fff;
         border-bottom:1px solid #f2f2f2;
         line-height:50px;
-    margin-top:5px;
+        margin-top:5px;
 
     .el-icon-success{
     &.success{
@@ -348,7 +493,7 @@
     label{width:85px; text-align:left; font-size:14px;
     &.w100{width:100px;}
     }
-    input{width:80%; text-indent:14px;}
+    input{width:60%; text-indent:14px;}
     h6{
         width:80%;
         text-align:left;
@@ -359,9 +504,11 @@
         font-size:14px;
     }
     span{
+    width:20%;
 
     i{
         float:right;
+        margin-left:20px;
         color:#f4f4f4;
     &.el-icon-arrow-right{
          color:#a5a5a5;
@@ -389,6 +536,12 @@
   height:94vh;
   padding-top:6vh;
   background:#f5f5f5;
+ }
+
+ .el-icon-question{
+     color:red!important;
+     font-size: 20px;
+     float: right;
  }
 
  .sendnone{
@@ -420,13 +573,15 @@
             }
             .productname{
              text-align:left;
+             font-size:12px;
              p:nth-child(1){color:#000;font-weight:600;}
              p:nth-child(2){color:#a1a1a1;}
             }
 
           }
           .price{
-          s{color:#999;}
+          width:20%;
+          s{color:#999; width: 100%;}
            em{
             font-style:normal;
             color:#ef1d12;
@@ -517,4 +672,9 @@
   background:#fff;
      margin-bottom:5px;
  }
+
+    .fadeIn{
+        transition-delay: 0s!important;
+        -webkit-animation-delay:0s!important;
+    }
 </style>

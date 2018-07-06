@@ -110,7 +110,7 @@
           </span>
           <span class="btnblock">
             <router-link to="/message">
-              <i><el-badge :value="12" class="item"><img src="../assets/icon-07.png" alt=""/></el-badge></i>
+              <i><el-badge :value="1" class="item"><img src="../assets/icon-07.png" alt=""/></el-badge></i>
               <b>我的消息</b>
             </router-link>
           </span>
