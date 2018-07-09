@@ -56,7 +56,7 @@
           共{{order.product_amount}}件商品，收货款金额￥ <big>{{order.amount_pay}}</big>
          </div>
          <div class="btnline">
-          <button class="red" v-if="order.status=='SEND_WAIT_RECEIVE' " @click="receivegoods(order.trade_name)">确认收货</button>
+          <button class="red" v-if="order.status=='SEND_WAIT_RECEIVE' " @click="receivegoods(order.trade_number)">确认收货</button>
           <button @click="toshowdetail(index)">查看详情</button>
          </div>
      </div>

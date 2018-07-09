@@ -30,7 +30,7 @@
                             <div class="colbox">
                                 <div class="rowbox">
                                     <span><h4>{{msgtypyname(msg.type)}}</h4><p>{{msg.add_time}}</p></span>
-                                    <span v-if="msg.link!=''&& msg.link != null && msg.link !='null' "><a :href="msg.link">详情{{msg.link}}▶</a></span>
+                                    <span v-if="msg.link!=''&& msg.link != null && msg.link !='null' "><a :href="msg.link">详情▶</a></span>
                                 </div>
                                 <div class="grybox">
                                     <h3>{{msg.title}}</h3>

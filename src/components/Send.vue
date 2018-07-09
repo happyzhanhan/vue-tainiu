@@ -26,39 +26,41 @@
   </div>
 
     <div class="tabcontent" v-for="order in orderlist">
-       <div class="top">
-        <span>
-         <p>订单编号：{{order.trade_number}}</p>
-         <p>下单时间：{{order.add_time}}</p>
-        </span>
-        <span>
-         <b>{{switchstatus(order.status)}}</b>
-        </span>
-       </div>
-     <div class="product">
-      <span><img :src="order.product_pic_url" alt=""/></span>
-        <span>
-         <p><b>{{order.trade_name}}</b><em>￥{{order.product_price}}</em></p>
-         <p><b>数量：×{{order.product_amount}}</b><em></em></p>
-        </span>
-     </div>
-     <div class="location" >
-        <span>
-         <i class="el-icon-location-outline"></i>
-        </span>
-        <span>
-         <p><b>收货人：{{order.consignee}}</b><em>{{order.consignee_phone}}</em></p>
-         <p>收货地址：{{order.consignee_system_address}}{{order.consignee_detail_address}}</p>
-        </span>
-     </div>
-     <div class="moneyall">
-      共{{order.product_amount}}件商品，收货款金额￥ <big>{{order.amount_pay}}</big>
-     </div>
-       <div class="btnline">
-        <button v-if="order.status=='PAY_WAIT_TAKE'" class="red" @click="confirmTake(order.trade_number)">立即接单</button>
-        <button v-if="order.status=='TAKE_WAIT_SEND'" class="red" @click="confirmSend(order.trade_number)">立即发货</button>
-        <button v-if="order.status=='TAKE_WAIT_SEND'" @click="OderRefuseService(order.trade_number)">发不了货</button>
-       </div>
+        <div v-if="order.status==showstatus || showstatus==''">
+                   <div class="top">
+                    <span>
+                     <p>订单编号：{{order.trade_number}}</p>
+                     <p>下单时间：{{order.add_time}}</p>
+                    </span>
+                    <span>
+                     <b>{{switchstatus(order.status)}}</b>
+                    </span>
+                   </div>
+                 <div class="product">
+                  <span><img :src="order.product_pic_url" alt=""/></span>
+                    <span>
+                     <p><b>{{order.trade_name}}</b><em>￥{{order.product_price}}</em></p>
+                     <p><b>数量：×{{order.product_amount}}</b><em></em></p>
+                    </span>
+                 </div>
+                 <div class="location" >
+                    <span>
+                     <i class="el-icon-location-outline"></i>
+                    </span>
+                    <span>
+                     <p><b>收货人：{{order.consignee}}</b><em>{{order.consignee_phone}}</em></p>
+                     <p>收货地址：{{order.consignee_system_address}}{{order.consignee_detail_address}}</p>
+                    </span>
+                 </div>
+                 <div class="moneyall">
+                  共{{order.product_amount}}件商品，收货款金额￥ <big>{{order.amount_pay}}</big>
+                 </div>
+                   <div class="btnline">
+                    <button v-if="order.status=='PAY_WAIT_TAKE'" class="red" @click="confirmTake(order.trade_number)">立即接单</button>
+                    <button v-if="order.status=='TAKE_WAIT_SEND'" class="red" @click="confirmSend(order.trade_number)">立即发货</button>
+                    <button v-if="order.status=='TAKE_WAIT_SEND'" @click="OderRefuseService(order.trade_number)">发不了货</button>
+                   </div>
+           </div>
     </div>
 </div>
 
@@ -298,7 +300,7 @@ export default{
 <style lang="scss" scodep>
 .send{
  position:relative;
- height:94vh;
+ min-height:94vh;
  padding-top:6vh;
  background:#f5f5f5;
 }

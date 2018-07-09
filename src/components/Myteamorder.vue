@@ -146,7 +146,7 @@
         text-align:left;
         float:left;
         margin-top:20px;
-        margin-bottom:40px;
+        margin-bottom:18px;
         width:100%;
     }
 

@@ -333,7 +333,8 @@
 
             }
             b{
-              font-size:10px;
+              font-size:12px;
+              line-height: 16px;
               color:#fff!important;
             }
           }
@@ -435,7 +436,7 @@
         padding:1px 15px;
         margin-top:10px;
         font-size:10px;
-        line-height:14px;
+        line-height:18px;
         display:inline-block;
       }
     }
