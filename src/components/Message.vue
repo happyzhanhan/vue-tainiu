@@ -86,6 +86,7 @@
                         if(res.data.code=='SUCCESS'){
                         _this.msglist = res.data.data;
                         _this.msgnum = res.data.num;
+                        localStorage.setItem("MESSAGENUM",res.data.num);
                     }else{
                         this.$message({
                             message: '错误：'+res.data.message,
@@ -123,7 +124,7 @@
 
 <style lang="scss" scoped>
     .tainiubox {
-        padding-top: 6vh;
+        padding-top: 50px;
         height: 94vh;
         background: #f5f5f5;
     }

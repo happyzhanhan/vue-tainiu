@@ -445,7 +445,7 @@
 .withdrawal{
  background:#f2f2f2;
  font-size:12px;
- height:94vh;
+ min-height:94vh;
 }
 
 .grybox{
@@ -481,11 +481,11 @@
 
     background:#fff;
     .selectnamebox{
-        height:6vh;
+        height:50px;
         border-bottom:1px solid #ddd;
         box-sizing:border-box;
         padding:0 10px;
-        i{line-height:6vh; margin-top:0;  width:10%;display:inline-block; float:left;}
+        i{line-height:50px; margin-top:0;  width:10%;display:inline-block; float:left;}
         .topselectresult{
             width:88%;
             overflow-x:scroll;
@@ -493,7 +493,7 @@
             flex-direction:row;
             align-items:stretch;
             flex-wrap: nowrap;
-            line-height:6vh;
+            line-height:50px;
             justify-content:space-between;
             span{
                 margin-right:2px;
@@ -538,7 +538,7 @@
     }
 }
 .withdrawalform{
-        margin-top:6vh;
+        margin-top:50px;
         padding-top:10px;
 
      .linebox{

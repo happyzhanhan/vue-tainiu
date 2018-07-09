@@ -83,8 +83,8 @@
 <style lang="scss" scoped>
 .pay{
  background:#f5f5f5;
- height:94vh;
- padding-top:6vh;
+ min-height:94vh;
+ padding-top:50px;
  text-align:left;
 }
  .paytext{

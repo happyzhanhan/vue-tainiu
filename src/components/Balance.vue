@@ -104,7 +104,7 @@
  background:url('../assets/profitbg.png') #ff5134 no-repeat;
  background-size:100%;
  color:#fff;
- padding-top:6vh;
+ padding-top:50px;
 padding-bottom:5px;
  h2{
   font-size:30px;

@@ -220,7 +220,7 @@ export default{
 .send{
  position:relative;
  min-height:94vh;
- padding-top:6vh;
+ padding-top:50px;
  background:#f5f5f5;
 }
 /*
@@ -297,7 +297,7 @@ background:#fff;
   padding:10px;
   box-sizing:border-box;
   border-bottom:1px solid #f4f4f4;
-  p{color:#676767;font-size:10px;line-height:20px;}
+  p{color:#676767;font-size:12px;line-height:20px;}
   b{color:red;}
  }
  .product{
@@ -307,19 +307,20 @@ background:#fff;
   flex-direction: row;
   align-items: stretch;
   justify-content: space-between;
-  padding:10px;
+  padding:5px 10px;
   box-sizing:border-box;
 
    span{
      display:block;
     &:nth-child(1){
-      width:20%;
+      width:15%;
    img{
     border:1px solid #e2e2e2;
    }
      }
     &:nth-child(2){
-      width:80%;
+      width:85%;
+    padding-left:5px;
      }
      img{
       width:40px;
@@ -334,11 +335,15 @@ background:#fff;
       &:nth-child(2){
        color:#a1a1a1;
        font-size:10px;
-      width:100%;
- float:left;
+       width:100%;
+        float:left;
+           font-size: 12px;
 
        }
-     b{float:left!important;}
+     b{float:left!important; overflow: hidden;
+         text-overflow:ellipsis;
+         white-space: nowrap;
+       }
      em{
        float:right;
        text-align:right;
@@ -387,11 +392,13 @@ background:#fff;
  }
  .moneyall{
   line-height:40px;
+     font-size:12px;
   text-align:right;
   padding:0 10px;
  border-bottom:1px solid #f4f4f4;
   big{
-   font-weight:600;
+   font-weight:normal;
+      font-size: 16px;
   }
  }
  .btnline{
@@ -403,10 +410,11 @@ background:#fff;
    border:none;
    outline:none;
    border-radius:50px;
-   padding:5px 10px;
-   margin-top:6px;
+   padding:3px 10px 5px;
+   margin-top:9px;
    font-size:12px;
-   border:1px solid #414547;
+      line-height: 12px;
+   border:0.6px solid #414547;
    color:#414547;
    background:#fff;
    float:right;

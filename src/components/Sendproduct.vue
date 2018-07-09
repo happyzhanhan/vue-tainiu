@@ -60,8 +60,8 @@ import tnhead from '@/components/Head.vue';
 <style lang="scss" scodep>
  .send{
   position:relative;
-  height:94vh;
-  padding-top:6vh;
+  min-height:94vh;
+  padding-top:50px;
   background:#f5f5f5;
  }
 

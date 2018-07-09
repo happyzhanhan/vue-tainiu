@@ -202,7 +202,7 @@
 
 <style lang="scss" scoped>
     .tainiubox {
-        padding-top: 6vh;
+        padding-top: 50px;
         height: 94vh;
         background: #f5f5f5;
     }
@@ -343,7 +343,7 @@
         }
 
         &:nth-child(1){
-             width:20%;
+             width:15%;
              text-align:center;
         i{
             font-size:20px;
@@ -351,7 +351,7 @@
         }
         }
         &:nth-child(2){
-             width:80%;
+             width:85%;
              float:left;
              text-align:left;
          }
@@ -365,20 +365,20 @@
         flex-direction: row;
         align-items: stretch;
         justify-content: space-between;
-        padding:10px;
+        padding:5px 10px;
         box-sizing:border-box;
 
         span{
             display:block;
             &:nth-child(1){
-                 width:20%;
+                 width:15%;
                 img{
                     border:1px solid #e2e2e2;
                 }
             }
             &:nth-child(2){
-                 width:80%;
-
+                 width:85%;
+                padding-left:5px;
              }
             img{
                 width:40px;
@@ -397,7 +397,10 @@
                      float:left;
 
                  }
-                b{float:left;}
+                b{float:left; overflow: hidden;
+                    text-overflow:ellipsis;
+                    white-space: nowrap;
+                font-size:12px;}
                 em{
                     float:right;
                     text-align:right;
@@ -411,7 +414,7 @@
     background:#fff;
     margin-top:6px;
     >p{
-        font-size:10px;
+        font-size:12px;
         line-height:30px;
         display:flex;
         flex-direction:row;
@@ -419,10 +422,9 @@
         box-sizing:border-box;
         padding:0 10px;
         button{
-            border:none;
             outline:none;
-            font-size:6px;
-            line-height:14px;
+            font-size:10px;
+            line-height:10px;
             border:1px solid #ddd;
             background:#fff;
             border-radius:3px;

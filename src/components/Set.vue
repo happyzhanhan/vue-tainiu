@@ -89,7 +89,7 @@
 
 <style lang="scss" scoped>
     .tainiubox {
-        padding-top: 6vh;
+        padding-top: 50px;
         height: 94vh;
         background: #f5f5f5;
     }

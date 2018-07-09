@@ -48,7 +48,7 @@
         <div class="block">
           <router-link to="/send">
             <p>待发订单</p>
-            <em>0</em>
+            <em>{{ordernumber}}</em>
             <span>发货</span>
           </router-link>
         </div>
@@ -110,7 +110,7 @@
           </span>
           <span class="btnblock">
             <router-link to="/message">
-              <i><el-badge :value="1" class="item"><img src="../assets/icon-07.png" alt=""/></el-badge></i>
+              <i><el-badge :value="messagenumber" class="item" :hidden="messagenumber==0"><img src="../assets/icon-07.png" alt=""/></el-badge></i>
               <b>我的消息</b>
             </router-link>
           </span>
@@ -146,6 +146,8 @@
           rolername:'区域代理'
         },
         haspermissions:true,
+        messagenumber:0,
+        ordernumber:0,
       }
     },
   computed:{
@@ -154,9 +156,11 @@
     },
   },
     methods:{
+
+
        getuid(){
           let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
-          console.log(persondata);
+
           if(persondata){
             this.person.rolerid = persondata.rule_id;
             this.person.username=persondata['username'];
@@ -194,18 +198,107 @@
             customClass:'black'
           });
           console.log('无法复制文本！')
-        }
+        },
+        getallorderlist:function(){
+          let _this = this;
+          let data = {uid:this.uid,};
+          this.axios.post('/index.php/index/oder/OderSellerListService.html',data).then((res)=>{
+            if(res.data.code=='SUCCESS'){
+            let arraylist = res.data.data;
+                let orderlist = arraylist.filter(function(item){
+                return item.status=='PAY_WAIT_TAKE';   //待接单状态的数组
+              });
+              _this.ordernumber = orderlist.length;
+          }else{
+            this.$message({
+              message: '待接单数量获取失败：'+res.data.message,
+              type: 'error',
+              customClass:'black'
+            });
+          };
+        },(res)=>{
+          this.$message({
+            message: '请检查网络是否通畅？',
+            type: 'error',
+            customClass:'black'
+          });
+        })
+      },
+        getmessage:function(){
+          let _this = this;
+          let data = {receiver_uid:this.uid,};
+          this.axios.post('/index.php/index/Message/MessageSelectService.html',data).then((res)=>{
+              if(res.data.code=='SUCCESS'){
+                    let newmsgnum = res.data.num;
+                    let msgnum=JSON.parse(localStorage.getItem("MESSAGENUM"));
+                    if(msgnum==undefined){
+                      msgnum = 0;
+                    }
+                    if(newmsgnum-msgnum >0){
+                        _this.messagenumber = newmsgnum-msgnum;
+                    }else{
+                        _this.messagenumber = 0;
+                    }
+
+
+              }else{
+                this.$message({
+                  message: '消息获取失败：'+res.data.message,
+                  type: 'error',
+                  customClass:'black'
+                });
+              };
+          },(res)=>{
+            this.$message({
+              message: '请检查网络是否通畅？',
+              type: 'error',
+              customClass:'black'
+            });
+          })
+      },
+     /* getallorderlist:function(){
+        let _this = this;
+        let data = {};
+            this.axios.post('/index.php/index/oder/OderBuyerListService.html',data).then((res)=>{
+              if(res.data.code=='SUCCESS'){
+                  let orderlist = res.data.data;
+                  var myDate = new Date();
+                 let yearnum = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
+                 let monthnum = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
+                 let daynum =  myDate.getDate(); //获取当前日(1-31)
+
+
+        }else{
+              this.$message({
+                message: '错误：'+res.data.message,
+                type: 'error',
+                customClass:'black'
+              });
+            };
+          },(res)=>{
+            this.$message({
+              message: '系统错误！',
+              type: 'error',
+              customClass:'black'
+            });
+          })
+      },
+*/
 
 
     },
     created:function(){
       this.getuid();
+      this.getmessage();
+      this.getallorderlist();
+     // this.getallorderlist();
     },
 
   }
 </script>
 
 <style lang="scss" scoped>
+
   .wobble{
     animation-iteration-count:infinite;
   }
@@ -378,13 +471,13 @@
     width:96%;
     margin-left:2%;
     background:#fff;
-    border-radius:5px;
+    border-radius:15px;
     display:flex;
     flex-direction: row ;
     align-items: stretch;
     justify-content: space-around;
     box-sizing:border-box;
-    padding:8px;
+    padding:8px 0;
     .block{
       display:flex;
       flex-direction: column;
@@ -448,8 +541,8 @@
     width:96%;
     margin-left:2%;
     background:#fff;
-    border-radius:5px;
-    padding:10px;
+    border-radius:15px;
+    padding:10px 0;
     box-sizing:border-box;
     .linebtn{
       width:100%;
@@ -496,9 +589,10 @@
     top:436px;
     width:96%;
     margin-left:2%;
-    margin-top:20px;
+    margin-top:10px;
     background:#fff;
-    border-radius:5px;
+    border-radius:15px;
+    overflow:hidden;
     a{
       img{
         width:100%;

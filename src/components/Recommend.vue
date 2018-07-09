@@ -112,39 +112,39 @@
 
 <style lang="scss" scoped>
     .tainiubox {
-        padding-top: 6vh;
+        padding-top: 50px;
         min-height: 94vh;
         background: #f5f5f5;
     }
 
     b.link{
-        width: 200px;
-        overflow: hidden;
+        width: 160px;
         overflow: hidden;
         text-overflow:ellipsis;
         white-space: nowrap;
         display: inline-block;
         float: left;
         line-height: 30px;
+        color:#8a6c6c;
 
     }
     .adresslistbox{
-        height:94vh;
+        min-height:94vh;
         background:url('../assets/tuijianbg.jpg') #ff5335 no-repeat;
         background-size:100% 100vh;
         color:#fff;
     padding:30px 20px;
     box-sizing:border-box;
         h2{
-            font-size:18px;
+            font-size:20px;
             line-height:30px;
         }
         h1{
-            font-size:20px;
+            font-size:22px;
             line-height:36px;
         }
         p{
-            font-size:14px;
+            font-size:12px;
             text-align:left;
         }
 
@@ -159,7 +159,8 @@
                 line-height:30px;
                 text-align:center;
                 padding:0 10px;
-                font-size:10px;
+                font-size:14px;
+                font-weight:600;
                 &.tcenter{
                     text-align:center;
                  }

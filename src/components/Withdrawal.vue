@@ -71,11 +71,11 @@
 .withdrawal{
  background:#f2f2f2;
  font-size:12px;
- height:94vh;
+ min-height:94vh;
 }
 
 .withdrawalform{
-margin-top:6vh;
+margin-top:50px;
 padding-top:10px;
 
  .linebox{

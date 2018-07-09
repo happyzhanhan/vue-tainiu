@@ -38,11 +38,11 @@
      left:0;
      z-index:99;
   width:100%;
-  height:6vh;
+  height:50px;
   background:rgba(0,0,0,0);
   color:#fff;
   font-size:14px;
-  line-heigth:6vh;
+  line-height:50px;
   display:flex;
   flex-direction: row ;
   align-items: center;
@@ -61,7 +61,7 @@
        background:rgba(0,0,0,0.1);
      }
     i{
-     line-height:6vh;
+     line-height:50px;
         font-size:20px;
     }
   }
@@ -73,7 +73,7 @@
       background:rgba(0,0,0,0.1);
      }*/
     i{
-     line-height:6vh;
+     line-height:50px;
     }
   }
  }

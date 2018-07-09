@@ -183,8 +183,8 @@ mounted:function(){
 
 <style lang="scss" scoped>
  .tainiubox{
-  padding-top:6vh;
-  height:94vh;
+  padding-top:50px;
+  min-height:94vh;
   background:#f5f5f5;
   &.whitebg{
      background:#fff;
@@ -281,8 +281,10 @@ mounted:function(){
              border-top:1px solid #f5f5f5;
              padding:10px 20px;
              box-sizing:border-box;
+ .el-button{font-size:12px;}
              span{
                  color:#d8d8d8;
+                 font-size:12px;
                  &.red{color:#f40000;}
                 line-height:20px;
                 b{

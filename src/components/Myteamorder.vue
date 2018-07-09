@@ -134,7 +134,7 @@
         width:100%;
         background:url('../assets/teamorderbg.jpg') #ff5437 no-repeat;
         background-size:100%;
-        padding-top:6vh;
+        padding-top:50px;
         color:#fff;
         padding-left:20px;
         padding-right:20px;

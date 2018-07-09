@@ -301,7 +301,7 @@ export default{
 .send{
  position:relative;
  min-height:94vh;
- padding-top:6vh;
+ padding-top:50px;
  background:#f5f5f5;
 }
 /*
