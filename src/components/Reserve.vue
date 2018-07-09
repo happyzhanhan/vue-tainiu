@@ -18,7 +18,7 @@
 
                      <div class="linebox">
                          <label for="name">支付密码：</label>
-                         <input type="password" placeholder="请填写支付密码" v-model="paypassword"/>
+                         <input type="password" autofocus placeholder="请填写支付密码" v-model="paypassword"/>
                          <span><i class="el-icon-question" @click="Toforgetpassword"></i></span>
                      </div>
 
@@ -57,7 +57,7 @@
     <i class="el-icon-arrow-right"></i>
    </div>
 
-   <div class="location" v-if="addressshow">
+   <div class="location" @click="Toadresslist" v-if="addressshow">
        <p v-for="ad in address">
           <span>
              <i class="el-icon-location-outline"></i>
@@ -315,48 +315,58 @@
     },
      postorder:function(){
          let _this = this;
-         let data = {
-                 product_id:this.product[this.productId].id,
-                 uid:this.uid,
-                 rule_id:this.rule_id,
-                 product_amount:this.buynumber,
-                 commend_id:this.commend_id,
-                 name:this.product[this.productId].name,
-                 sub_name:this.product[this.productId].sub_name,
-                 paypassword:this.paypassword,
-                 rule_id:this.rule_id,
-                 consignee:this.address[0].fullname,
-                 consignee_system_address:this.address[0].address_system,
-                 consignee_detail_address:this.address[0].address_detail,
-                 consignee_phone:this.address[0].phone,
-                 area3_code:this.address[0].area3_code,
+         console.log(this.address!=null);
+         console.log(this.address!={});
+         console.log(this.address>0);
+         if(this.addressshow){
+                     let data = {
+                         product_id:this.product[this.productId].id,
+                         uid:this.uid,
+                         rule_id:this.rule_id,
+                         product_amount:this.buynumber,
+                         commend_id:this.commend_id,
+                         name:this.product[this.productId].name,
+                         sub_name:this.product[this.productId].sub_name,
+                         paypassword:this.paypassword,
+                         rule_id:this.rule_id,
+                         consignee:this.address[0].fullname,
+                         consignee_system_address:this.address[0].address_system,
+                         consignee_detail_address:this.address[0].address_detail,
+                         consignee_phone:this.address[0].phone,
+                         area3_code:this.address[0].area3_code,
 
-        };
-
-        /* console.log(data);
-         return;*/
-         this.axios.post('/index.php/index/Oder/OderGenerateService.html',data).then((res)=>{
-             if(res.data.code=='SUCCESS'){
+                     };
+                     this.axios.post('/index.php/index/Oder/OderGenerateService.html',data).then((res)=>{
+                         if(res.data.code=='SUCCESS'){
+                         this.$message({
+                             message: '订单提交成功！',
+                             type: 'success',
+                             customClass:'black'
+                         });
+                         this.$router.push({path:'/order'});
+                     }else{
+                         this.$message({
+                             message: '错误：'+res.data.message,
+                             type: 'error',
+                             customClass:'black'
+                         });
+                     };
+                 },(res)=>{
+                     this.$message({
+                         message: '系统错误！',
+                         type: 'error',
+                         customClass:'black'
+                     });
+                 })
+         }else{
              this.$message({
-                 message: '订单提交成功！',
-                 type: 'success',
-                 customClass:'black'
-             });
-             this.$router.push({path:'/order'});
-             }else{
-                 this.$message({
-                     message: '错误：'+res.data.message,
-                     type: 'error',
-                     customClass:'black'
-                 });
-             };
-         },(res)=>{
-             this.$message({
-                 message: '系统错误！',
+                 message: '地址未填写？',
                  type: 'error',
                  customClass:'black'
              });
-         })
+             return ;
+         }
+
      },
 
 
@@ -457,11 +467,8 @@
 
                 }
                 .bottom20{
-                    position:absolute;
-                    bottom:20px;
-                    width: 100%;
-                    left:0;
-                    z-index: 999;
+                    margin-bottom:20px;
+                    margin-top:20px;
                 }
             }
         }

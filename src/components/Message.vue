@@ -129,7 +129,7 @@
     }
 
     .tabnav{
-        wiidth:100%;
+        width:100%;
     ul{
         width:100%;
         display:flex;
@@ -169,7 +169,7 @@
          display:none;
      }
     }
-    &:hover,&.hover{
+    &.hover{
                  color:#f0160d;
     &:after{display:block;}
     }

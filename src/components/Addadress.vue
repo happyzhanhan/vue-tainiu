@@ -71,7 +71,9 @@
                         inactive-color="#ff4949">
                 </el-switch>
             </div>
-
+            <p class="tips" v-if="default_addr">
+                *注意：设为默认地址后，订货默认使用该地址！
+            </p>
         </div>
         <div class="btnbox">
             <button :class="{'success':isSuccess4}" @click="postad">保   存</button>

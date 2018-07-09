@@ -56,8 +56,8 @@
      </div>
        <div class="btnline">
         <button v-if="order.status=='PAY_WAIT_TAKE'" class="red" @click="confirmTake(order.trade_number)">立即接单</button>
-        <button v-if="order.status=='TAKE_WAIT_SEND'" class="red" @click="confirmTake(order.trade_number)">立即发货</button>
-        <button v-if="order.status=='TAKE_WAIT_SEND'" @click="tosendnone">发不了货</button>
+        <button v-if="order.status=='TAKE_WAIT_SEND'" class="red" @click="confirmSend(order.trade_number)">立即发货</button>
+        <button v-if="order.status=='TAKE_WAIT_SEND'" @click="OderRefuseService(order.trade_number)">发不了货</button>
        </div>
     </div>
 </div>
@@ -76,7 +76,7 @@ export default{
  components:{tnhead},
  data(){
   return{
-   headname:'派单',
+   headname:'我的派单',
    headstyle:'whitetop',
    uid:1,
    ordernumber:0,
@@ -165,7 +165,7 @@ export default{
  },
  confirmTake:function(number){
       let _this = this;
-      let data = {trade_name:number};
+      let data = {trade_number:number};
 
       this.$confirm('请尽快接单，接单后24小时内联系买家给他发货！', '提示', {
           confirmButtonText: '确定',
@@ -173,7 +173,7 @@ export default{
           type: 'warning'
       }).then(() => {
 
-        this.axios.post('/index.php/index/Oder/OderCollectService.html',data).then((res)=>{
+        this.axios.post('/index.php/index/Oder/OderReceiptService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
                   this.$message({
                    type: 'success',
@@ -206,7 +206,7 @@ export default{
  },
  confirmSend:function(number){
         let _this = this;
-        let data = {trade_name:number};
+        let data = {trade_number:number};
 
         this.$confirm('确认已经到达买家，当面派单签收成功？', '提示', {
          confirmButtonText: '确定',
@@ -214,7 +214,7 @@ export default{
          type: 'warning'
         }).then(() => {
 
-               this.axios.post('/index.php/index/Oder/OderCollectService.html',data).then((res)=>{
+               this.axios.post('/index.php/index/Oder/OderSendService.html',data).then((res)=>{
                     if(res.data.code=='SUCCESS'){
                           this.$message({
                            type: 'success',
@@ -245,6 +245,47 @@ export default{
                });
        });
  },
+ OderRefuseService:function(number){
+     let _this = this;
+     let data = {trade_number:number};
+
+     this.$confirm('请谨慎操作，拒绝后将由公司另外指派？', '提示', {
+         confirmButtonText: '确定',
+         cancelButtonText: '取消',
+         type: 'warning'
+     }).then(() => {
+
+         this.axios.post('/index.php/index/Oder/OderRefuseService.html',data).then((res)=>{
+         if(res.data.code=='SUCCESS'){
+         this.$message({
+             type: 'success',
+             message: '拒绝成功!',
+             customClass:'black'
+         });
+         _this.getallorderlist(); //刷新数据
+     }else{
+         this.$message({
+             message: '错误：'+res.data.message,
+             type: 'error',
+             customClass:'black'
+         });
+     };
+ },(res)=>{
+     this.$message({
+         message: '系统错误！',
+         type: 'error',
+         customClass:'black'
+     });
+ })
+
+ }).catch(() => {
+     this.$message({
+             type: 'info',
+             message: '已取消',
+             customClass:'black'
+         });
+ });
+ },
 
 
 
@@ -270,7 +311,7 @@ export default{
  .paidian{
  width:100%;
   .tabnav{
-  wiidth:100%;
+  width:100%;
    ul{
    width:100%;
    display:flex;
@@ -310,7 +351,7 @@ export default{
         display:none;
        }
       }
-      &:hover,&.hover{
+      &.hover{
        color:#f0160d;
         &:after{display:block;}
       }

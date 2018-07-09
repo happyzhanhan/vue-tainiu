@@ -295,7 +295,7 @@
          display:none;
      }
     }
-    &:hover,&.hover{
+    &.hover{
                  color:#f0160d;
     &:after{display:block;}
     }

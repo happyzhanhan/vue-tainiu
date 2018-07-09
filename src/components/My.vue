@@ -216,7 +216,7 @@
     width:100vw;
     height:100vh;
     display:block;
-    background:rgba(24,23,29,0.6);
+    background:rgba(24,23,29,0.92);
     color:#fff;
   text-align:center;
   a{dispaly:block;

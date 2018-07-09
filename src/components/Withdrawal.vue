@@ -44,7 +44,7 @@
      </div>
    </div>
   <div class="tip">
-   *每月22号可提现上个月22号的订单利润
+   *该功能正在开发中……
   </div>
   <div class="btnbox">
    <button>提交申请</button>

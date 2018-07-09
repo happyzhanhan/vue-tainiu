@@ -168,7 +168,7 @@ export default{
   },
      receivegoods:function(number){
          let _this = this;
-         let data = {trade_name:number};
+         let data = {trade_number:number};
 
              this.$confirm('请收到货后再确认收货！点击后将不可更改！', '提示', {
                  confirmButtonText: '确定',
@@ -236,7 +236,7 @@ export default{
  width:100%;
  margin-top:3px;
   .tabnav{
-  wiidth:100%;
+  width:100%;
    ul{
    width:100%;
    display:flex;
@@ -276,7 +276,7 @@ export default{
         display:none;
        }
       }
-      &:hover,&.hover{
+      &.hover{
        color:#f0160d;
         &:after{display:block;}
       }
