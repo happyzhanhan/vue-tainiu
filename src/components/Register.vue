@@ -28,7 +28,7 @@
     <input type="password" autocomplete="new-password" placeholder="请输入密码" v-model="password" />
    </div>
    <div class="linebox "  :class="{'success':isSuccess4}">
-    <input type="text" placeholder="请输入订货推荐人ID，没有则默认为0" v-model="commendid"/>
+    <input type="text" placeholder="推荐人ID，没有则默认为1公司" v-model="commendid"/>
    </div>
   </div>
 
@@ -65,7 +65,7 @@
      username:'',
      verification:'',
      password:'',
-     commendid:0,
+     commendid:1,
      Checked:false,
      timer:null,
      count:0,
@@ -200,6 +200,9 @@
      },
 
      postregister:function(){
+       if(this.commendid =='' && this.commendid ==0 ){
+        this.commendid = 1;
+       }
         let data = {username:this.username,password:this.password,verification:this.verification,commend_id:this.commendid}
         this.axios.post('/index.php/index/login/RegisterService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){

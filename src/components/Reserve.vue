@@ -307,7 +307,7 @@
                         type: 'error',
                         customClass:'black'
                     });
-                    this.$router.push({path:'/login'});
+                    _this.$router.push({path:'/login'});
                 }else{
                     _this.addressshow = false;
 

@@ -93,7 +93,7 @@
                                 type: 'error',
                                 customClass:'black'
                             });
-                            this.$router.push({path:'/login'});
+                            _this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '错误：'+res.data.message,

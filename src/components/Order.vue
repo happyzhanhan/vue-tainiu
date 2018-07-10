@@ -157,7 +157,7 @@ export default{
                   type: 'error',
                   customClass:'black'
               });
-              this.$router.push({path:'/login'});
+            _this.$router.push({path:'/login'});
           }else{
          this.$message({
           message: '错误：'+res.data.message,
@@ -421,14 +421,14 @@ background:#fff;
    margin-top:9px;
    font-size:12px;
       line-height: 12px;
-   border:0.6px solid #414547;
+   border:0.6px solid #c7c7c7;
    color:#414547;
    background:#fff;
    float:right;
    display:inline-block;
    margin-left:10px;
    &.red{
-     border:1px solid #f40000;
+     border:1px solid #fe9090;
      color:#f40000;
      background:#fff;
     }

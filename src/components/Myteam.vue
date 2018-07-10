@@ -86,7 +86,7 @@
                                 type: 'error',
                                 customClass:'black'
                             });
-                            this.$router.push({path:'/login'});
+                             _this.$router.push({path:'/login'});
                         }else{
                             this.$message({
                                 message: '获取失败：'+res.data.message,

@@ -108,7 +108,7 @@
                             type: 'error',
                             customClass:'black'
                         });
-                        this.$router.push({path:'/login'});
+                        _this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '获取失败：'+res.data.message,
@@ -139,7 +139,7 @@
 
     .topbox{
         width:100%;
-        background:url('../assets/teamorderbg.jpg') #ff5437 no-repeat;
+        background:url('../assets/tuijianbg.jpg') #ff5437 no-repeat;
         background-size:100%;
         padding-top:50px;
         color:#fff;
@@ -211,7 +211,9 @@
         padding:0 20px;
         box-sizing:border-box;
 
+
     .searchbar{
+        width:68%;
         height:30px;
         background:#f2f2f2;
         border-radius:50px;
@@ -223,10 +225,14 @@
         align-items: center;
         justify-content: space-between;
 
+    .input{
+        width: 90%;
+    }
     .el-icon-search{
     }
     input{
         background:#f2f2f2;
+        float: left;
     }
     }
 

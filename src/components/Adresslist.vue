@@ -112,6 +112,7 @@ mounted:function(){
      },
      getAjax:function () {
          let data = {}  //uid:this.uid
+         let _this = this;
          this.axios.post('/index.php/index/Address/AddressSelectService.html',data).then((res)=>{
 
              if(res.data.code=='SUCCESS'){
@@ -127,7 +128,7 @@ mounted:function(){
                      type: 'error',
                      customClass:'black'
                  });
-                 this.$router.push({path:'/login'});
+                _this.$router.push({path:'/login'});
              }
          },(res)=>{
              this.$message({

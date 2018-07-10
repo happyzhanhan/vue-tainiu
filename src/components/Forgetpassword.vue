@@ -128,7 +128,8 @@
    },
 
   getverify:function(){
-     let data = {username:this.telephone}
+     let data = {username:this.telephone};
+     let _this = this;
      this.axios.post('/index.php//index/login/RegisterPhoneService.html',data).then((res)=>{
         if(res.data.code=='SUCCESS'){
          this.$message({
@@ -142,7 +143,7 @@
           type: 'error',
           customClass:'black'
          });
-         this.$router.push({path:'/login'});
+         _this.$router.push({path:'/login'});
         }else{
          this.$message({
           message: res.data.message,

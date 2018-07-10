@@ -188,6 +188,7 @@
          }
      },
      getupdatedata(){
+         let _this = this;
          if(this.$route.query.type == 'update'){
              let typename = '';
              if(this.$route.query.addr_type == 0){
@@ -242,7 +243,7 @@
                          type: 'error',
                          customClass:'black'
                      });
-                     this.$router.push({path:'/login'});
+                    _this.$router.push({path:'/login'});
                 }else{
                      this.$message({
                          message: '请求失败：'+res.data.message,

@@ -152,7 +152,7 @@
                             type: 'error',
                             customClass:'black'
                         });
-                        this.$router.push({path:'/login'});
+                        _this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '获取失败：'+res.data.message,
@@ -228,7 +228,7 @@
     .profithead{
         position:relative;
         width:100%;
-        background:url('../assets/profitbg.png') #ff5134 no-repeat;
+        background:url('../assets/tuijianbg.jpg') #ff5134 no-repeat;
         background-size:100%;
         color:#fff;
         padding-top:50px;
