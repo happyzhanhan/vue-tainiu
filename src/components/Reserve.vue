@@ -271,6 +271,13 @@
              this.axios.post('/index.php/index/Product/ProductSelectService.html',data).then((res)=>{
                  if(res.data.code=='SUCCESS'){
                  _this.product = res.data.data.product;
+             }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                 this.$message({
+                     message: '登录超时，请重新登录',
+                     type: 'error',
+                     customClass:'black'
+                 });
+                 this.$router.push({path:'/login'});
              }else{
                  this.$message({
                      message: '错误：'+res.data.message,
@@ -294,6 +301,13 @@
                 if(res.data.num>0){
                     _this.addressshow = true;
                     _this.address = res.data.data;
+                }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                    this.$message({
+                        message: '登录超时，请重新登录',
+                        type: 'error',
+                        customClass:'black'
+                    });
+                    this.$router.push({path:'/login'});
                 }else{
                     _this.addressshow = false;
 

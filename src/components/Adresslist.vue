@@ -121,6 +121,13 @@ mounted:function(){
                     this.showno=false;
                     this.addresslist =  res.data.data;
                 }
+             }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                 this.$message({
+                     message: '登录超时，请重新登录',
+                     type: 'error',
+                     customClass:'black'
+                 });
+                 this.$router.push({path:'/login'});
              }
          },(res)=>{
              this.$message({

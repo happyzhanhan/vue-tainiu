@@ -209,6 +209,13 @@
                 return item.status=='PAY_WAIT_TAKE';   //待接单状态的数组
               });
               _this.ordernumber = orderlist.length;
+          }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+            this.$message({
+              message: '登录超时，请重新登录',
+              type: 'error',
+              customClass:'black'
+            });
+            this.$router.push({path:'/login'});
           }else{
             this.$message({
               message: '待接单数量获取失败：'+res.data.message,
@@ -241,6 +248,13 @@
                     }
 
 
+              }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                this.$message({
+                  message: '登录超时，请重新登录',
+                  type: 'error',
+                  customClass:'black'
+                });
+                this.$router.push({path:'/login'});
               }else{
                 this.$message({
                   message: '消息获取失败：'+res.data.message,
@@ -512,23 +526,25 @@
       p{
         width:100%;
         color:#000;
+        font-size: 14px;
       }
       em{
         width:100%;
         display:block;
         color:#d9160b;
         font-size:14px;
+        line-height: 20px;
         font-style:normal;
         font-weight:600;
-        margin-top:3px;
+        margin-top:6px;
       }
       span{
-        border:1px solid #d9160b;
+        border:0.6px solid #d9160b;
         color:#d9160b;
         border-radius:50px;
         padding:1px 15px;
-        margin-top:10px;
-        font-size:10px;
+        margin-top:6px;
+        font-size:12px;
         line-height:18px;
         display:inline-block;
       }
@@ -574,7 +590,7 @@
           b{
             width:100%;
             display:inline-block;
-            font-size:12px;
+            font-size:14px;
             line-height:10px;
             color:#666;
           }
@@ -590,7 +606,7 @@
     width:96%;
     margin-left:2%;
     margin-top:10px;
-    background:#fff;
+    /*background:#fff;*/
     border-radius:15px;
     overflow:hidden;
     a{

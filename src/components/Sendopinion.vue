@@ -47,7 +47,7 @@
        },
        postopinion:function(){
               let data = {
-               receiver_uid:40,
+               receiver_uid:0,
                title:'用户反馈',
                content:this.content,
                type:4,

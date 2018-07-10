@@ -30,7 +30,7 @@
                             <div class="colbox">
                                 <div class="rowbox">
                                     <span><h4>{{msgtypyname(msg.type)}}</h4><p>{{msg.add_time}}</p></span>
-                                    <span v-if="msg.link!=''&& msg.link != null && msg.link !='null' "><a :href="msg.link">详情▶</a></span>
+                                    <span v-if="msg.link!=''&& msg.link != null && msg.link !='null' "><a :href="msg.link">详情 <i class="el-icon-caret-right"></i></a></span>
                                 </div>
                                 <div class="grybox">
                                     <h3>{{msg.title}}</h3>
@@ -87,6 +87,13 @@
                         _this.msglist = res.data.data;
                         _this.msgnum = res.data.num;
                         localStorage.setItem("MESSAGENUM",res.data.num);
+                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                            this.$message({
+                                message: '登录超时，请重新登录',
+                                type: 'error',
+                                customClass:'black'
+                            });
+                            this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '错误：'+res.data.message,
@@ -215,6 +222,7 @@
               border-radius:4px;
               text-align:left;
               padding:10px;
+          margin:10px 0;
               h3{
                   font-size:14px;
                   text-align:left;
@@ -239,5 +247,9 @@
 
     .tabcontent{
         background:none;
+    }
+
+    .el-icon-caret-right{
+        font-size:8px;
     }
 </style>

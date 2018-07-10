@@ -236,6 +236,13 @@
                              this.default_addr = false;
                          }
 
+                }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                     this.$message({
+                         message: '登录超时，请重新登录',
+                         type: 'error',
+                         customClass:'black'
+                     });
+                     this.$router.push({path:'/login'});
                 }else{
                      this.$message({
                          message: '请求失败：'+res.data.message,

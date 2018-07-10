@@ -150,7 +150,14 @@ export default{
       console.log(res.data);
       _this.orderlist = res.data.data;
       _this.ordernumber = res.data.arr_length;
-     }else{
+     }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+          this.$message({
+              message: '登录超时，请重新登录',
+              type: 'error',
+              customClass:'black'
+          });
+          this.$router.push({path:'/login'});
+      }else{
       this.$message({
        message: '错误：'+res.data.message,
        type: 'error',
@@ -384,19 +391,19 @@ background:#fff;
   flex-direction: row;
   align-items: stretch;
   justify-content: space-between;
-  padding:10px;
+  padding:5px 10px;
   box-sizing:border-box;
 
    span{
      display:block;
     &:nth-child(1){
-      width:20%;
+      width:15%;
    img{
     border:1px solid #e2e2e2;
    }
      }
     &:nth-child(2){
-      width:80%;
+      width:85%;
      }
      img{
       width:40px;
@@ -436,7 +443,7 @@ background:#fff;
 
   span{
    text-align:left;
-   font-size:14px;
+   font-size:12px;
    p{
      b{
       text-align:left;
@@ -448,7 +455,7 @@ background:#fff;
    }
 
    &:nth-child(1){
-     width:20%;
+     width:15%;
      text-align:center;
      i{
       font-size:20px;
@@ -456,7 +463,7 @@ background:#fff;
      }
    }
    &:nth-child(2){
-     width:80%;
+     width:85%;
      float:left;
      text-align:left;
     }
@@ -467,8 +474,10 @@ background:#fff;
   text-align:right;
   padding:0 10px;
  border-bottom:1px solid #f4f4f4;
+ font-size:12px;
   big{
-   font-weight:600;
+   font-weight:normal;
+      font-size: 16px;
   }
  }
  .btnline{
@@ -476,14 +485,14 @@ background:#fff;
  height:40px;
  padding:0 10px;
  box-sizing:border-box;
+
   button{
-   border:none;
    outline:none;
    border-radius:50px;
-   padding:5px 10px;
-   margin-top:6px;
+   padding:2px 10px;
+   margin-top:10px;
    font-size:12px;
-   border:1px solid #414547;
+   border:0.8px solid #414547;
    color:#414547;
    background:#fff;
    float:right;

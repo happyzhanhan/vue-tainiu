@@ -146,6 +146,13 @@
                         }
 
 
+                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                        this.$message({
+                            message: '登录超时，请重新登录',
+                            type: 'error',
+                            customClass:'black'
+                        });
+                        this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '获取失败：'+res.data.message,
@@ -182,7 +189,7 @@
         justify-content:  flex-start;
         padding-bottom:26px;
         box-sizing:border-box;
-        padding:10px 20px;
+        padding:20px 20px;
     .part{
         display:flex;
         flex-direction: row  ;

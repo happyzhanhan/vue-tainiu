@@ -148,6 +148,13 @@
                         console.log(res.data);
                         _this.trad = res.data.data.trad;
                         _this.wallet_serial = res.data.data.wallet_serial;
+                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                        this.$message({
+                            message: '登录超时，请重新登录',
+                            type: 'error',
+                            customClass:'black'
+                        });
+                        this.$router.push({path:'/login'});
                     }else{
                         this.$message({
                             message: '错误：'+res.data.message,

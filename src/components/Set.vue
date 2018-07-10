@@ -8,8 +8,9 @@
         <div class="adresslistbox">
             <div class="copyright">
                 <p><img src="../assets/logotx.png" alt=""/></p>
-                <h3>泰牛订货系统</h3>
-                <p>当前版本V1.0.1</p>
+                <h3>泰牛订货系统 <span>内测版</span></h3>
+                <p>当前版本V0.0.1</p>
+                <p class="tips">内测期间所有数据将会被清除</p>
             </div>
             <div class="linebox">
                 <router-link to="/setpersonal">
@@ -103,13 +104,30 @@
         }
         h3{
             color:#000;
+            margin-top:20px;
             font-size:14px;
             font-weight:600;
             line-height:30px;
+            span{
+                width: 50px;
+                height:16px;
+                font-size: 8px;
+                line-height: 16px;
+                display:inline-block;
+                margin-left:2px;
+                background: #999;
+                border-radius: 5px;
+                color:#fff;
+                text-align: center;
+            }
         }
         p{
             color:#999;
-            font-size:8px;
+            font-size:12px;
+            &.tips{
+                color:red;
+        text-align: center;
+             }
         }
     }
 

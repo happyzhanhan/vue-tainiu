@@ -80,6 +80,13 @@
                         if(res.data.code=='SUCCESS'){
                             _this.datanumber = res.data.data.total;
                             _this.myteam = res.data.data.rows;
+                        }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                            this.$message({
+                                message: '登录超时，请重新登录',
+                                type: 'error',
+                                customClass:'black'
+                            });
+                            this.$router.push({path:'/login'});
                         }else{
                             this.$message({
                                 message: '获取失败：'+res.data.message,
