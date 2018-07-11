@@ -133,8 +133,8 @@
         background:url('../assets/tuijianbg.jpg') #ff5335 no-repeat;
         background-size:100% 100vh;
         color:#fff;
-    padding:30px 20px;
-    box-sizing:border-box;
+        padding:10px 20px;
+        box-sizing:border-box;
         h2{
             font-size:20px;
             line-height:30px;

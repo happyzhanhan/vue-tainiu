@@ -109,13 +109,13 @@
             font-weight:600;
             line-height:30px;
             span{
-                width: 50px;
+                width: 30px;
                 height:16px;
                 font-size: 8px;
                 line-height: 16px;
                 display:inline-block;
                 margin-left:2px;
-                background: #999;
+                background: #eee;
                 border-radius: 5px;
                 color:#fff;
                 text-align: center;
@@ -125,6 +125,7 @@
             color:#999;
             font-size:12px;
             &.tips{
+        font-size: 10px;
                 color:red;
         text-align: center;
              }

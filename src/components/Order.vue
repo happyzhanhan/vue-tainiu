@@ -149,9 +149,9 @@ export default{
         let data = {};
         this.axios.post('/index.php/index/oder/OderBuyerListService.html',data).then((res)=>{
          if(res.data.code=='SUCCESS'){
-         _this.orderlist = res.data.data;
+         _this.orderlist = res.data.data.rows;
          _this.ordernumber = res.data.arr_length;
-        }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+        }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
               this.$message({
                   message: '登录超时，请重新登录',
                   type: 'error',
@@ -383,7 +383,7 @@ background:#fff;
    }
 
    &:nth-child(1){
-     width:20%;
+     width:15%;
      text-align:center;
      i{
       font-size:20px;
@@ -391,7 +391,7 @@ background:#fff;
      }
    }
    &:nth-child(2){
-     width:80%;
+     width:85%;
      float:left;
      text-align:left;
     }

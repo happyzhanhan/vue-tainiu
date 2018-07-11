@@ -5,7 +5,7 @@
 <template>
     <div class="profit">
         <div class="profithead">
-            <tnhead :headname="headname"></tnhead>
+            <tnhead :headname="headname" :headstyle=" showheadopacity?'whitetop':'' "></tnhead>
             <router-link to="/balance">
                 <h2>{{balance.money}}</h2>
                 <p>账户余额(元)</p>
@@ -119,7 +119,8 @@
             },
             bzj:{
                 money:0.0,
-            }
+            },
+            showheadopacity:false,
 
 
         }
@@ -127,6 +128,11 @@
     created:function(){
         this.getAjaxwallet();
     },
+    mounted () {
+        // 事件监听滚动条
+        window.addEventListener('scroll', this.watchScroll)
+    },
+
     methods: {
         getAjaxwallet:function () {
                 let data = {};
@@ -146,7 +152,7 @@
                         }
 
 
-                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                    }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                         this.$message({
                             message: '登录超时，请重新登录',
                             type: 'error',
@@ -169,6 +175,17 @@
                 console.log(res);
             })
         },
+        watchScroll () {
+            var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+            // console.log('滚动条'+scrollTop);
+            //  当滚动超过 50 时，实现变白底的效果
+            if (scrollTop >49) {
+                this.showheadopacity = true
+            } else {
+                this.showheadopacity = false
+            }
+        },
+
     }
     }
 </script>

@@ -80,7 +80,7 @@
                         if(res.data.code=='SUCCESS'){
                             _this.datanumber = res.data.data.total;
                             _this.myteam = res.data.data.rows;
-                        }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                        }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                             this.$message({
                                 message: '登录超时，请重新登录',
                                 type: 'error',

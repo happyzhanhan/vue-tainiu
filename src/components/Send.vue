@@ -10,7 +10,7 @@
 
  <div class="paidian">
     <div class="fixed">
-     <p class="tips">*您有新的派单，请尽快发货哦！~</p>
+     <p class="tips" v-if="showwaitsend">*您有新的派单，请尽快发货哦！~</p>
      <div class="tabnav">
       <ul>
        <li :class="{'hover':showstatus ==''}" @click="showstatus='' ">全部订单</li>
@@ -83,6 +83,7 @@ export default{
    uid:1,
    ordernumber:0,
    showstatus:'',
+   showwaitsend:false,
    orderlist:{
 
    },
@@ -143,14 +144,18 @@ export default{
   },
 
   getallorderlist:function(){
+     if(JSON.parse(localStorage.getItem("ORDERNUMBER")) >0){
+         this.showwaitsend = true;
+     }else{
+         this.showwaitsend = false;
+     }
      let _this = this;
      let data = {uid:this.uid,};
      this.axios.post('/index.php/index/oder/OderSellerListService.html',data).then((res)=>{
       if(res.data.code=='SUCCESS'){
-      console.log(res.data);
-      _this.orderlist = res.data.data;
+      _this.orderlist = res.data.data.rows;
       _this.ordernumber = res.data.arr_length;
-     }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+     }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
           this.$message({
               message: '登录超时，请重新登录',
               type: 'error',
@@ -404,6 +409,7 @@ background:#fff;
      }
     &:nth-child(2){
       width:85%;
+    padding-left:5px;
      }
      img{
       width:40px;
@@ -422,7 +428,13 @@ background:#fff;
        font-size:10px;
 
        }
-     b{float:left;}
+     b{float:left;
+         text-align: left;
+         width: 200px;
+         overflow: hidden;
+         text-overflow:ellipsis;
+         white-space: nowrap;
+     }
      em{
        float:right;
        text-align:right;

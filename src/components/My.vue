@@ -204,12 +204,13 @@
           let data = {uid:this.uid,};
           this.axios.post('/index.php/index/oder/OderSellerListService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
-            let arraylist = res.data.data;
+            let arraylist = res.data.data.rows;
                 let orderlist = arraylist.filter(function(item){
-                return item.status=='PAY_WAIT_TAKE';   //待接单状态的数组
+                return item.status=='PAY_WAIT_TAKE' || item.status=='TAKE_WAIT_SEND';   //待接单状态的数组
               });
-              _this.ordernumber = orderlist.length;
-          }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+              _this.ordernumber = orderlist.length; //待接单和待发货订单总数
+             localStorage.setItem("ORDERNUMBER",orderlist.length); //存入缓存
+          }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
             this.$message({
               message: '登录超时，请重新登录',
               type: 'error',
@@ -248,7 +249,7 @@
                     }
 
 
-              }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+              }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                 this.$message({
                   message: '登录超时，请重新登录',
                   type: 'error',
@@ -539,7 +540,7 @@
         margin-top:6px;
       }
       span{
-        border:0.6px solid #d9160b;
+        border:0.6px solid #fe9090;
         color:#d9160b;
         border-radius:50px;
         padding:1px 15px;
@@ -553,7 +554,7 @@
 
   .btnlistbox{
     position:absolute;
-    top:270px;
+    top:272px;
     width:96%;
     margin-left:2%;
     background:#fff;

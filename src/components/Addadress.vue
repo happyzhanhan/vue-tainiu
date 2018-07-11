@@ -237,7 +237,7 @@
                              this.default_addr = false;
                          }
 
-                }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                      this.$message({
                          message: '登录超时，请重新登录',
                          type: 'error',

@@ -87,7 +87,7 @@
                         _this.msglist = res.data.data;
                         _this.msgnum = res.data.num;
                         localStorage.setItem("MESSAGENUM",res.data.num);
-                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                    }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                             this.$message({
                                 message: '登录超时，请重新登录',
                                 type: 'error',
@@ -132,7 +132,7 @@
 <style lang="scss" scoped>
     .tainiubox {
         padding-top: 50px;
-        height: 94vh;
+        min-height: 94vh;
         background: #f5f5f5;
     }
 

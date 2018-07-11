@@ -49,9 +49,17 @@
   justify-content: space-between;
   box-sizing:border-box;
   &.whitetop{
-     background:#fff;
+     background:rgba(255,255,255,1);
      color:#000;
      border-bottom:1px solid #ddd;
+
+       -moz-transition:background 1s;
+       /* Safari and Chrome */
+       -webkit-transition:background 1s;
+       /* Opera */
+       -o-transition:background 1s;
+       transition: background 1s;
+
    }
   .back{
     display:inline-block;

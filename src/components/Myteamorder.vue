@@ -6,7 +6,7 @@
     <div class="tainiubox">
         <div class="adresslistbox">
             <div class="topbox">
-                <tnhead :headname="headname" ></tnhead>
+                <tnhead :headname="headname" :headstyle=" showheadopacity?'whitetop':'' "></tnhead>
 
                 <div class="ordernumber">
                     订单量累计：0
@@ -86,12 +86,19 @@
             return {
                 headname: '团队订单',
                 datanumber:0,
-                teamorderlist:{},
+                teamorderlist:[
+                ],
+                showheadopacity:false,
             }
         },
         created:function(){
             this.getAjaxteamorder();
         },
+        mounted () {
+            // 事件监听滚动条
+            window.addEventListener('scroll', this.watchScroll)
+        },
+
         methods: {
             getAjaxteamorder:function () {
                 let data = {};
@@ -102,7 +109,7 @@
                         _this.datanumber = res.data.data.total;
                         _this.teamorderlist = res.data.data.rows;
 
-                    }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
+                    }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                         this.$message({
                             message: '登录超时，请重新登录',
                             type: 'error',
@@ -125,9 +132,20 @@
                         console.log(res);
                  })
             },
+            watchScroll () {
+                var scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+               // console.log('滚动条'+scrollTop);
+                //  当滚动超过 50 时，实现变白底的效果
+                if (scrollTop >49) {
+                    this.showheadopacity = true
+                } else {
+                    this.showheadopacity = false
+                }
+            },
 
 
-        },
+
+    },
     }
 </script>
 
