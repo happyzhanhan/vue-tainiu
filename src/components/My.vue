@@ -237,7 +237,7 @@
           let data = {receiver_uid:this.uid,};
           this.axios.post('/index.php/index/Message/MessageSelectService.html',data).then((res)=>{
               if(res.data.code=='SUCCESS'){
-                    let newmsgnum = res.data.num;
+                    let newmsgnum = res.data.data.total;
                     let msgnum=JSON.parse(localStorage.getItem("MESSAGENUM"));
                     if(msgnum==undefined){
                       msgnum = 0;

@@ -270,7 +270,7 @@
              let data = {rule_id:this.rule_id};
              this.axios.post('/index.php/index/Product/ProductSelectService.html',data).then((res)=>{
                  if(res.data.code=='SUCCESS'){
-                 _this.product = res.data.data.product;
+                 _this.product = res.data.data.product.rows;
              }else if(res.data.data == 'LOGIN_TAINIU_ERROR'){
                  this.$message({
                      message: '登录超时，请重新登录',
@@ -298,9 +298,9 @@
         let data = {uid:this.uid,default_addr:'1',addr_type:'0'};
         this.axios.post('/index.php/index/Address/AddressSelectService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
-                if(res.data.num>0){
+                if(res.data.data.total>0){
                     _this.addressshow = true;
-                    _this.address = res.data.data;
+                    _this.address = res.data.data.rows;
                 }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                     this.$message({
                         message: '登录超时，请重新登录',

@@ -116,11 +116,11 @@ mounted:function(){
          this.axios.post('/index.php/index/Address/AddressSelectService.html',data).then((res)=>{
 
              if(res.data.code=='SUCCESS'){
-                if(res.data.num==0){
+                if(res.data.data.total==0){
                     this.showno=true;
                 }else{
                     this.showno=false;
-                    this.addresslist =  res.data.data;
+                    this.addresslist =  res.data.data.rows;
                 }
              }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                  this.$message({

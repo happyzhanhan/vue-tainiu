@@ -84,9 +84,9 @@
                     let data = {receiver_uid:this.uid,};
                     this.axios.post('/index.php/index/Message/MessageSelectService.html',data).then((res)=>{
                         if(res.data.code=='SUCCESS'){
-                        _this.msglist = res.data.data;
-                        _this.msgnum = res.data.num;
-                        localStorage.setItem("MESSAGENUM",res.data.num);
+                        _this.msglist = res.data.data.rows;
+                        _this.msgnum = res.data.data.total;
+                        localStorage.setItem("MESSAGENUM",res.data.data.total);
                     }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
                             this.$message({
                                 message: '登录超时，请重新登录',

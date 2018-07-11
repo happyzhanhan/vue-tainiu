@@ -66,7 +66,7 @@
         methods:{
             getuid(){
                 let persondata=JSON.parse(localStorage.getItem("TAINIUPERSON"));
-                console.log(persondata);
+                //console.log(persondata);
                 if(persondata){
                     this.person.rolerid = persondata.rule_id;
                     this.person.username=persondata['username'];

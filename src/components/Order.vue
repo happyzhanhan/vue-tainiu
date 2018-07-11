@@ -150,7 +150,7 @@ export default{
         this.axios.post('/index.php/index/oder/OderBuyerListService.html',data).then((res)=>{
          if(res.data.code=='SUCCESS'){
          _this.orderlist = res.data.data.rows;
-         _this.ordernumber = res.data.arr_length;
+         _this.ordernumber = res.data.data.total;
         }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
               this.$message({
                   message: '登录超时，请重新登录',
