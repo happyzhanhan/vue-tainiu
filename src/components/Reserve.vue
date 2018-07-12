@@ -684,7 +684,7 @@
  }
 
  .pricebox{
- margin-left:30px;
+
   b{color:#e81b0f;  font-weight:bold;}
   big{color:#e81b0f;font-size:20px; font-weight:bold;}
  }

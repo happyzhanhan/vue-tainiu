@@ -8,6 +8,11 @@
    </div>
 
   <div class="withdrawalform">
+      <div class="lineboxtwo">
+          <label for="name" class="selectwallet">选择钱包</label>
+          <el-radio v-model="wallet_type" label="0">货款</el-radio>
+          <el-radio v-model="wallet_type" label="1">利润</el-radio>
+      </div>
      <div class="linebox">
       <label for="name">真实姓名</label>
       <input type="text" placeholder="请输入银行卡开户人姓名"/>
@@ -25,7 +30,7 @@
      </div>
      <div class="linebox">
       <label for="name">联系方式</label>
-      <input type="text" placeholder="请输入银行绑定的手机号或联系电话"/>
+      <input type="text" placeholder="请输入联系电话"/>
       <span><button>发送验证码</button></span>
      </div>
      <div class="linebox">
@@ -62,6 +67,7 @@
    return {
     headname:'提现',
     headstyle:'whitetop',
+       wallet_type:'0',
    }
   }
  }
@@ -93,11 +99,12 @@ padding-top:10px;
  em{
   font-style:normal;
   color:#a4a4a4;
+     font-size: 12px;
  }
  label{width:20%; text-align:left; font-size:14px;}
- input{width:50%;}
+ input{width:55%; font-size: 12px;}
  span{
-   width:30%;
+   width:25%;
    i{
     float:right;
     color:#f4f4f4;
@@ -117,6 +124,23 @@ padding-top:10px;
 
 
  }
+}
+
+.lineboxtwo{
+    line-height: 50px;
+    background: #fff;
+    border-bottom:1px solid #f2f2f2;
+    box-sizing:border-box;
+    padding:0 20px;
+    float: left;
+    width: 100%;
+label{float: left;line-height: 50px;}
+    label.selectwallet{
+        width: 20%;
+        float: left;
+        font-size: 14px;
+        text-align: left;
+    }
 }
 
 .tip{

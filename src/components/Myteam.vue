@@ -152,6 +152,7 @@
     box-sizing:border-box;
 
     .searchbar{
+        width:68%;
         height:30px;
         background:#f2f2f2;
         border-radius:50px;
@@ -162,11 +163,15 @@
         flex-direction: row ;
         align-items: center;
         justify-content: space-between;
+        .input{
+            width: 90%;
+        }
 
         .el-icon-search{
         }
         input{
             background:#f2f2f2;
+            float: left;
         }
     }
 

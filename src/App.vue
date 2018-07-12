@@ -156,7 +156,7 @@ i{
 .el-message-box{width:220px!important;}
 
  .fadeIn{
-     animation-delay:1s;
-     -webkit-animation-delay:1s;
+     animation-delay:0.2s;
+     -webkit-animation-delay:0.2s;
  }
 </style>
