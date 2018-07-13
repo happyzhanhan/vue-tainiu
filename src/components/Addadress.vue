@@ -393,7 +393,7 @@
                     this.$router.back(-1);
                 }else{
                     this.$message({
-                        message: '请求错误：'+res.data.messaga,
+                        message: '请求错误：'+res.data.message,
                         type: 'error',
                         customClass:'black'
                     });
@@ -419,7 +419,7 @@
                      this.$router.back(-1);
                  }else{
                      this.$message({
-                         message: '请求错误：'+res.data.messaga,
+                         message: '请求错误：'+res.data.message,
                          type: 'error',
                          customClass:'black'
                      });

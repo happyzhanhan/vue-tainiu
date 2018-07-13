@@ -81,7 +81,7 @@
   getAjax:function () {
    let data = {username:this.username,password:this.password}   //{username:'Who123',password:'3891265'}
    this.axios.post('/index.php/index/login/LoginService.html',data).then((res)=>{
-       console.log(res);
+       //console.log(res);
         if(res.data.code=='SUCCESS'){
         localStorage.setItem("TAINIUUID",res.data.data.id);
         localStorage.setItem("TAINIUROLER",res.data.data.rule_id);

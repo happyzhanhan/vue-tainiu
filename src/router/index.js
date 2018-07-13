@@ -35,7 +35,7 @@ export default new Router({
   //base: '/vueweb',
   routes: [
     { path: '*',
-      component: Register
+      component: Home
     },
     {
       path: '/',

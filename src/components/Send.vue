@@ -92,6 +92,7 @@ export default{
   }
  },
  created:function(){
+  this.getswitchtba();
   this.getuid();
   this.getallorderlist();
  },
@@ -111,6 +112,16 @@ export default{
     this.$router.push({path:'/login'})
    }
   },
+   getswitchtba(){
+         if(this.$route.query.type == 'PAY_WAIT_TAKE'){
+             this.showstatus = 'PAY_WAIT_TAKE';
+         }else if(this.$route.query.type == 'TAKE_WAIT_SEND'){
+             this.showstatus = 'TAKE_WAIT_SEND';
+         }else{
+             this.showstatus = '';
+         }
+
+   },
   /*
    * 状态:
    WAIT_PAY 待付款,

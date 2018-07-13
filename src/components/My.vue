@@ -46,9 +46,9 @@
 
       <div class="listbox">
         <div class="block">
-          <router-link to="/send">
+          <router-link to="/send?type=TAKE_WAIT_SEND">
             <p>待发订单</p>
-            <em>{{ordernumber}}</em>
+            <em>{{ordersendnumber}}</em>
             <span>发货</span>
           </router-link>
         </div>
@@ -77,8 +77,8 @@
             </router-link>
           </span>
           <span class="btnblock">
-            <router-link to="/send">
-              <i><img src="../assets/icon-02.png" alt=""/></i>
+            <router-link to="/send?type=PAY_WAIT_TAKE">
+              <i><el-badge :value="ordertakenumber" class="item" :hidden="ordertakenumber==0"><img src="../assets/icon-02.png" alt=""/></el-badge></i>
               <b>我的派单</b>
             </router-link>
           </span>
@@ -129,6 +129,12 @@
         </router-link>
       </div>
 
+      <div class="audio"> <!--* autoplay="autoplay"*-->
+        <audio src="http://33mimg.oss-cn-hangzhou.aliyuncs.com/tainiu%2Fmusic%2Ftake.mp3" id="audio" controls="controls" preload="auto" hidden></audio>
+      </div>
+      <div class="audio">
+        <audio src="http://33mimg.oss-cn-hangzhou.aliyuncs.com/tainiu%2Fmusic%2Fsend.mp3" id="audiob" controls="controls" preload="auto" hidden></audio>
+      </div>
     </div>
   </div>
 
@@ -148,6 +154,10 @@
         haspermissions:true,
         messagenumber:0,
         ordernumber:0,
+        ordersendnumber:0,
+        ordertakenumber:0,
+        isPlaying:false,
+        isPlayingb:false,
       }
     },
   computed:{
@@ -205,10 +215,25 @@
           this.axios.post('/index.php/index/oder/OderSellerListService.html',data).then((res)=>{
             if(res.data.code=='SUCCESS'){
             let arraylist = res.data.data.rows;
-                let orderlist = arraylist.filter(function(item){
-                return item.status=='PAY_WAIT_TAKE' || item.status=='TAKE_WAIT_SEND';   //待接单状态的数组
-              });
+            let orderlist = arraylist.filter(function(item){
+              return item.status=='PAY_WAIT_TAKE' || item.status=='TAKE_WAIT_SEND';   //待接单状态的数组
+            });
+            let ordersendnumber = arraylist.filter(function(item){
+              return  item.status=='TAKE_WAIT_SEND';   //待发货状态的数组
+            });
+            let ordertakenumber = arraylist.filter(function(item){
+              return item.status=='PAY_WAIT_TAKE' ;   //待接单状态的数组
+            });
               _this.ordernumber = orderlist.length; //待接单和待发货订单总数
+              _this.ordersendnumber = ordersendnumber.length; //待发货订单总数
+              _this.ordertakenumber = ordertakenumber.length; //待接单订单总数
+
+              if(ordertakenumber.length>0){
+                 _this.playA();
+              }else if(ordertakenumber.length==0 && ordersendnumber.length>0){
+                 _this.playB();
+              }
+
              localStorage.setItem("ORDERNUMBER",orderlist.length); //存入缓存
           }else if(res.data.code == 'LOGIN_TAINIU_ERROR'){
             this.$message({
@@ -271,34 +296,34 @@
             });
           })
       },
-     /* getallorderlist:function(){
-        let _this = this;
-        let data = {};
-            this.axios.post('/index.php/index/oder/OderBuyerListService.html',data).then((res)=>{
-              if(res.data.code=='SUCCESS'){
-                  let orderlist = res.data.data;
-                  var myDate = new Date();
-                 let yearnum = myDate.getFullYear(); //获取完整的年份(4位,1970-????)
-                 let monthnum = myDate.getMonth(); //获取当前月份(0-11,0代表1月)
-                 let daynum =  myDate.getDate(); //获取当前日(1-31)
-
-
-        }else{
-              this.$message({
-                message: '错误：'+res.data.message,
-                type: 'error',
-                customClass:'black'
-              });
-            };
-          },(res)=>{
-            this.$message({
-              message: '系统错误！',
-              type: 'error',
-              customClass:'black'
-            });
-          })
+      playA(){
+        var audio =document.querySelector('#audio');
+        if(!this.isPlaying){
+          audio.play();
+          this.isPlaying = true;
+        }
       },
-*/
+      stopA(){
+        var audio =document.querySelector('#audio');
+        if(this.isPlaying){
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      },
+      playB(){
+        var audio =document.querySelector('#audiob');
+        if(!this.isPlayingb){
+          audio.play();
+          this.isPlayingb = true;
+        }
+      },
+      stopB(){
+        var audio =document.querySelector('#audiob');
+        if(this.isPlayingb){
+          audio.pause();
+          audio.currentTime = 0;
+        }
+      }
 
 
     },
