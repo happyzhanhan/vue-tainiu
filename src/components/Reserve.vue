@@ -4,6 +4,23 @@
 
 <template>
  <div class="send">
+     <transition name="showposter">
+     <div class="posterbox animated fadeIn" :class="{'fadeOut':showposter == false}" v-show="showposter"  transiton="showposter">
+         <div class="postertop"  @click="hiddenposter">
+             <div>
+                 <img src="../assets/poster03.png" draggable="false" @click.prevent="(()=>{return false})"  oncontextmenu="return false;" onselectstart="return false;"  width="100%" class="animated fadeInDown" :class="{'fadeOutUp':showposter == false}"  alt="">
+                 <button class="animated pulse" :class="{'fadeOutUp':showposter == false}">立即订购 >></button>
+             </div>
+         </div>
+         <div class="posterunder"  @click="hiddenposter">
+             <div>
+                 <img src="../assets/poster04.png" draggable="false" @click.prevent="(()=>{return false})"  oncontextmenu="return false;" onselectstart="return false;"  width="100%" class="animated fadeInUp" :class="{'fadeOutDown':showposter == false}"  alt="">
+                 <button class="animated pulse" :class="{'fadeOutDown':showposter == false}">立即订购 >></button>
+             </div>
+         </div>
+     </div>
+     </transition>
+
      <div class="passwordbox animated fadeIn" v-if="showgrybox==true" >
          <div class="kongblock " @click="showgrybox = false,showpay=true">
 
@@ -143,6 +160,8 @@
       showpay:true,
       type:'BALANCE',
 
+      showposter:true,
+
    num1: 1,
    uid:0,
    rule_id:1,
@@ -235,6 +254,9 @@
              default:return '新用户';
                  break;
          }
+     },
+     hiddenposter:function(){
+         this.showposter = false;
      },
      switchwallettype:function(type){
          switch(type){
@@ -390,6 +412,76 @@
 </script>
 
 <style lang="scss" scoped>
+    .none{
+        display:none;
+    }
+    .pulse{
+        animation-iteration-count:infinite;
+    }
+    .showposter-enter-active, .showposter-leave-active {
+        transition: opacity .5s
+    }
+    .showposter-enter, .showposter-leave-active {
+        opacity: 0
+    }
+    .posterbox{
+        background: #ee312d;
+        position: fixed;
+        top:0;
+        z-index: 999999999;
+        left:0;
+        width: 100%;
+        height:100vh;
+        overflow: hidden;
+        .postertop{
+            position: fixed;
+            top:0;
+            z-index: 999999999;
+            img{pointer-events: none;}
+            div{
+                position: relative;
+                button{
+                    border:none;
+                    outline:none;
+                    background:#ed322d;
+                    padding:5px 10px;
+                    font-size: 14px;
+                    line-height:16px;
+                    border-radius: 5px;
+                    color:#fff;
+                    text-align: center;
+                    position: absolute;
+                    z-index:99999999999999;
+                    right:10px;
+                    bottom:110px;
+                }
+            }
+        }
+        .posterunder{
+            position: fixed;
+            bottom:0;
+            z-index: 999999999;
+            img{pointer-events: none;}
+            div{
+                position: relative;
+                button{
+                    border:none;
+                    outline:none;
+                    background:#ed322d;
+                    padding:5px 10px;
+                    font-size: 14px;
+                    line-height:16px;
+                    border-radius: 5px;
+                    color:#fff;
+                    text-align: center;
+                    position: absolute;
+                    z-index:99999999999999;
+                    left:10px;
+                    top:70px;
+                }
+            }
+        }
+    }
 
     @-moz-keyframes zuo /* Firefox */
     {

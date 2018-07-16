@@ -45,7 +45,7 @@
                             <h6>
                                 <span :class="{'red': ad.default_addr == 1 }"><i class="el-icon-success"></i>  默认地址</span>
                                 <span>
-                                    <b><el-button type="text" @click="Toupdate(ad.id)" ><i class="el-icon-edit" ></i> 编辑</el-button></b>
+                                    <b><el-button type="text" @click="Toupdate(ad.id,ad.addr_type)" ><i class="el-icon-edit" ></i> 编辑</el-button></b>
                                     <b><el-button type="text" @click="deletead(ad,index)"><i class="el-icon-delete"></i> 删除</el-button></b>
                                 </span>
                             </h6>
@@ -100,8 +100,8 @@ mounted:function(){
      Toadd(){
          this.$router.push({path:'/addadress',query:{type:'add',addr_type:this.addr_type}})
      },
-     Toupdate(id,addr_type){
-         this.$router.push({path:'/addadress',query:{type:'update',id:id,addr_type:addr_type}});
+     Toupdate($id,addr_type){
+         this.$router.push({path:'/addadress',query:{type:'update',id:$id,addr_type:addr_type}});
      },
      getuid:function(){
          if(localStorage.getItem("TAINIUUID")=='null'|| typeof localStorage.getItem("TAINIUUID") == "undefined" || localStorage.getItem("TAINIUUID") == null || localStorage.getItem("TAINIUROLER") == ""){

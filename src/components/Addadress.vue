@@ -200,38 +200,38 @@
 
              this.axios.post('/index.php/index/Address/AddressSelectService.html',{id:this.$route.query.id,uid:this.uid}).then((res)=>{
                  if(res.data.code=='SUCCESS'){
-                    console.info('获取单条数据:');
-                    console.log(res.data.data);
-                         this.id = res.data.data[0].id;
-                         this.fullname = res.data.data[0].fullname;
-                         this.phone = res.data.data[0].phone;
+                   // console.info('获取单条数据:');
+                    //console.log(res.data.data);
+                         this.id = res.data.data.rows[0].id;
+                         this.fullname = res.data.data.rows[0].fullname;
+                         this.phone = res.data.data.rows[0].phone;
                          this.chooseCity = [
                             {
-                                id:res.data.data[0].area1_code,
-                                name:res.data.data[0].area1_name,
+                                id:res.data.data.rows[0].area1_code,
+                                name:res.data.data.rows[0].area1_name,
                             },
                              {
-                                 id:res.data.data[0].area2_code,
-                                 name:res.data.data[0].area2_name,
+                                 id:res.data.data.rows[0].area2_code,
+                                 name:res.data.data.rows[0].area2_name,
                              },
                              {
-                                 id:res.data.data[0].area3_code,
-                                 name:res.data.data[0].area3_name,
+                                 id:res.data.data.rows[0].area3_code,
+                                 name:res.data.data.rows[0].area3_name,
                              },
                              {
-                                 id:res.data.data[0].area4_code,
-                                 name:res.data.data[0].area4_name,
+                                 id:res.data.data.rows[0].area4_code,
+                                 name:res.data.data.rows[0].area4_name,
                              },
                              {
-                                 id:res.data.data[0].area5_code,
-                                 name:res.data.data[0].area5_name,
+                                 id:res.data.data.rows[0].area5_code,
+                                 name:res.data.data.rows[0].area5_name,
                              }
                          ];
 
-                         this.address_detail = res.data.data[0].address_detail;
-                         this.addr_type = res.data.data[0].addr_type;
+                         this.address_detail = res.data.data.rows[0].address_detail;
+                         this.addr_type = res.data.data.rows[0].addr_type;
 
-                         if( res.data.data[0].default_addr == 1){
+                         if( res.data.data.rows[0].default_addr == 1){
                              this.default_addr = true;
                          }else{
                              this.default_addr = false;
